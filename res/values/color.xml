@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="red_start">#ff4040</color>
+    <color name="red_center">#541515</color>
+    <color name="red_end">#a82a2a</color>
+    <color name="blue_start">#5842ff</color>
+    <color name="blue_center">#151d52</color>
+    <color name="blue_end">#2a3aa6</color>
+    <color name="gray_start">#e0e0e0</color>
+    <color name="gray_center">#666666</color>
+    <color name="gray_end">#999999</color>
+    <color name="black_start">#eeeeee</color>
+    <color name="black_center">#3e3e3e</color>
+    <color name="black_end">#555555</color>
+    <color name="push_start">#8bff00</color>
+    <color name="push_center">#5da800</color>
+    <color name="push_end">#2e5400</color>
+
+</resources>

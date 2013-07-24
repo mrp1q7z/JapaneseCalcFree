@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!-- ボタンが押されている -->
+<!-- フォーカスされていない -->
+<item android:state_pressed="true"
+	android:state_focused="false">
+<layer-list>
+	<item >
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:shape="rectangle">
+		    <gradient
+		        android:startColor="@color/push_start"
+		        android:centerColor="@color/push_center"
+		        android:endColor="@color/push_end"
+		        android:centerY="0.2"
+		        android:angle="-90"/>
+		    <padding
+		     android:left="1dip"
+		        android:top="dip"
+		        android:right="1dip"
+		        android:bottom="1dip" />
+		    <corners android:radius="15dip" />
+		    <stroke android:width="1dip" 
+		    android:color="#999999"
+		    />
+		</shape>
+	</item>
+</layer-list>
+</item>
+
+<!-- ボタンが押されていない -->
+<!-- フォーカスされていない -->
+<item android:state_pressed="false"
+	android:state_focused="false">
+<layer-list>
+	<item >
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:shape="rectangle">
+		    <gradient
+		        android:startColor="@color/gray_start"
+		        android:centerColor="@color/gray_center"
+		        android:endColor="@color/gray_end"
+		        android:centerY="0.2"
+		        android:angle="-90"/>
+		    <padding
+		     android:left="1dip"
+		        android:top="dip"
+		        android:right="1dip"
+		        android:bottom="1dip" />
+		    <corners android:radius="15dip" />
+		    <stroke android:width="1dip" 
+		    android:color="@color/gray_center"
+		    />
+		</shape>
+	</item>
+</layer-list>
+</item>
+
+<!-- ボタンが押されている -->
+<!-- フォーカスされた -->
+<item android:state_pressed="true"
+	android:state_focused="true">
+<layer-list>
+	<item >
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:shape="rectangle">
+		    <gradient
+		        android:startColor="@color/push_start"
+		        android:centerColor="@color/push_center"
+		        android:endColor="@color/push_end"
+		        android:centerY="0.2"
+		        android:angle="-90"/>
+		    <padding
+		     android:left="1dip"
+		        android:top="dip"
+		        android:right="1dip"
+		        android:bottom="1dip" />
+		    <corners android:radius="15dip" />
+		    <stroke android:width="1dip" 
+		    android:color="#FF6600"
+		    />
+		</shape>
+	</item>
+</layer-list>
+</item>
+
+<!-- ボタンが押されていない -->
+<!-- フォーカスされた -->
+<item android:state_pressed="false"
+	android:state_focused="true">
+<layer-list>
+	<item >
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:shape="rectangle">
+		    <gradient
+		        android:startColor="@color/gray_start"
+		        android:centerColor="@color/gray_center"
+		        android:endColor="@color/gray_end"
+		        android:centerY="0.2"
+		        android:angle="-90"/>
+		    <padding
+		     android:left="1dip"
+		        android:top="dip"
+		        android:right="1dip"
+		        android:bottom="1dip" />
+		    <corners android:radius="15dip" />
+		    <stroke android:width="1dip" 
+		    android:color="#FF6600"
+		    />
+		</shape>
+	</item>
+</layer-list>
+</item>
+
+</selector>
