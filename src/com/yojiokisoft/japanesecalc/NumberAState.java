@@ -49,4 +49,26 @@ public class NumberAState implements State {
 		context.showDisplay(context.getA());
 		context.changeState(ResultState.getInstance());
 	}
+
+	@Override
+	public void onInputMemoryPlus(Context context) {
+		context.memoryPlus();
+		context.changeState(ResultState.getInstance());
+	}
+
+	@Override
+	public void onInputMemoryMinus(Context context) {
+		context.memoryMinus();
+		context.changeState(ResultState.getInstance());
+	}
+
+	@Override
+	public void onInputClearMemory(Context context) {
+		context.clearMemory();
+	}
+
+	@Override
+	public void onInputReturnMemory(Context context) {
+		context.returnMemory();
+	}
 }

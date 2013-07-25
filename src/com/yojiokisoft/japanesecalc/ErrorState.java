@@ -40,4 +40,20 @@ public class ErrorState implements State {
 	@Override
 	public void onInputPercent(Context context) {
 	}
+
+	@Override
+	public void onInputMemoryPlus(Context context) {
+	}
+
+	@Override
+	public void onInputMemoryMinus(Context context) {
+	}
+
+	@Override
+	public void onInputClearMemory(Context context) {
+	}
+
+	@Override
+	public void onInputReturnMemory(Context context) {
+	}
 }

@@ -32,6 +32,34 @@ public interface State {
 	public abstract void onInputPercent(Context context);
 
 	/**
+	 * M+ボタン
+	 *
+	 * @param context
+	 */
+	public abstract void onInputMemoryPlus(Context context);
+
+	/**
+	 * M-ボタン
+	 *
+	 * @param context
+	 */
+	public abstract void onInputMemoryMinus(Context context);
+
+	/**
+	 * CMボタン
+	 *
+	 * @param context
+	 */
+	public abstract void onInputClearMemory(Context context);
+
+	/**
+	 * RMボタン
+	 *
+	 * @param context
+	 */
+	public abstract void onInputReturnMemory(Context context);
+
+	/**
 	 * クリアボタン
 	 *
 	 * @param context

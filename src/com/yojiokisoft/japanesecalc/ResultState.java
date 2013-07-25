@@ -55,4 +55,24 @@ public class ResultState implements State {
 	public void onInputPercent(Context context) {
 		// 何もしない
 	}
+
+	@Override
+	public void onInputMemoryPlus(Context context) {
+		context.memoryPlus();
+	}
+
+	@Override
+	public void onInputMemoryMinus(Context context) {
+		context.memoryMinus();
+	}
+
+	@Override
+	public void onInputClearMemory(Context context) {
+		context.clearMemory();
+	}
+
+	@Override
+	public void onInputReturnMemory(Context context) {
+		context.returnMemory();
+	}
 }

@@ -59,13 +59,13 @@ public final class R {
         public static final int four=0x7f090011;
         public static final int linearLayout1=0x7f090000;
         public static final int linearLayout2=0x7f090002;
+        public static final int memoryMinus=0x7f090007;
+        public static final int memoryPlus=0x7f090006;
         public static final int minus=0x7f09001a;
-        public static final int minusMemory=0x7f090007;
         public static final int nine=0x7f09000d;
         public static final int one=0x7f090017;
         public static final int percent=0x7f09001b;
         public static final int plus=0x7f090020;
-        public static final int plusMemory=0x7f090006;
         public static final int returnMemory=0x7f090005;
         public static final int seven=0x7f09000b;
         public static final int sign=0x7f090015;

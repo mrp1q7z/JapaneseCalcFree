@@ -39,4 +39,12 @@ public interface Context {
 	public abstract void clearError();
 	// ＋・－記号を反転します
 	public abstract void changeSign();
+	// メモリーへ加算します
+	public abstract void memoryPlus();
+	// メモリーから減算します
+	public abstract void memoryMinus();
+	// メモリーをクリアします
+	public abstract void clearMemory();
+	// メモリーを読み出します
+	public abstract void returnMemory();
 }

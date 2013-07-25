@@ -1,11 +1,13 @@
 package com.yojiokisoft.japanesecalc;
 
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Calc implements Context {
 	private double A; // 電卓はメモリＡを持ちます
 	private double B; // 電卓はメモリＢを持ちます
+	private double M; // 電卓はメモリＭを持ちます
 	private Operation op; // 電卓は演算子を持ちます
 	protected AbstractDisplay disp; // 電卓はディスプレイを持ちます
 	protected State state; // 電卓の状態を表すクラス
@@ -14,6 +16,7 @@ public class Calc implements Context {
 	public Calc() {
 		A = 0d;
 		B = 0d;
+		M = 0d;
 		op = null;
 		changeState(NumberAState.getInstance());
 	}
@@ -49,6 +52,22 @@ public class Calc implements Context {
 
 	public void onButtonPercent() {
 		state.onInputPercent(this);
+	}
+
+	public void onButtonMemoryPlus() {
+		state.onInputMemoryPlus(this);
+	}
+
+	public void onButtonMemoryMinus() {
+		state.onInputMemoryMinus(this);
+	}
+
+	public void onButtonClearMemory() {
+		state.onInputClearMemory(this);
+	}
+
+	public void onButtonReturnMemory() {
+		state.onInputReturnMemory(this);
 	}
 
 	@Override
@@ -193,4 +212,26 @@ public class Calc implements Context {
 		}
 	}
 
+	@Override
+	public void memoryPlus() {
+		M += disp.getNumber();
+		Log.d("TAG", "M=" + M + ",num=" + disp.getNumber());
+	}
+
+	@Override
+	public void memoryMinus() {
+		M -= disp.getNumber();
+		Log.d("TAG", "M=" + M + ",num=" + disp.getNumber());
+	}
+
+	@Override
+	public void clearMemory() {
+		M = 0;
+	}
+
+	@Override
+	public void returnMemory() {
+		disp.setNumber(M);
+		disp.showDisplay(true);
+	}
 }

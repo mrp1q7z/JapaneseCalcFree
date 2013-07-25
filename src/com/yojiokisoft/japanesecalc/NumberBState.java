@@ -68,4 +68,40 @@ public class NumberBState implements State {
 			context.changeState(ErrorState.getInctance());
 		}
 	}
+
+	@Override
+	public void onInputMemoryPlus(Context context) {
+		try {
+			context.saveDisplayNumberToB();
+			context.doOperation();
+			context.memoryPlus();
+			context.changeState(ResultState.getInstance());
+		} catch (CalcException e) {
+			context.setError();
+			context.changeState(ErrorState.getInctance());
+		}
+	}
+
+	@Override
+	public void onInputMemoryMinus(Context context) {
+		try {
+			context.saveDisplayNumberToB();
+			context.doOperation();
+			context.memoryMinus();
+			context.changeState(ResultState.getInstance());
+		} catch (CalcException e) {
+			context.setError();
+			context.changeState(ErrorState.getInctance());
+		}
+	}
+
+	@Override
+	public void onInputClearMemory(Context context) {
+		context.clearMemory();
+	}
+
+	@Override
+	public void onInputReturnMemory(Context context) {
+		context.returnMemory();
+	}
 }

@@ -53,7 +53,7 @@
                 </Button>
 
                 <Button
-                    android:id="@+id/plusMemory"
+                    android:id="@+id/memoryPlus"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="5px"
@@ -66,7 +66,7 @@
                 </Button>
 
                 <Button
-                    android:id="@+id/minusMemory"
+                    android:id="@+id/memoryMinus"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="5px"

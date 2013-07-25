@@ -90,6 +90,18 @@ public class MainActivity extends Activity {
 		case R.id.percent:
 			calc.onButtonPercent();
 			break;
+		case R.id.memoryPlus:
+			calc.onButtonMemoryPlus();
+			break;
+		case R.id.memoryMinus:
+			calc.onButtonMemoryMinus();
+			break;
+		case R.id.clearMemory:
+			calc.onButtonClearMemory();
+			break;
+		case R.id.returnMemory:
+			calc.onButtonReturnMemory();
+			break;
 		default:
 			break;
 		}
