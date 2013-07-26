@@ -25,7 +25,8 @@ public class MainActivity extends Activity {
 		btnAllClear.setOnLongClickListener(mAllClearButtonClicked);
 
 		TextView txtDisp = (TextView) findViewById(R.id.display);
-		calc.setDisplay(txtDisp, this);
+		TextView txtMem = (TextView) findViewById(R.id.memoryMark);
+		calc.setDisplay(txtDisp, txtMem, this);
 	}
 
 	@Override

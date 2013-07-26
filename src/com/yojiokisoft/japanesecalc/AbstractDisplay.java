@@ -32,6 +32,9 @@ public abstract class AbstractDisplay {
 	// 引数の数字を文字列にしてディスプレイに設定します
 	public abstract void setNumber(double d);
 
+	// M(メモリ)の有無をディスプレイに表示します
+	public abstract void setMemory(double d);
+
 	// エラーを表示します
 	public abstract void setError();
 

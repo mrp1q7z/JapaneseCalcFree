@@ -4,10 +4,12 @@ import android.widget.TextView;
 
 public class StringDisplay extends AbstractDisplay {
 	private TextView txt;
+	private TextView mMemory;
 
-	public StringDisplay(TextView disp) {
+	public StringDisplay(TextView disp, TextView memoryMark) {
 		clear();
 		this.txt = disp;
+		mMemory = memoryMark;
 	}
 
 	@Override
@@ -204,6 +206,15 @@ public class StringDisplay extends AbstractDisplay {
 
 	@Override
 	public void clearError() {
+	}
+
+	@Override
+	public void setMemory(double d) {
+		if (d == 0) {
+			mMemory.setText("");
+		} else {
+			mMemory.setText("M");
+		}
 	}
 
 }

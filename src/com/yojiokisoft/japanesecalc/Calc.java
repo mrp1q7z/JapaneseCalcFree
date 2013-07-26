@@ -1,6 +1,5 @@
 package com.yojiokisoft.japanesecalc;
 
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,12 +20,12 @@ public class Calc implements Context {
 		changeState(NumberAState.getInstance());
 	}
 
-	public void setDisplay(TextView txt) {
-		disp = new StringDisplay(txt);
+	public void setDisplay(TextView txt, TextView txtMemory) {
+		disp = new StringDisplay(txt, txtMemory);
 	}
 
-	public void setDisplay(TextView txt, android.content.Context parent) {
-		this.disp = new StringDisplay(txt);
+	public void setDisplay(TextView txt, TextView txtMemory, android.content.Context parent) {
+		this.disp = new StringDisplay(txt, txtMemory);
 		this.parent = parent;
 	}
 
@@ -225,18 +224,19 @@ public class Calc implements Context {
 	@Override
 	public void memoryPlus() {
 		M += disp.getNumber();
-		Log.d("TAG", "M=" + M + ",num=" + disp.getNumber());
+		disp.setMemory(M);
 	}
 
 	@Override
 	public void memoryMinus() {
 		M -= disp.getNumber();
-		Log.d("TAG", "M=" + M + ",num=" + disp.getNumber());
+		disp.setMemory(M);
 	}
 
 	@Override
 	public void clearMemory() {
 		M = 0;
+		disp.setMemory(M);
 	}
 
 	@Override
