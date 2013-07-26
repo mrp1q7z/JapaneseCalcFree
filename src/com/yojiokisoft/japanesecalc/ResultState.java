@@ -30,7 +30,12 @@ public class ResultState implements State {
 
 	@Override
 	public void onInputEquale(Context context) {
-		// 何もしない
+		context.showDisplay();
+	}
+
+	@Override
+	public void onInputBackspace(Context context) {
+		context.backspace();
 	}
 
 	@Override

@@ -79,7 +79,8 @@ public class MainActivity extends Activity {
 			calc.onButtonAllClear();
 			break;
 		case R.id.clear:
-			calc.onButtonClear();
+//			calc.onButtonClear();
+			calc.onButtonBackspace();
 			break;
 		case R.id.equal:
 			calc.onButtonEquale();

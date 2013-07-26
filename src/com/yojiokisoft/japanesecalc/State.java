@@ -60,6 +60,13 @@ public interface State {
 	public abstract void onInputReturnMemory(Context context);
 
 	/**
+	 * BSボタン
+	 *
+	 * @param context
+	 */
+	public abstract void onInputBackspace(Context context);
+
+	/**
 	 * クリアボタン
 	 *
 	 * @param context

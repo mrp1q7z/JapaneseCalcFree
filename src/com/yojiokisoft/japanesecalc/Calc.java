@@ -38,6 +38,10 @@ public class Calc implements Context {
 		state.onInputOperation(this, op);
 	}
 
+	public void onButtonBackspace() {
+		state.onInputBackspace(this);
+	}
+
 	public void onButtonClear() {
 		state.onInputClear(this);
 	}
@@ -116,7 +120,7 @@ public class Calc implements Context {
 
 	@Override
 	public void showDisplay() {
-		disp.showDisplay(false);
+		disp.showDisplay(true);
 	}
 
 	@Override
@@ -148,6 +152,12 @@ public class Calc implements Context {
 	@Override
 	public void saveDisplayNumberToB() {
 		B = disp.getNumber();
+	}
+
+	@Override
+	public void backspace() {
+		disp.onInputBackspace();
+		disp.showDisplay(false);
 	}
 
 	@Override

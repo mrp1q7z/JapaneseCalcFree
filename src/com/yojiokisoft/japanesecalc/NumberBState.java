@@ -44,6 +44,11 @@ public class NumberBState implements State {
 	}
 
 	@Override
+	public void onInputBackspace(Context context) {
+		context.backspace();
+	}
+
+	@Override
 	public void onInputClear(Context context) {
 		context.clearB();
 		context.clearDisplay();

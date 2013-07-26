@@ -25,6 +25,10 @@ public class ErrorState implements State {
 	}
 
 	@Override
+	public void onInputBackspace(Context context) {
+	}
+
+	@Override
 	public void onInputClear(Context context) {
 	}
 

@@ -17,6 +17,8 @@ public interface Context {
 	public abstract void saveDisplayNumberToA();
 	// ディスプレイ表示を変数Bに保存します
 	public abstract void saveDisplayNumberToB();
+	// 直前に入力した１文字を取り消します
+	public abstract void backspace();
 	// 変数Aをクリアします
 	public abstract void clearA();
 	// 変数Bをクリアします
