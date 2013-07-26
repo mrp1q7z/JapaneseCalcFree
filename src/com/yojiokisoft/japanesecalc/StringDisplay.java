@@ -190,8 +190,12 @@ public class StringDisplay extends AbstractDisplay {
 		formatStr.append("f");
 		String d2 = String.format(formatStr.toString(), Math.abs(d));
 		// 数値を文字列かしてスタックに追加
-		StringBuffer sb = omitDecimalZero(new StringBuffer(d2));
-		string2Stack(sb);
+		StringBuffer sb = new StringBuffer(d2);
+		if (d < 0) {
+			sb.insert(0, "-");
+		}
+		StringBuffer sbOmitZero = omitDecimalZero(sb);
+		string2Stack(sbOmitZero);
 	}
 
 	@Override
