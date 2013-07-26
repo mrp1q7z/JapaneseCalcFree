@@ -17,8 +17,13 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+
 		Button btnClear = (Button) findViewById(R.id.clear);
 		btnClear.setOnLongClickListener(mClearButtonClicked);
+
+		Button btnAllClear = (Button) findViewById(R.id.allclear);
+		btnAllClear.setOnLongClickListener(mAllClearButtonClicked);
+
 		TextView txtDisp = (TextView) findViewById(R.id.display);
 		calc.setDisplay(txtDisp, this);
 	}
@@ -33,6 +38,15 @@ public class MainActivity extends Activity {
 		@Override
 		public boolean onLongClick(View v) {
 			calc.onButtonClear();
+			return false;
+		}
+	};
+
+	private OnLongClickListener mAllClearButtonClicked = new OnLongClickListener() {
+		@Override
+		public boolean onLongClick(View v) {
+			calc.onButtonClearMemory();
+			calc.onButtonAllClear();
 			return false;
 		}
 	};
