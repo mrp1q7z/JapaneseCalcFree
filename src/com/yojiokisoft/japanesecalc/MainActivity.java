@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -15,6 +17,8 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+		Button btnClear = (Button) findViewById(R.id.clear);
+		btnClear.setOnLongClickListener(mClearButtonClicked);
 		TextView txtDisp = (TextView) findViewById(R.id.display);
 		calc.setDisplay(txtDisp, this);
 	}
@@ -24,6 +28,14 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	private OnLongClickListener mClearButtonClicked = new OnLongClickListener() {
+		@Override
+		public boolean onLongClick(View v) {
+			calc.onButtonClear();
+			return false;
+		}
+	};
 
 	public void onClickButton(View view) {
 		switch (view.getId()) {
@@ -79,7 +91,6 @@ public class MainActivity extends Activity {
 			calc.onButtonAllClear();
 			break;
 		case R.id.clear:
-//			calc.onButtonClear();
 			calc.onButtonBackspace();
 			break;
 		case R.id.equal:
