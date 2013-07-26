@@ -26,7 +26,8 @@ public class MainActivity extends Activity {
 
 		TextView txtDisp = (TextView) findViewById(R.id.display);
 		TextView txtMem = (TextView) findViewById(R.id.memoryMark);
-		calc.setDisplay(txtDisp, txtMem, this);
+		TextView txtErr = (TextView) findViewById(R.id.errorMark);
+		calc.setDisplay(txtDisp, txtMem, txtErr, this);
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	private OnLongClickListener mClearButtonClicked = new OnLongClickListener() {
 		@Override
 		public boolean onLongClick(View v) {

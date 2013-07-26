@@ -20,12 +20,12 @@ public class Calc implements Context {
 		changeState(NumberAState.getInstance());
 	}
 
-	public void setDisplay(TextView txt, TextView txtMemory) {
-		disp = new StringDisplay(txt, txtMemory);
+	public void setDisplay(TextView txt, TextView txtMemory, TextView txtError) {
+		disp = new StringDisplay(txt, txtMemory, txtError);
 	}
 
-	public void setDisplay(TextView txt, TextView txtMemory, android.content.Context parent) {
-		this.disp = new StringDisplay(txt, txtMemory);
+	public void setDisplay(TextView txt, TextView txtMemory, TextView txtError, android.content.Context parent) {
+		this.disp = new StringDisplay(txt, txtMemory, txtError);
 		this.parent = parent;
 	}
 

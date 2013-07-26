@@ -48,7 +48,7 @@ public abstract class AbstractDisplay {
 	 */
 	public boolean isOverflow(double d) {
 		StringBuffer sb = new StringBuffer();
-		for (int i=0; i<DISPLAY_DIGIT; i++) {
+		for (int i = 0; i < DISPLAY_DIGIT; i++) {
 			sb.append("9");
 		}
 		double max = Double.parseDouble(sb.toString());
