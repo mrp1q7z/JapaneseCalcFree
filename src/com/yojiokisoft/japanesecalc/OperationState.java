@@ -93,5 +93,6 @@ public class OperationState implements State {
 	@Override
 	public void onInputReturnMemory(Context context) {
 		context.returnMemory();
+		context.changeState(NumberBState.getInstance());
 	}
 }
