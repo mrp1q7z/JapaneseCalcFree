@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 public class MainActivity extends Activity {
 	Calc calc = new Calc();
@@ -24,10 +24,8 @@ public class MainActivity extends Activity {
 		Button btnAllClear = (Button) findViewById(R.id.allclear);
 		btnAllClear.setOnLongClickListener(mAllClearButtonClicked);
 
-		TextView txtDisp = (TextView) findViewById(R.id.display);
-		TextView txtMem = (TextView) findViewById(R.id.memoryMark);
-		TextView txtErr = (TextView) findViewById(R.id.errorMark);
-		calc.setDisplay(txtDisp, txtMem, txtErr, this);
+		LinearLayout displayContainer = (LinearLayout) findViewById(R.id.displayContainer);
+		calc.setDisplay(displayContainer, this);
 	}
 
 	@Override

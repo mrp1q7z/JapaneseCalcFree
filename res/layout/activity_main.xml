@@ -5,47 +5,10 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/displayContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal" >
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="2dp"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/memoryMark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#EEEEEE"
-                android:textColor="#505050" >
-            </TextView>
-
-            <TextView
-                android:id="@+id/errorMark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#EEEEEE"
-                android:textColor="#505050" >
-            </TextView>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/display"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#EEEEEE"
-            android:gravity="right"
-            android:textColor="#505050"
-            android:textSize="40sp" >
-        </TextView>
-    </LinearLayout>
+        android:orientation="horizontal" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"

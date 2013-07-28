@@ -1,5 +1,6 @@
 package com.yojiokisoft.japanesecalc;
 
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,10 @@ public class Calc implements Context {
 		M = 0d;
 		op = null;
 		changeState(NumberAState.getInstance());
+	}
+
+	public void setDisplay(ViewGroup viewGroup, android.content.Context context) {
+		disp = new GraphicDisplay(viewGroup, context);
 	}
 
 	public void setDisplay(TextView txt, TextView txtMemory, TextView txtError) {
