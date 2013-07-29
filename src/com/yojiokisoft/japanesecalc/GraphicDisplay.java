@@ -44,7 +44,7 @@ public class GraphicDisplay extends AbstractDisplay {
 		mTen.setImageResource(R.drawable.ten);
 
 		mError = new ImageView(context);
-		mError.setImageResource(android.R.drawable.ic_menu_mylocation);
+		mError.setImageResource(R.drawable.error);
 
 		frameLayout.addView(linearLayout);
 		frameLayout.addView(mUnitOku);
