@@ -22,6 +22,7 @@ public class GraphicDisplay extends AbstractDisplay {
 
 		mMemory = new ImageView(context);
 		mMemory.setImageResource(R.drawable.memory);
+		mMemory.setVisibility(View.INVISIBLE);
 		linearLayout.addView(mMemory);
 
 		for (int i = 0; i < mNumResId.length; i++) {
@@ -264,7 +265,6 @@ public class GraphicDisplay extends AbstractDisplay {
 		minus = false;
 		displayChar.clear();
 		clearError();
-		mMemory.setVisibility(View.INVISIBLE);
 		mUnitOku.setVisibility(View.INVISIBLE);
 		mUnitMan.setVisibility(View.INVISIBLE);
 		mUnitSen.setVisibility(View.INVISIBLE);
