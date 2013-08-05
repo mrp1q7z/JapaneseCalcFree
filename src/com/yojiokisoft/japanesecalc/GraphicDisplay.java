@@ -1,5 +1,6 @@
 package com.yojiokisoft.japanesecalc;
 
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -8,6 +9,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
 public class GraphicDisplay extends AbstractDisplay {
+	private ViewGroup mDisplayContainer;
 	private ImageView[] mNum = new ImageView[DISPLAY_DIGIT + 1];
 	private ImageView mMemory;
 	private ImageView mTen;
@@ -18,6 +20,7 @@ public class GraphicDisplay extends AbstractDisplay {
 	private int[] mNumResId = new int[10];
 
 	public GraphicDisplay(ViewGroup viewGroup, android.content.Context context) {
+		mDisplayContainer = viewGroup;
 		FrameLayout frameLayout = new FrameLayout(context);
 		LinearLayout linearLayout = new LinearLayout(context);
 
@@ -308,11 +311,13 @@ public class GraphicDisplay extends AbstractDisplay {
 
 	@Override
 	public void setError() {
+		mDisplayContainer.setBackgroundColor(Color.BLACK);
 		mError.setVisibility(View.VISIBLE);
 	}
 
 	@Override
 	public void clearError() {
+		mDisplayContainer.setBackgroundColor(Color.WHITE);
 		mError.setVisibility(View.INVISIBLE);
 	}
 
