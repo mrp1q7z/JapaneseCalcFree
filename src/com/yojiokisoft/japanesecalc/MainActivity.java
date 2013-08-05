@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.Window;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 public class MainActivity extends Activity {
@@ -18,10 +18,10 @@ public class MainActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 
-		Button btnClear = (Button) findViewById(R.id.clear);
+		ImageButton btnClear = (ImageButton) findViewById(R.id.clear);
 		btnClear.setOnLongClickListener(mClearButtonClicked);
 
-		Button btnAllClear = (Button) findViewById(R.id.allclear);
+		ImageButton btnAllClear = (ImageButton) findViewById(R.id.allclear);
 		btnAllClear.setOnLongClickListener(mAllClearButtonClicked);
 
 		LinearLayout displayContainer = (LinearLayout) findViewById(R.id.displayContainer);

@@ -7,14 +7,17 @@
     <LinearLayout
         android:id="@+id/displayContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:background="@android:color/white"
         android:orientation="horizontal" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/buttonContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal" >
+        android:background="@drawable/back04_025"
+        android:orientation="horizontal"
+        android:tileMode="repeat" >
 
         <TableLayout
             android:id="@+id/tableLayout1"
@@ -27,70 +30,50 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" >
 
-                <Button
+                <ImageButton
                     android:id="@+id/returnMemory"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_blue"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="読M"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_mreturn" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/memoryPlus"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_blue"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="足M"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_mplus" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/memoryMinus"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_blue"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="引M"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_mminus" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/clearMemory"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_blue"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="消M"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_mclear" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/allclear"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_red"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="全消"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_allclear" />
             </TableRow>
 
             <TableRow
@@ -99,70 +82,50 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" >
 
-                <Button
+                <ImageButton
                     android:id="@+id/seven"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_black"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="七"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn7" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/eight"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_black"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="八"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn8" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/nine"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_black"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="九"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn9" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/divide"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_gray"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="割"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_divide" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/clear"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_red"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="小消"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_clear" />
             </TableRow>
 
             <TableRow
@@ -171,70 +134,50 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" >
 
-                <Button
+                <ImageButton
                     android:id="@+id/four"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_black"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="四"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn4" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/five"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_black"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="五"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn5" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/six"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_black"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="六"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn6" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/times"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_gray"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="掛"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_times" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/sign"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_gray"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="正負"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_sign" />
             </TableRow>
 
             <TableRow
@@ -243,70 +186,51 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" >
 
-                <Button
+                <ImageButton
                     android:id="@+id/one"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_black"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="一"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn1" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/two"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_black"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="二"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn2" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/three"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_black"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="三"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn3" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/minus"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_gray"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="引"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_minus" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/percent"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_gray"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="率"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_ritu" />
             </TableRow>
 
             <TableRow
@@ -315,70 +239,50 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" >
 
-                <Button
+                <ImageButton
                     android:id="@+id/zero"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_black"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="零"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn0" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/doublezero"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_black"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="百"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_hyaku" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/comma"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_black"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="点"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_ten" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/plus"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_gray"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="足"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_plus" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/equal"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
-                    android:background="@drawable/button_gray"
+                    android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
-                    android:text="和"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" >
-                </Button>
+                    android:src="@drawable/btn_wa" />
             </TableRow>
         </TableLayout>
     </LinearLayout>

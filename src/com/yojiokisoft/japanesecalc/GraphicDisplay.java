@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
 public class GraphicDisplay extends AbstractDisplay {
@@ -30,7 +31,12 @@ public class GraphicDisplay extends AbstractDisplay {
 		}
 		for (int i = DISPLAY_DIGIT; i >= 0; i--) {
 			mNum[i] = new ImageView(context);
-			linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(34, 49));
+			mNum[i].setScaleType(ScaleType.FIT_XY);
+			if (i == DISPLAY_DIGIT) {
+				linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(20, 50));
+			} else {
+				linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(36, 50));
+			}
 		}
 
 		mUnitOku = new ImageView(context);
@@ -87,7 +93,7 @@ public class GraphicDisplay extends AbstractDisplay {
 			case '.':
 				int left = mNum[index].getLeft() + mNum[index].getWidth();
 				int top = mNum[index].getBottom();
-				mTen.setPadding(left - 10, top - 10, 0, 0);
+				mTen.setPadding(left - 13, top - 2, 0, 0);
 				mTen.setVisibility(View.VISIBLE);
 				break;
 			default:
@@ -102,29 +108,18 @@ public class GraphicDisplay extends AbstractDisplay {
 			mNum[i].setVisibility(View.INVISIBLE);
 		}
 
+		ImageView[] unit = { mUnitOku, mUnitMan, mUnitSen };
+		int[] keta = { 8, 4, 3 };
 		int ketaSu = displayChar.size() - decimalPlaces;
-		if (ketaSu > 8) {
-			mUnitOku.setVisibility(View.VISIBLE);
-			int left = mNum[8 + decimalPlaces].getLeft() + mNum[8 + decimalPlaces].getWidth();
-			mUnitOku.setPadding(left - 10, 0, 0, 0);
-		} else {
-			mUnitOku.setVisibility(View.INVISIBLE);
-		}
-
-		if (ketaSu > 4) {
-			mUnitMan.setVisibility(View.VISIBLE);
-			int left = mNum[4 + decimalPlaces].getLeft() + mNum[4 + decimalPlaces].getWidth();
-			mUnitMan.setPadding(left - 10, 0, 0, 0);
-		} else {
-			mUnitMan.setVisibility(View.INVISIBLE);
-		}
-
-		if (ketaSu > 3) {
-			mUnitSen.setVisibility(View.VISIBLE);
-			int left = mNum[3 + decimalPlaces].getLeft() + mNum[3 + decimalPlaces].getWidth();
-			mUnitSen.setPadding(left - 10, 0, 0, 0);
-		} else {
-			mUnitSen.setVisibility(View.INVISIBLE);
+		for (int i = 0; i < keta.length; i++) {
+			if (ketaSu > keta[i]) {
+				unit[i].setVisibility(View.VISIBLE);
+				int left = mNum[keta[i] + decimalPlaces].getLeft() + mNum[keta[i] + decimalPlaces].getWidth();
+				int height = mNum[keta[i] + decimalPlaces].getHeight();
+				unit[i].setPadding(left - 13, height - 3, 0, 0);
+			} else {
+				unit[i].setVisibility(View.INVISIBLE);
+			}
 		}
 	}
 
