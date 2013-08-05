@@ -1,6 +1,8 @@
 package com.yojiokisoft.japanesecalc;
 
 import android.app.Activity;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -10,13 +12,18 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 public class MainActivity extends Activity {
-	Calc calc = new Calc();
+	private Calc calc = new Calc();
+	private SoundPool mSound;
+	private int mSoundId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+
+		mSound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+		mSoundId = mSound.load(getApplicationContext(), R.raw.mp_chiiin, 0);
 
 		ImageButton btnClear = (ImageButton) findViewById(R.id.clear);
 		btnClear.setOnLongClickListener(mClearButtonClicked);
@@ -32,6 +39,12 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mSound.release();
 	}
 
 	private OnLongClickListener mClearButtonClicked = new OnLongClickListener() {
@@ -52,6 +65,9 @@ public class MainActivity extends Activity {
 	};
 
 	public void onClickButton(View view) {
+		mSound.stop(mSoundId);
+		mSound.play(mSoundId, 1.0F, 1.0F, 0, 0, 1.0F);
+
 		switch (view.getId()) {
 		case R.id.zero:
 			calc.onButtonNumber(Number.ZERO);
