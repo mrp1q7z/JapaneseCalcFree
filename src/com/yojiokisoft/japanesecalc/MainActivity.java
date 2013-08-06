@@ -1,10 +1,12 @@
 package com.yojiokisoft.japanesecalc;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.Window;
@@ -15,6 +17,7 @@ public class MainActivity extends Activity {
 	private Calc calc = new Calc();
 	private SoundPool mSound;
 	private int mSoundId;
+	private String mSoundName;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -23,7 +26,13 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		mSound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-		mSoundId = mSound.load(getApplicationContext(), R.raw.mp_chiiin, 0);
+		mSoundName = SettingDao.getInstance().getClickSound();
+		int resId = MyResource.getResourceIdByName(mSoundName, "raw");
+		if (resId == 0) {
+			mSoundId = 0;
+		} else {
+			mSoundId = mSound.load(getApplicationContext(), resId, 0);
+		}
 
 		ImageButton btnClear = (ImageButton) findViewById(R.id.clear);
 		btnClear.setOnLongClickListener(mClearButtonClicked);
@@ -36,9 +45,43 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		String newSoundName = SettingDao.getInstance().getClickSound();
+		if (mSoundName.equals(newSoundName)) {
+			return;
+		}
+		
+		if (mSoundId != 0) {
+			mSound.unload(mSoundId);
+		}
+
+		mSoundName = newSoundName;
+		int resId = MyResource.getResourceIdByName(mSoundName, "raw");
+		if (resId == 0) {
+			mSoundId = 0;
+		} else {
+			mSoundId = mSound.load(getApplicationContext(), resId, 0);
+		}
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.set_sound:
+			Intent intent = new Intent(getApplicationContext(), SoundActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -65,8 +108,10 @@ public class MainActivity extends Activity {
 	};
 
 	public void onClickButton(View view) {
-		mSound.stop(mSoundId);
-		mSound.play(mSoundId, 1.0F, 1.0F, 0, 0, 1.0F);
+		if (mSoundId != 0) {
+			mSound.stop(mSoundId);
+			mSound.play(mSoundId, 1.0F, 1.0F, 0, 0, 1.0F);
+		}
 
 		switch (view.getId()) {
 		case R.id.zero:
