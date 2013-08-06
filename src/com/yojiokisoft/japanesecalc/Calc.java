@@ -4,7 +4,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Calc implements Context {
+public class Calc implements CalcContext {
 	private double A; // 電卓はメモリＡを持ちます
 	private double B; // 電卓はメモリＢを持ちます
 	private double M; // 電卓はメモリＭを持ちます

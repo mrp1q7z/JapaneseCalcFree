@@ -13,27 +13,27 @@ public class ErrorState implements State {
 	}
 
 	@Override
-	public void onInputNumber(Context context, Number num) {
+	public void onInputNumber(CalcContext context, Number num) {
 	}
 
 	@Override
-	public void onInputOperation(Context context, Operation op) {
+	public void onInputOperation(CalcContext context, Operation op) {
 	}
 
 	@Override
-	public void onInputEquale(Context context) {
+	public void onInputEquale(CalcContext context) {
 	}
 
 	@Override
-	public void onInputBackspace(Context context) {
+	public void onInputBackspace(CalcContext context) {
 	}
 
 	@Override
-	public void onInputClear(Context context) {
+	public void onInputClear(CalcContext context) {
 	}
 
 	@Override
-	public void onInputAllClear(Context context) {
+	public void onInputAllClear(CalcContext context) {
 		context.clearA();
 		context.clearB();
 		context.clearDisplay();
@@ -42,22 +42,22 @@ public class ErrorState implements State {
 	}
 
 	@Override
-	public void onInputPercent(Context context) {
+	public void onInputPercent(CalcContext context) {
 	}
 
 	@Override
-	public void onInputMemoryPlus(Context context) {
+	public void onInputMemoryPlus(CalcContext context) {
 	}
 
 	@Override
-	public void onInputMemoryMinus(Context context) {
+	public void onInputMemoryMinus(CalcContext context) {
 	}
 
 	@Override
-	public void onInputClearMemory(Context context) {
+	public void onInputClearMemory(CalcContext context) {
 	}
 
 	@Override
-	public void onInputReturnMemory(Context context) {
+	public void onInputReturnMemory(CalcContext context) {
 	}
 }

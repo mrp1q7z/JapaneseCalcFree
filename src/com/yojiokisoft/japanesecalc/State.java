@@ -7,7 +7,7 @@ public interface State {
 	 * @param context
 	 * @param num
 	 */
-	public abstract void onInputNumber(Context context, Number num);
+	public abstract void onInputNumber(CalcContext context, Number num);
 
 	/**
 	 * 四則演算ボタン
@@ -15,68 +15,68 @@ public interface State {
 	 * @param context
 	 * @param op
 	 */
-	public abstract void onInputOperation(Context context, Operation op);
+	public abstract void onInputOperation(CalcContext context, Operation op);
 
 	/**
 	 * ＝ボタン
 	 *
 	 * @param context
 	 */
-	public abstract void onInputEquale(Context context);
+	public abstract void onInputEquale(CalcContext context);
 
 	/**
 	 * ％ボタン
 	 *
 	 * @param context
 	 */
-	public abstract void onInputPercent(Context context);
+	public abstract void onInputPercent(CalcContext context);
 
 	/**
 	 * M+ボタン
 	 *
 	 * @param context
 	 */
-	public abstract void onInputMemoryPlus(Context context);
+	public abstract void onInputMemoryPlus(CalcContext context);
 
 	/**
 	 * M-ボタン
 	 *
 	 * @param context
 	 */
-	public abstract void onInputMemoryMinus(Context context);
+	public abstract void onInputMemoryMinus(CalcContext context);
 
 	/**
 	 * CMボタン
 	 *
 	 * @param context
 	 */
-	public abstract void onInputClearMemory(Context context);
+	public abstract void onInputClearMemory(CalcContext context);
 
 	/**
 	 * RMボタン
 	 *
 	 * @param context
 	 */
-	public abstract void onInputReturnMemory(Context context);
+	public abstract void onInputReturnMemory(CalcContext context);
 
 	/**
 	 * BSボタン
 	 *
 	 * @param context
 	 */
-	public abstract void onInputBackspace(Context context);
+	public abstract void onInputBackspace(CalcContext context);
 
 	/**
 	 * クリアボタン
 	 *
 	 * @param context
 	 */
-	public abstract void onInputClear(Context context);
+	public abstract void onInputClear(CalcContext context);
 
 	/**
 	 * オールクリアボタン
 	 *
 	 * @param context
 	 */
-	public abstract void onInputAllClear(Context context);
+	public abstract void onInputAllClear(CalcContext context);
 }

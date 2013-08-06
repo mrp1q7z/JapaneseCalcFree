@@ -1,6 +1,6 @@
 package com.yojiokisoft.japanesecalc;
 
-public interface Context {
+public interface CalcContext {
 	// 状態遷移
 	public abstract void changeState(State state);
 	// 演算実行し結果をディスプレイに表示します

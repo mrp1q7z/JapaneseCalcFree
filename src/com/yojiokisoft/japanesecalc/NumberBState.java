@@ -13,12 +13,12 @@ public class NumberBState implements State {
 	}
 
 	@Override
-	public void onInputNumber(Context context, Number num) {
+	public void onInputNumber(CalcContext context, Number num) {
 		context.addDisplayNumber(num);
 	}
 
 	@Override
-	public void onInputOperation(Context context, Operation op) {
+	public void onInputOperation(CalcContext context, Operation op) {
 		try {
 			context.saveDisplayNumberToB();
 			context.doOperation();
@@ -32,7 +32,7 @@ public class NumberBState implements State {
 	}
 
 	@Override
-	public void onInputEquale(Context context) {
+	public void onInputEquale(CalcContext context) {
 		try {
 			context.saveDisplayNumberToB();
 			context.doOperation();
@@ -44,18 +44,18 @@ public class NumberBState implements State {
 	}
 
 	@Override
-	public void onInputBackspace(Context context) {
+	public void onInputBackspace(CalcContext context) {
 		context.backspace();
 	}
 
 	@Override
-	public void onInputClear(Context context) {
+	public void onInputClear(CalcContext context) {
 		context.clearB();
 		context.clearDisplay();
 	}
 
 	@Override
-	public void onInputAllClear(Context context) {
+	public void onInputAllClear(CalcContext context) {
 		context.clearA();
 		context.clearB();
 		context.clearDisplay();
@@ -63,7 +63,7 @@ public class NumberBState implements State {
 	}
 
 	@Override
-	public void onInputPercent(Context context) {
+	public void onInputPercent(CalcContext context) {
 		try {
 			context.saveDisplayNumberToB();
 			context.doPercent();
@@ -75,7 +75,7 @@ public class NumberBState implements State {
 	}
 
 	@Override
-	public void onInputMemoryPlus(Context context) {
+	public void onInputMemoryPlus(CalcContext context) {
 		try {
 			context.saveDisplayNumberToB();
 			context.doOperation();
@@ -88,7 +88,7 @@ public class NumberBState implements State {
 	}
 
 	@Override
-	public void onInputMemoryMinus(Context context) {
+	public void onInputMemoryMinus(CalcContext context) {
 		try {
 			context.saveDisplayNumberToB();
 			context.doOperation();
@@ -101,12 +101,12 @@ public class NumberBState implements State {
 	}
 
 	@Override
-	public void onInputClearMemory(Context context) {
+	public void onInputClearMemory(CalcContext context) {
 		context.clearMemory();
 	}
 
 	@Override
-	public void onInputReturnMemory(Context context) {
+	public void onInputReturnMemory(CalcContext context) {
 		context.returnMemory();
 	}
 }
