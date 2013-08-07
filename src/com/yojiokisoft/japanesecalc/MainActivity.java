@@ -18,6 +18,8 @@ public class MainActivity extends Activity {
 	private SoundPool mSound;
 	private int mSoundId;
 	private String mSoundName;
+	private String mSkinName;
+	private LinearLayout mButtonContainer;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,11 @@ public class MainActivity extends Activity {
 		ImageButton btnAllClear = (ImageButton) findViewById(R.id.allclear);
 		btnAllClear.setOnLongClickListener(mAllClearButtonClicked);
 
+		mButtonContainer = (LinearLayout) findViewById(R.id.buttonContainer);
+		mSkinName = SettingDao.getInstance().getSkin();
+		resId = MyResource.getResourceIdByName(mSkinName);
+		mButtonContainer.setBackgroundResource(resId);
+
 		LinearLayout displayContainer = (LinearLayout) findViewById(R.id.displayContainer);
 		calc.setDisplay(displayContainer, this);
 	}
@@ -47,22 +54,29 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		String newSoundName = SettingDao.getInstance().getClickSound();
-		if (mSoundName.equals(newSoundName)) {
-			return;
-		}
-		
-		if (mSoundId != 0) {
-			mSound.unload(mSoundId);
+		if (!mSoundName.equals(newSoundName)) {
+			if (mSoundId != 0) {
+				mSound.unload(mSoundId);
+			}
+
+			mSoundName = newSoundName;
+			int resId = MyResource.getResourceIdByName(mSoundName, "raw");
+			if (resId == 0) {
+				mSoundId = 0;
+			} else {
+				mSoundId = mSound.load(getApplicationContext(), resId, 0);
+			}
 		}
 
-		mSoundName = newSoundName;
-		int resId = MyResource.getResourceIdByName(mSoundName, "raw");
-		if (resId == 0) {
-			mSoundId = 0;
-		} else {
-			mSoundId = mSound.load(getApplicationContext(), resId, 0);
+		String newSkinName = SettingDao.getInstance().getSkin();
+		if (!mSkinName.equals(newSkinName)) {
+			mSkinName = newSkinName;
+			int resId = MyResource.getResourceIdByName(mSkinName);
+			if (resId != 0) {
+				mButtonContainer.setBackgroundResource(resId);
+			}
 		}
 	}
 
@@ -74,9 +88,15 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent;
 		switch (item.getItemId()) {
+		case R.id.set_skin:
+			intent = new Intent(getApplicationContext(), SkinActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+			return true;
 		case R.id.set_sound:
-			Intent intent = new Intent(getApplicationContext(), SoundActivity.class);
+			intent = new Intent(getApplicationContext(), SoundActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			return true;

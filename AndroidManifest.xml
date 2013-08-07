@@ -27,6 +27,10 @@
             android:name="com.yojiokisoft.japanesecalc.SoundActivity"
             android:label="@string/title_activity_sound" >
         </activity>
+        <activity
+            android:name="com.yojiokisoft.japanesecalc.SkinActivity"
+            android:label="@string/title_activity_skin" >
+        </activity>
     </application>
 
 </manifest>

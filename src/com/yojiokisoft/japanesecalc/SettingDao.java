@@ -65,4 +65,22 @@ public class SettingDao {
 	public boolean setClickSound(String resName) {
 		return mSharedPref.edit().putString("ClickSound", resName).commit();
 	}
+
+	/**
+	 * @return スキンのリソース名
+	 */
+	public String getSkin() {
+		String val = mSharedPref.getString("Skin", "bg_image_02");
+		return val;
+	}
+
+	/**
+	 * スキンのセット
+	 * 
+	 * @param resName スキンのリソース名
+	 * @return true=正常終了
+	 */
+	public boolean setSkin(String resName) {
+		return mSharedPref.edit().putString("Skin", resName).commit();
+	}
 }
