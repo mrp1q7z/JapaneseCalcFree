@@ -17,6 +17,7 @@ package com.yojiokisoft.japanesecalc;
 
 import java.util.List;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,7 +36,7 @@ public class SoundListAdapter extends ArrayAdapter<SoundEntity> {
 		RadioButton radioButton;
 	}
 
-	public SoundListAdapter(android.content.Context context, int resourceId, List<SoundEntity> list) {
+	public SoundListAdapter(Context context, int resourceId, List<SoundEntity> list) {
 		super(context, resourceId, list);
 
 		this.mItems = list;
@@ -56,8 +57,7 @@ public class SoundListAdapter extends ArrayAdapter<SoundEntity> {
 		ViewHolder viewHolder;
 
 		if (convertView == null) {
-			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
-					android.content.Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.row_sound, null);
 
 			viewHolder = new ViewHolder();

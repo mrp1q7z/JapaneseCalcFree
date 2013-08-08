@@ -1,5 +1,6 @@
 package com.yojiokisoft.japanesecalc;
 
+import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,7 +12,7 @@ public class Calc implements CalcContext {
 	private Operation op; // 電卓は演算子を持ちます
 	protected AbstractDisplay disp; // 電卓はディスプレイを持ちます
 	protected State state; // 電卓の状態を表すクラス
-	protected android.content.Context parent; // Toast表示用のcontext
+	protected Context parent; // Toast表示用のcontext
 
 	public Calc() {
 		A = 0d;
@@ -21,7 +22,7 @@ public class Calc implements CalcContext {
 		changeState(NumberAState.getInstance());
 	}
 
-	public void setDisplay(ViewGroup viewGroup, android.content.Context context) {
+	public void setDisplay(ViewGroup viewGroup, Context context) {
 		disp = new GraphicDisplay(viewGroup, context);
 	}
 
@@ -29,7 +30,7 @@ public class Calc implements CalcContext {
 		disp = new StringDisplay(txt, txtMemory, txtError);
 	}
 
-	public void setDisplay(TextView txt, TextView txtMemory, TextView txtError, android.content.Context parent) {
+	public void setDisplay(TextView txt, TextView txtMemory, TextView txtError, Context parent) {
 		this.disp = new StringDisplay(txt, txtMemory, txtError);
 		this.parent = parent;
 	}

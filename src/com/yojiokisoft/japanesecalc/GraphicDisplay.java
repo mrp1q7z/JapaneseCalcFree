@@ -1,5 +1,6 @@
 package com.yojiokisoft.japanesecalc;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class GraphicDisplay extends AbstractDisplay {
 	private ImageView mUnitSen;
 	private int[] mNumResId = new int[10];
 
-	public GraphicDisplay(ViewGroup viewGroup, android.content.Context context) {
+	public GraphicDisplay(ViewGroup viewGroup, Context context) {
 		mDisplayContainer = viewGroup;
 		FrameLayout frameLayout = new FrameLayout(context);
 		LinearLayout linearLayout = new LinearLayout(context);
