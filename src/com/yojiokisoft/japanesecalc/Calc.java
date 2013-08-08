@@ -22,8 +22,8 @@ public class Calc implements CalcContext {
 		changeState(NumberAState.getInstance());
 	}
 
-	public void setDisplay(ViewGroup viewGroup, Context context) {
-		disp = new GraphicDisplay(viewGroup, context);
+	public void setDisplay(ViewGroup viewGroup, Context context, int orientation) {
+		disp = new GraphicDisplay(viewGroup, context, orientation);
 	}
 
 	public void setDisplay(TextView txt, TextView txtMemory, TextView txtError) {

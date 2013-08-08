@@ -47,8 +47,9 @@ public class MainActivity extends Activity {
 		resId = MyResource.getResourceIdByName(mSkinName);
 		mButtonContainer.setBackgroundResource(resId);
 
+		int iOrientation = getResources().getConfiguration().orientation;
 		LinearLayout displayContainer = (LinearLayout) findViewById(R.id.displayContainer);
-		calc.setDisplay(displayContainer, this);
+		calc.setDisplay(displayContainer, this, iOrientation);
 	}
 
 	@Override

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/displayContainer"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <TableLayout
+            android:id="@+id/tableLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" >
+
+                <ImageButton
+                    android:id="@+id/returnMemory"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_mreturn" />
+
+                <ImageButton
+                    android:id="@+id/memoryPlus"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_mplus" />
+
+                <ImageButton
+                    android:id="@+id/memoryMinus"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_mminus" />
+
+                <ImageButton
+                    android:id="@+id/clearMemory"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_mclear" />
+
+                <ImageButton
+                    android:id="@+id/allclear"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_allclear" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" >
+
+                <ImageButton
+                    android:id="@+id/seven"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn7" />
+
+                <ImageButton
+                    android:id="@+id/eight"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn8" />
+
+                <ImageButton
+                    android:id="@+id/nine"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn9" />
+
+                <ImageButton
+                    android:id="@+id/divide"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_divide" />
+
+                <ImageButton
+                    android:id="@+id/clear"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_clear" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" >
+
+                <ImageButton
+                    android:id="@+id/four"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn4" />
+
+                <ImageButton
+                    android:id="@+id/five"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn5" />
+
+                <ImageButton
+                    android:id="@+id/six"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn6" />
+
+                <ImageButton
+                    android:id="@+id/times"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_times" />
+
+                <ImageButton
+                    android:id="@+id/sign"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_sign" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" >
+
+                <ImageButton
+                    android:id="@+id/one"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5px"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn1" />
+
+                <ImageButton
+                    android:id="@+id/two"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn2" />
+
+                <ImageButton
+                    android:id="@+id/three"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn3" />
+
+                <ImageButton
+                    android:id="@+id/minus"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_minus" />
+
+                <ImageButton
+                    android:id="@+id/percent"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_ritu" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" >
+
+                <ImageButton
+                    android:id="@+id/zero"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn0" />
+
+                <ImageButton
+                    android:id="@+id/doublezero"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_hyaku" />
+
+                <ImageButton
+                    android:id="@+id/comma"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_ten" />
+
+                <ImageButton
+                    android:id="@+id/plus"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_plus" />
+
+                <ImageButton
+                    android:id="@+id/equal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/btn_wa" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+</LinearLayout>

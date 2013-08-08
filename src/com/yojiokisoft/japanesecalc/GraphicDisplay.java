@@ -1,6 +1,7 @@
 package com.yojiokisoft.japanesecalc;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
 public class GraphicDisplay extends AbstractDisplay {
+	private int mOrientation;
 	private ViewGroup mDisplayContainer;
 	private ImageView[] mNum = new ImageView[DISPLAY_DIGIT + 1];
 	private ImageView mMemory;
@@ -20,7 +22,8 @@ public class GraphicDisplay extends AbstractDisplay {
 	private ImageView mUnitSen;
 	private int[] mNumResId = new int[10];
 
-	public GraphicDisplay(ViewGroup viewGroup, Context context) {
+	public GraphicDisplay(ViewGroup viewGroup, Context context, int orientation) {
+		mOrientation = orientation;
 		mDisplayContainer = viewGroup;
 		FrameLayout frameLayout = new FrameLayout(context);
 		LinearLayout linearLayout = new LinearLayout(context);
@@ -29,6 +32,9 @@ public class GraphicDisplay extends AbstractDisplay {
 		mMemory.setImageResource(R.drawable.memory);
 		mMemory.setVisibility(View.INVISIBLE);
 		linearLayout.addView(mMemory);
+		if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+			linearLayout.setOrientation(LinearLayout.VERTICAL);
+		}
 
 		for (int i = 0; i < mNumResId.length; i++) {
 			mNumResId[i] = MyResource.getResourceIdByName("num" + i);
@@ -37,9 +43,17 @@ public class GraphicDisplay extends AbstractDisplay {
 			mNum[i] = new ImageView(context);
 			mNum[i].setScaleType(ScaleType.FIT_XY);
 			if (i == DISPLAY_DIGIT) {
-				linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(20, 50));
+				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(37, 32));
+				} else {
+					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(20, 50));
+				}
 			} else {
-				linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(36, 50));
+				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(37, 32));
+				} else {
+					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(36, 50));
+				}
 			}
 		}
 
@@ -96,8 +110,13 @@ public class GraphicDisplay extends AbstractDisplay {
 				break;
 			case '.':
 				int left = mNum[index].getLeft() + mNum[index].getWidth();
-				int top = mNum[index].getBottom();
-				mTen.setPadding(left - 13, top - 2, 0, 0);
+				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+					int top = mNum[index].getHeight() * (sb.length() - index - 1);
+					mTen.setPadding(left - 5, top + 5, 0, 0);
+				} else {
+					int top = mNum[index].getBottom();
+					mTen.setPadding(left - 13, top - 2, 0, 0);
+				}
 				mTen.setVisibility(View.VISIBLE);
 				break;
 			default:
@@ -109,7 +128,11 @@ public class GraphicDisplay extends AbstractDisplay {
 			}
 		}
 		for (int i = index; i < DISPLAY_DIGIT + 1; i++) {
-			mNum[i].setVisibility(View.INVISIBLE);
+			if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+				mNum[i].setVisibility(View.GONE);
+			} else {
+				mNum[i].setVisibility(View.INVISIBLE);
+			}
 		}
 
 		ImageView[] unit = { mUnitOku, mUnitMan, mUnitSen };
@@ -120,7 +143,13 @@ public class GraphicDisplay extends AbstractDisplay {
 				unit[i].setVisibility(View.VISIBLE);
 				int left = mNum[keta[i] + decimalPlaces].getLeft() + mNum[keta[i] + decimalPlaces].getWidth();
 				int height = mNum[keta[i] + decimalPlaces].getHeight();
-				unit[i].setPadding(left - 13, height - 3, 0, 0);
+				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+					int minusFlag = (minus) ? 1 : 0;
+					int top = mNum[DISPLAY_DIGIT].getTop() + height * (ketaSu - keta[i] + minusFlag);
+					unit[i].setPadding(left - 5, top - 10, 0, 0);
+				} else {
+					unit[i].setPadding(left - 13, height - 3, 0, 0);
+				}
 			} else {
 				unit[i].setVisibility(View.INVISIBLE);
 			}
