@@ -42,11 +42,17 @@ public class SkinActivity extends Activity {
 			images[i] = new ImageView(this);
 			resId = MyResource.getResourceIdByName("s_" + items.get(i).resourceName);
 			images[i].setImageResource(resId);
-			images[i].setLayoutParams(new LayoutParams(80, 120));
+			images[i].setLayoutParams(new LayoutParams(80 + 10, 120));
+			images[i].setPadding(5, 0, 5, 0);
 			images[i].setTag(items.get(i).resourceName);
 			images[i].setOnClickListener(mImageClicked);
 			imageContainer.addView(images[i]);
 		}
+
+		String resName = SettingDao.getInstance().getSkin();
+		resId = MyResource.getResourceIdByName(resName);
+		mBigImage.setImageResource(resId);
+		mBigImage.setTag(resName);
 	}
 
 	private IScrollStateListener mImageScrolled = new IScrollStateListener() {
