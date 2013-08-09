@@ -3,6 +3,7 @@ package com.yojiokisoft.japanesecalc;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,14 +24,20 @@ public class SkinActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_skin);
 
-		CustomHorizontalScrollView scrollView = (CustomHorizontalScrollView) findViewById(R.id.horizontal_scrollview);
+		int orientation = getResources().getConfiguration().orientation;
+		if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			CustomScrollView scrollView = (CustomScrollView) findViewById(R.id.horizontal_scrollview);
+			scrollView.setScrollStateListener(mImageVScrolled);
+		} else {
+			CustomHorizontalScrollView scrollView = (CustomHorizontalScrollView) findViewById(R.id.horizontal_scrollview);
+			scrollView.setScrollStateListener(mImageHScrolled);
+		}
 		LinearLayout imageContainer = (LinearLayout) findViewById(R.id.image_container);
 		mLeftArrow = (ImageView) findViewById(R.id.left_arrow);
 		mRightArrow = (ImageView) findViewById(R.id.right_arrow);
 		mBigImage = (ImageView) findViewById(R.id.big_image);
 		Button useButton = (Button) findViewById(R.id.use_button);
 
-		scrollView.setScrollStateListener(mImageScrolled);
 		useButton.setOnClickListener(mUseButtonClicked);
 
 		BackImageDao backImageDao = new BackImageDao();
@@ -42,8 +49,13 @@ public class SkinActivity extends Activity {
 			images[i] = new ImageView(this);
 			resId = MyResource.getResourceIdByName("s_" + items.get(i).resourceName);
 			images[i].setImageResource(resId);
-			images[i].setLayoutParams(new LayoutParams(80 + 10, 120));
-			images[i].setPadding(5, 0, 5, 0);
+			if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+				images[i].setLayoutParams(new LayoutParams(120, 80 + 10));
+				images[i].setPadding(0, 5, 0, 5);
+			} else {
+				images[i].setLayoutParams(new LayoutParams(80 + 10, 120));
+				images[i].setPadding(5, 0, 5, 0);
+			}
 			images[i].setTag(items.get(i).resourceName);
 			images[i].setOnClickListener(mImageClicked);
 			imageContainer.addView(images[i]);
@@ -55,7 +67,7 @@ public class SkinActivity extends Activity {
 		mBigImage.setTag(resName);
 	}
 
-	private IScrollStateListener mImageScrolled = new IScrollStateListener() {
+	private IScrollStateListener mImageHScrolled = new IScrollStateListener() {
 		public void onScrollMostRight() {
 			mRightArrow.setVisibility(View.INVISIBLE);
 		}
@@ -69,6 +81,24 @@ public class SkinActivity extends Activity {
 		}
 
 		public void onScrollFromMostRight() {
+			mRightArrow.setVisibility(View.VISIBLE);
+		}
+	};
+
+	private CustomScrollView.IScrollStateListener mImageVScrolled = new CustomScrollView.IScrollStateListener() {
+		public void onScrollMostBottom() {
+			mRightArrow.setVisibility(View.INVISIBLE);
+		}
+
+		public void onScrollMostTop() {
+			mLeftArrow.setVisibility(View.INVISIBLE);
+		}
+
+		public void onScrollFromMostTop() {
+			mLeftArrow.setVisibility(View.VISIBLE);
+		}
+
+		public void onScrollFromMostBottom() {
 			mRightArrow.setVisibility(View.VISIBLE);
 		}
 	};
