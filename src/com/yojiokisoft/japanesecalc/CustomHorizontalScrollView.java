@@ -23,7 +23,9 @@ public class CustomHorizontalScrollView extends HorizontalScrollView {
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		super.onLayout(changed, l, t, r, b);
-		prepare();
+		if (changed) {
+			prepare();
+		}
 	}
 
 	private void prepare() {
