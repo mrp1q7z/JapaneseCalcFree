@@ -7,7 +7,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -36,7 +36,7 @@ public class SkinActivity extends Activity {
 		mLeftArrow = (ImageView) findViewById(R.id.left_arrow);
 		mRightArrow = (ImageView) findViewById(R.id.right_arrow);
 		mBigImage = (ImageView) findViewById(R.id.big_image);
-		Button useButton = (Button) findViewById(R.id.use_button);
+		ImageButton useButton = (ImageButton) findViewById(R.id.use_button);
 
 		useButton.setOnClickListener(mUseButtonClicked);
 
