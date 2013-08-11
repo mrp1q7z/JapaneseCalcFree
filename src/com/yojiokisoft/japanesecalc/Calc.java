@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Calc implements CalcContext {
+	private boolean mIsError; // エラー状態かどうか
 	private double A; // 電卓はメモリＡを持ちます
 	private double B; // 電卓はメモリＢを持ちます
 	private double M; // 電卓はメモリＭを持ちます
@@ -26,6 +27,7 @@ public class Calc implements CalcContext {
 		sb.append("," + mDisp.getNumber()); // 3
 		sb.append("," + ((mOp == null) ? "null" : mOp.toString())); // 4
 		sb.append("," + ((mState == null) ? "null" : mState.getClass().getName())); // 5
+		sb.append("," + mIsError); // 6
 
 		return sb.toString();
 	}
@@ -51,30 +53,41 @@ public class Calc implements CalcContext {
 			}
 		}
 
-		if (stateArray[5].equals("null")) {
-			return;
-		}
-		try {
-			Class clazz = Class.forName(stateArray[5]);
-			if (clazz != null) {
-				Method factoryMethod = clazz.getDeclaredMethod("getInstance");
-				mState = (State) factoryMethod.invoke(null, null);
+		if (!stateArray[5].equals("null")) {
+			try {
+				Class clazz = Class.forName(stateArray[5]);
+				if (clazz != null) {
+					Method factoryMethod = clazz.getDeclaredMethod("getInstance");
+					mState = (State) factoryMethod.invoke(null, null);
+				}
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+		
+		mIsError = (stateArray[6].equals("true") ? true : false);
+		if (mIsError) {
+			mState = ErrorState.getInctance();
+			setError();
+		}
+		
+		// test
+		String s = getInstanceState();
+		if (!s.equals(state)) {
+			throw new RuntimeException("状態が復元できませんでした");
 		}
 	}
 
@@ -280,11 +293,13 @@ public class Calc implements CalcContext {
 			Toast.makeText(mContext, "Error", Toast.LENGTH_LONG).show();
 		}
 		mDisp.setError();
+		mIsError = true;
 	}
 
 	@Override
 	public void clearError() {
 		mDisp.clearError();
+		mIsError = false;
 	}
 
 	@Override
