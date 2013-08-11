@@ -105,6 +105,24 @@ public class MainActivity extends Activity {
 		return false;
 	}
 
+	/** アクティビティがデータを一時保存する時に呼ばれます。 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		String state = calc.getInstanceState();
+		outState.putString("SAVE_NUMBER", state);
+	}
+
+	/** アクティビティが一時保存されたデータを読み込む時に呼ばれます。 */
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+
+		String state = savedInstanceState.getString("SAVE_NUMBER");
+		calc.restoreInstanceState(state);
+	}
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

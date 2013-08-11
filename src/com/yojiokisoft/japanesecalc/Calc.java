@@ -1,5 +1,8 @@
 package com.yojiokisoft.japanesecalc;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -9,91 +12,156 @@ public class Calc implements CalcContext {
 	private double A; // 電卓はメモリＡを持ちます
 	private double B; // 電卓はメモリＢを持ちます
 	private double M; // 電卓はメモリＭを持ちます
-	private Operation op; // 電卓は演算子を持ちます
-	protected AbstractDisplay disp; // 電卓はディスプレイを持ちます
-	protected State state; // 電卓の状態を表すクラス
-	protected Context parent; // Toast表示用のcontext
+	private Operation mOp; // 電卓は演算子を持ちます
+	protected AbstractDisplay mDisp; // 電卓はディスプレイを持ちます
+	protected State mState; // 電卓の状態を表すクラス
+	protected Context mContext; // Toast表示用のcontext
+
+	public String getInstanceState() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(String.valueOf(A)); // 0
+		sb.append("," + String.valueOf(B)); // 1
+		sb.append("," + String.valueOf(M)); // 2
+		sb.append("," + mDisp.getNumber()); // 3
+		sb.append("," + ((mOp == null) ? "null" : mOp.toString())); // 4
+		sb.append("," + ((mState == null) ? "null" : mState.getClass().getName())); // 5
+
+		return sb.toString();
+	}
+
+	public void restoreInstanceState(String state) {
+		String[] stateArray = state.split(",");
+		A = Double.parseDouble(stateArray[0]);
+		B = Double.parseDouble(stateArray[1]);
+		M = Double.parseDouble(stateArray[2]);
+		mDisp.setNumber(Double.parseDouble(stateArray[3]));
+		mDisp.showDisplay(false);
+		mDisp.setMemory(M);
+
+		if (!stateArray[4].equals("null")) {
+			if (stateArray[4].equals("PLUS")) {
+				mOp = Operation.PLUS;
+			} else if (stateArray[4].equals("MINUS")) {
+				mOp = Operation.MINUS;
+			} else if (stateArray[4].equals("TIMES")) {
+				mOp = Operation.TIMES;
+			} else if (stateArray[4].equals("DIVIDE")) {
+				mOp = Operation.DIVIDE;
+			}
+		}
+
+		if (stateArray[5].equals("null")) {
+			return;
+		}
+		try {
+			Class clazz = Class.forName(stateArray[5]);
+			if (clazz != null) {
+				Method factoryMethod = clazz.getDeclaredMethod("getInstance");
+				mState = (State) factoryMethod.invoke(null, null);
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public Calc() {
 		A = 0d;
 		B = 0d;
 		M = 0d;
-		op = null;
+		mOp = null;
 		changeState(NumberAState.getInstance());
 	}
 
 	public void setDisplay(ViewGroup viewGroup, Context context, int orientation) {
-		disp = new GraphicDisplay(viewGroup, context, orientation);
+		if (mDisp != null) {
+			mDisp = null;
+		}
+		mDisp = new GraphicDisplay(viewGroup, context, orientation);
+		mContext = context;
 	}
 
 	public void setDisplay(TextView txt, TextView txtMemory, TextView txtError) {
-		disp = new StringDisplay(txt, txtMemory, txtError);
+		mDisp = new StringDisplay(txt, txtMemory, txtError);
 	}
 
 	public void setDisplay(TextView txt, TextView txtMemory, TextView txtError, Context parent) {
-		this.disp = new StringDisplay(txt, txtMemory, txtError);
-		this.parent = parent;
+		this.mDisp = new StringDisplay(txt, txtMemory, txtError);
+		this.mContext = parent;
 	}
 
 	public void onButtonNumber(Number num) {
-		state.onInputNumber(this, num);
+		mState.onInputNumber(this, num);
 	}
 
 	public void onButtonOp(Operation op) {
-		state.onInputOperation(this, op);
+		mState.onInputOperation(this, op);
 	}
 
 	public void onButtonBackspace() {
-		state.onInputBackspace(this);
+		mState.onInputBackspace(this);
 	}
 
 	public void onButtonClear() {
-		state.onInputClear(this);
+		mState.onInputClear(this);
 	}
 
 	public void onButtonAllClear() {
-		state.onInputAllClear(this);
+		mState.onInputAllClear(this);
 	}
 
 	public void onButtonEquale() {
-		state.onInputEquale(this);
+		mState.onInputEquale(this);
 	}
 
 	public void onButtonPercent() {
-		state.onInputPercent(this);
+		mState.onInputPercent(this);
 	}
 
 	public void onButtonMemoryPlus() {
-		state.onInputMemoryPlus(this);
+		mState.onInputMemoryPlus(this);
 	}
 
 	public void onButtonMemoryMinus() {
-		state.onInputMemoryMinus(this);
+		mState.onInputMemoryMinus(this);
 	}
 
 	public void onButtonClearMemory() {
-		state.onInputClearMemory(this);
+		mState.onInputClearMemory(this);
 	}
 
 	public void onButtonReturnMemory() {
-		state.onInputReturnMemory(this);
+		mState.onInputReturnMemory(this);
 	}
 
 	@Override
 	public void changeState(State newState) {
-		state = newState;
+		mState = newState;
 	}
 
 	@Override
 	public double doOperation() throws CalcException {
-		double result = op.eval(A, B);
+		double result = mOp.eval(A, B);
 		// Double の場合ゼロ割でエラーが発生しないので注意
 		if (Double.isInfinite(result) || Double.isNaN(result)) {
 			throw new CalcException();
 		}
 		showDisplay(result);
 		// 演算結果がディスプレイからはみ出さないか
-		if (disp.isOverflow(result)) {
+		if (mDisp.isOverflow(result)) {
 			throw new CalcException();
 		}
 		return result;
@@ -102,11 +170,11 @@ public class Calc implements CalcContext {
 	@Override
 	public double doPercent() throws CalcException {
 		double result;
-		if (op == Operation.PLUS) {
+		if (mOp == Operation.PLUS) {
 			result = A + (A * B / 100);
-		} else if (op == Operation.MINUS) {
+		} else if (mOp == Operation.MINUS) {
 			result = A - (A * B / 100);
-		} else if (op == Operation.TIMES) {
+		} else if (mOp == Operation.TIMES) {
 			result = A * B / 100;
 		} else {
 			result = A / B * 100;
@@ -117,7 +185,7 @@ public class Calc implements CalcContext {
 		}
 		showDisplay(result);
 		// 演算結果がディスプレイからはみ出さないか
-		if (disp.isOverflow(result)) {
+		if (mDisp.isOverflow(result)) {
 			throw new CalcException();
 		}
 		return result;
@@ -125,44 +193,44 @@ public class Calc implements CalcContext {
 
 	@Override
 	public void showDisplay() {
-		disp.showDisplay(true);
+		mDisp.showDisplay(true);
 	}
 
 	@Override
 	public void showDisplay(double d) {
-		disp.setNumber(d);
-		disp.showDisplay(true);
+		mDisp.setNumber(d);
+		mDisp.showDisplay(true);
 	}
 
 	@Override
 	public void addDisplayNumber(Number num) {
 		if (num == Number.ZERO || num == Number.DOUBLE_ZERO) {
-			if (disp.displayChar.size() == 0 && !disp.commaMode) {
-				disp.showDisplay(false);
+			if (mDisp.displayChar.size() == 0 && !mDisp.commaMode) {
+				mDisp.showDisplay(false);
 				return;
 			}
 		}
-		if (num == Number.COMMA && !disp.commaMode && disp.displayChar.size() == 0) {
-			disp.onInputNumber(Number.ZERO);
+		if (num == Number.COMMA && !mDisp.commaMode && mDisp.displayChar.size() == 0) {
+			mDisp.onInputNumber(Number.ZERO);
 		}
-		disp.onInputNumber(num);
-		disp.showDisplay(false);
+		mDisp.onInputNumber(num);
+		mDisp.showDisplay(false);
 	}
 
 	@Override
 	public void saveDisplayNumberToA() {
-		A = disp.getNumber();
+		A = mDisp.getNumber();
 	}
 
 	@Override
 	public void saveDisplayNumberToB() {
-		B = disp.getNumber();
+		B = mDisp.getNumber();
 	}
 
 	@Override
 	public void backspace() {
-		disp.onInputBackspace();
-		disp.showDisplay(false);
+		mDisp.onInputBackspace();
+		mDisp.showDisplay(false);
 	}
 
 	@Override
@@ -177,18 +245,18 @@ public class Calc implements CalcContext {
 
 	@Override
 	public Operation getOp() {
-		return op;
+		return mOp;
 	}
 
 	@Override
 	public void setOp(Operation newOp) {
-		op = newOp;
+		mOp = newOp;
 	}
 
 	@Override
 	public void clearDisplay() {
-		disp.clear();
-		disp.showDisplay(false);
+		mDisp.clear();
+		mDisp.showDisplay(false);
 	}
 
 	@Override
@@ -208,46 +276,46 @@ public class Calc implements CalcContext {
 
 	@Override
 	public void setError() {
-		if (parent != null) {
-			Toast.makeText(parent, "Error", Toast.LENGTH_LONG).show();
+		if (mContext != null) {
+			Toast.makeText(mContext, "Error", Toast.LENGTH_LONG).show();
 		}
-		disp.setError();
+		mDisp.setError();
 	}
 
 	@Override
 	public void clearError() {
-		disp.clearError();
+		mDisp.clearError();
 	}
 
 	@Override
 	public void changeSign() {
-		if (disp.getNumber() != 0d) {
-			disp.minus = !disp.minus;
-			disp.showDisplay(false);
+		if (mDisp.getNumber() != 0d) {
+			mDisp.minus = !mDisp.minus;
+			mDisp.showDisplay(false);
 		}
 	}
 
 	@Override
 	public void memoryPlus() {
-		M += disp.getNumber();
-		disp.setMemory(M);
+		M += mDisp.getNumber();
+		mDisp.setMemory(M);
 	}
 
 	@Override
 	public void memoryMinus() {
-		M -= disp.getNumber();
-		disp.setMemory(M);
+		M -= mDisp.getNumber();
+		mDisp.setMemory(M);
 	}
 
 	@Override
 	public void clearMemory() {
 		M = 0;
-		disp.setMemory(M);
+		mDisp.setMemory(M);
 	}
 
 	@Override
 	public void returnMemory() {
-		disp.setNumber(M);
-		disp.showDisplay(true);
+		mDisp.setNumber(M);
+		mDisp.showDisplay(true);
 	}
 }
