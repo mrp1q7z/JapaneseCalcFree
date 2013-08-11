@@ -7,7 +7,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -18,6 +18,8 @@ public class SkinActivity extends Activity {
 	private ImageView mLeftArrow;
 	private ImageView mRightArrow;
 	private ImageView mBigImage;
+	private Button mUseButton;
+	private String mSkinResName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +38,9 @@ public class SkinActivity extends Activity {
 		mLeftArrow = (ImageView) findViewById(R.id.left_arrow);
 		mRightArrow = (ImageView) findViewById(R.id.right_arrow);
 		mBigImage = (ImageView) findViewById(R.id.big_image);
-		ImageButton useButton = (ImageButton) findViewById(R.id.use_button);
+		mUseButton = (Button) findViewById(R.id.use_button);
 
-		useButton.setOnClickListener(mUseButtonClicked);
+		mUseButton.setOnClickListener(mUseButtonClicked);
 
 		BackImageDao backImageDao = new BackImageDao();
 		List<BackImageEntity> items = backImageDao.queryForAll();
@@ -61,10 +63,11 @@ public class SkinActivity extends Activity {
 			imageContainer.addView(images[i]);
 		}
 
-		String resName = SettingDao.getInstance().getSkin();
-		resId = MyResource.getResourceIdByName(resName);
+		mSkinResName = SettingDao.getInstance().getSkin();
+		resId = MyResource.getResourceIdByName(mSkinResName);
 		mBigImage.setImageResource(resId);
-		mBigImage.setTag(resName);
+		mBigImage.setTag(mSkinResName);
+		setUseButtonText(mSkinResName);
 	}
 
 	private IScrollStateListener mImageHScrolled = new IScrollStateListener() {
@@ -110,13 +113,27 @@ public class SkinActivity extends Activity {
 			int resId = MyResource.getResourceIdByName(resName);
 			mBigImage.setImageResource(resId);
 			mBigImage.setTag(resName);
+			setUseButtonText(resName);
 		}
 	};
+
+	private void setUseButtonText(String resName) {
+		if (mSkinResName.equals(resName)) {
+			mUseButton.setText("使用中");
+			mUseButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.star_big_on, 0, 0, 0);
+		} else {
+			mUseButton.setText(getString(R.string.use_this));
+			mUseButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.star_big_off, 0, 0, 0);
+		}
+	}
 
 	private OnClickListener mUseButtonClicked = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			String resName = (String) mBigImage.getTag();
+			if (mSkinResName.equals(resName)) {
+				return;
+			}
 			SettingDao.getInstance().setSkin(resName);
 			finish();
 		}
