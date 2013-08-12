@@ -347,6 +347,7 @@ public class GraphicDisplay extends AbstractDisplay {
 
 	@Override
 	public void setError() {
+		clear();
 		mDisplayContainer.setBackgroundColor(Color.BLACK);
 		mError.setVisibility(View.VISIBLE);
 	}
