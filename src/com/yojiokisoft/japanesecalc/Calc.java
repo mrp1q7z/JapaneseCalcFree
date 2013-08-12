@@ -2,17 +2,17 @@ package com.yojiokisoft.japanesecalc;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 
 import android.content.Context;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Calc implements CalcContext {
 	private boolean mIsError; // エラー状態かどうか
-	private double A; // 電卓はメモリＡを持ちます
-	private double B; // 電卓はメモリＢを持ちます
-	private double M; // 電卓はメモリＭを持ちます
+	private BigDecimal A; // 電卓はメモリＡを持ちます
+	private BigDecimal B; // 電卓はメモリＢを持ちます
+	private BigDecimal M; // 電卓はメモリＭを持ちます
 	private Operation mOp; // 電卓は演算子を持ちます
 	protected AbstractDisplay mDisp; // 電卓はディスプレイを持ちます
 	protected State mState; // 電卓の状態を表すクラス
@@ -34,12 +34,12 @@ public class Calc implements CalcContext {
 
 	public void restoreInstanceState(String state) {
 		String[] stateArray = state.split(",");
-		A = Double.parseDouble(stateArray[0]);
-		B = Double.parseDouble(stateArray[1]);
-		M = Double.parseDouble(stateArray[2]);
-		mDisp.setNumber(Double.parseDouble(stateArray[3]));
+		A = new BigDecimal(stateArray[0]);
+		B = new BigDecimal(stateArray[1]);
+		M = new BigDecimal(stateArray[2]);
+		mDisp.setNumber(new BigDecimal(stateArray[3]));
 		mDisp.showDisplay(false);
-		mDisp.setMemory(M);
+		mDisp.setMemory(M.doubleValue());
 
 		if (!stateArray[4].equals("null")) {
 			if (stateArray[4].equals("PLUS")) {
@@ -77,13 +77,13 @@ public class Calc implements CalcContext {
 				e.printStackTrace();
 			}
 		}
-		
+
 		mIsError = (stateArray[6].equals("true") ? true : false);
 		if (mIsError) {
 			mState = ErrorState.getInctance();
 			setError();
 		}
-		
+
 		// test
 		String s = getInstanceState();
 		if (!s.equals(state)) {
@@ -92,9 +92,9 @@ public class Calc implements CalcContext {
 	}
 
 	public Calc() {
-		A = 0d;
-		B = 0d;
-		M = 0d;
+		A = new BigDecimal("0");
+		B = new BigDecimal("0");
+		M = new BigDecimal("0");
 		mOp = null;
 		changeState(NumberAState.getInstance());
 	}
@@ -105,15 +105,6 @@ public class Calc implements CalcContext {
 		}
 		mDisp = new GraphicDisplay(viewGroup, context, orientation);
 		mContext = context;
-	}
-
-	public void setDisplay(TextView txt, TextView txtMemory, TextView txtError) {
-		mDisp = new StringDisplay(txt, txtMemory, txtError);
-	}
-
-	public void setDisplay(TextView txt, TextView txtMemory, TextView txtError, Context parent) {
-		this.mDisp = new StringDisplay(txt, txtMemory, txtError);
-		this.mContext = parent;
 	}
 
 	public void onButtonNumber(Number num) {
@@ -166,12 +157,12 @@ public class Calc implements CalcContext {
 	}
 
 	@Override
-	public double doOperation() throws CalcException {
-		double result = mOp.eval(A, B);
+	public BigDecimal doOperation() throws CalcException {
+		BigDecimal result = mOp.eval(A, B);
 		// Double の場合ゼロ割でエラーが発生しないので注意
-		if (Double.isInfinite(result) || Double.isNaN(result)) {
-			throw new CalcException();
-		}
+		//		if (Double.isInfinite(result) || Double.isNaN(result)) {
+		//			throw new CalcException();
+		//		}
 		showDisplay(result);
 		// 演算結果がディスプレイからはみ出さないか
 		if (mDisp.isOverflow(result)) {
@@ -181,21 +172,22 @@ public class Calc implements CalcContext {
 	}
 
 	@Override
-	public double doPercent() throws CalcException {
-		double result;
+	public BigDecimal doPercent() throws CalcException {
+		BigDecimal hyaku = new BigDecimal("100");
+		BigDecimal result;
 		if (mOp == Operation.PLUS) {
-			result = A + (A * B / 100);
+			result = A.add((A.multiply(B).divide(hyaku)));
 		} else if (mOp == Operation.MINUS) {
-			result = A - (A * B / 100);
+			result = A.subtract((A.multiply(B).divide(hyaku)));
 		} else if (mOp == Operation.TIMES) {
-			result = A * B / 100;
+			result = A.multiply(B).divide(hyaku);
 		} else {
-			result = A / B * 100;
+			result = A.divide(B).multiply(hyaku);
 		}
 		// Double の場合ゼロ割でエラーが発生しないので注意
-		if (Double.isInfinite(result) || Double.isNaN(result)) {
-			throw new CalcException();
-		}
+		//		if (Double.isInfinite(result) || Double.isNaN(result)) {
+		//			throw new CalcException();
+		//		}
 		showDisplay(result);
 		// 演算結果がディスプレイからはみ出さないか
 		if (mDisp.isOverflow(result)) {
@@ -210,7 +202,7 @@ public class Calc implements CalcContext {
 	}
 
 	@Override
-	public void showDisplay(double d) {
+	public void showDisplay(BigDecimal d) {
 		mDisp.setNumber(d);
 		mDisp.showDisplay(true);
 	}
@@ -248,12 +240,12 @@ public class Calc implements CalcContext {
 
 	@Override
 	public void clearA() {
-		A = 0d;
+		A = new BigDecimal("0");
 	}
 
 	@Override
 	public void clearB() {
-		B = 0d;
+		B = new BigDecimal("0");
 	}
 
 	@Override
@@ -278,12 +270,12 @@ public class Calc implements CalcContext {
 	}
 
 	@Override
-	public double getA() {
+	public BigDecimal getA() {
 		return A;
 	}
 
 	@Override
-	public double getB() {
+	public BigDecimal getB() {
 		return B;
 	}
 
@@ -304,7 +296,7 @@ public class Calc implements CalcContext {
 
 	@Override
 	public void changeSign() {
-		if (mDisp.getNumber() != 0d) {
+		if (!mDisp.getNumber().equals(new BigDecimal("0"))) {
 			mDisp.minus = !mDisp.minus;
 			mDisp.showDisplay(false);
 		}
@@ -312,20 +304,23 @@ public class Calc implements CalcContext {
 
 	@Override
 	public void memoryPlus() {
-		M += mDisp.getNumber();
-		mDisp.setMemory(M);
+		M = M.add(mDisp.getNumber());
+		mDisp.setMemory(M.doubleValue());
 	}
 
 	@Override
 	public void memoryMinus() {
-		M -= mDisp.getNumber();
-		mDisp.setMemory(M);
+		M = M.subtract(mDisp.getNumber());
+		mDisp.setMemory(M.doubleValue());
 	}
 
 	@Override
 	public void clearMemory() {
-		M = 0;
-		mDisp.setMemory(M);
+		if (M != null) {
+			M = null;
+		}
+		M = new BigDecimal("0");
+		mDisp.setMemory(M.doubleValue());
 	}
 
 	@Override

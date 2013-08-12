@@ -1,5 +1,7 @@
 package com.yojiokisoft.japanesecalc;
 
+import java.math.BigDecimal;
+
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -51,7 +53,8 @@ public class GraphicDisplay extends AbstractDisplay {
 				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
 					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(CHAR_WIDTH_LAND, CHAR_HEIGHT_LAND));
 				} else {
-					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams((int)(CHAR_WIDTH_PORT * 0.56), CHAR_HEIGHT_PORT));
+					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams((int) (CHAR_WIDTH_PORT * 0.56),
+							CHAR_HEIGHT_PORT));
 				}
 			} else {
 				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -294,6 +297,7 @@ public class GraphicDisplay extends AbstractDisplay {
 
 	@Override
 	public void clear() {
+		mDisplayNumber = null;
 		commaMode = false;
 		decimalPlaces = 0;
 		minus = false;
@@ -306,7 +310,13 @@ public class GraphicDisplay extends AbstractDisplay {
 	}
 
 	@Override
-	public double getNumber() {
+	public BigDecimal getNumber() {
+		if (mDisplayNumber != null) {
+			BigDecimal ret = mDisplayNumber;
+			mDisplayNumber = null;
+			return ret;
+		}
+
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < displayChar.size(); i++) {
 			String str = displayChar.get(i);
@@ -322,27 +332,28 @@ public class GraphicDisplay extends AbstractDisplay {
 		}
 
 		try {
-			return Double.parseDouble(sb.toString());
+			return new BigDecimal(sb.toString());
 		} catch (Exception e) {
-			return 0d;
+			return new BigDecimal("0");
 		}
 	}
 
 	@Override
-	public void setNumber(double d) {
+	public void setNumber(BigDecimal d) {
 		this.clear();
 		StringBuffer formatStr = new StringBuffer();
 		formatStr.append("%.");
 		formatStr.append(String.valueOf(DISPLAY_DIGIT));
 		formatStr.append("f");
-		String d2 = String.format(formatStr.toString(), Math.abs(d));
+		String d2 = String.format(formatStr.toString(), d.abs().doubleValue());
 		// 数値を文字列かしてスタックに追加
 		StringBuffer sb = new StringBuffer(d2);
-		if (d < 0) {
+		if (d.compareTo(new BigDecimal("0")) < 0) {
 			sb.insert(0, "-");
 		}
 		StringBuffer sbOmitZero = omitDecimalZero(sb);
 		string2Stack(sbOmitZero);
+		mDisplayNumber = d;
 	}
 
 	@Override

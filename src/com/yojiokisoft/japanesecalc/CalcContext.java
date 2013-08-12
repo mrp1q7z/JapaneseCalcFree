@@ -1,16 +1,18 @@
 package com.yojiokisoft.japanesecalc;
 
+import java.math.BigDecimal;
+
 public interface CalcContext {
 	// 状態遷移
 	public abstract void changeState(State state);
 	// 演算実行し結果をディスプレイに表示します
-	public abstract double doOperation() throws CalcException;
+	public abstract BigDecimal doOperation() throws CalcException;
 	// パーセント演算を実行し結果をディスプレイに表示します
-	public abstract double doPercent() throws CalcException;
+	public abstract BigDecimal doPercent() throws CalcException;
 	// ディスプレイ表示を更新します
 	void showDisplay();
 	// ディスプレイ表示を引数の値で更新します
-	public abstract void showDisplay(double d);
+	public abstract void showDisplay(BigDecimal d);
 	// ディスプレイ表示に数値を追加します
 	public abstract void addDisplayNumber(Number num);
 	// ディスプレイ表示を変数Aに保存します
@@ -32,9 +34,9 @@ public interface CalcContext {
 	// メモリAからBへコピーします
 	public abstract void copyAtoB();
 	// メモリAを取得します
-	public abstract double getA();
+	public abstract BigDecimal getA();
 	// メモリBを取得します
-	public abstract double getB();
+	public abstract BigDecimal getB();
 	// エラー表示を設定します
 	public abstract void setError();
 	// エラー表示を解除します

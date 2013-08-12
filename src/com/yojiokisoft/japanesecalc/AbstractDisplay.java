@@ -1,5 +1,6 @@
 package com.yojiokisoft.japanesecalc;
 
+import java.math.BigDecimal;
 import java.util.Stack;
 
 public abstract class AbstractDisplay {
@@ -13,6 +14,8 @@ public abstract class AbstractDisplay {
 	protected int decimalPlaces;
 	// マイナス記号です
 	protected boolean minus;
+	// 内部保持用
+	protected BigDecimal mDisplayNumber;
 
 	// ディスプレイ表示を行います
 	public abstract void showDisplay(boolean format);
@@ -27,10 +30,10 @@ public abstract class AbstractDisplay {
 	public abstract void clear();
 
 	// ディスプレイの内容をダブル型で取得します
-	public abstract double getNumber();
+	public abstract BigDecimal getNumber();
 
 	// 引数の数字を文字列にしてディスプレイに設定します
-	public abstract void setNumber(double d);
+	public abstract void setNumber(BigDecimal d);
 
 	// M(メモリ)の有無をディスプレイに表示します
 	public abstract void setMemory(double d);
@@ -46,13 +49,13 @@ public abstract class AbstractDisplay {
 	 * @param d チェックしたい値
 	 * @return true=表示桁数を超える false=超えない
 	 */
-	public boolean isOverflow(double d) {
+	public boolean isOverflow(BigDecimal d) {
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < DISPLAY_DIGIT; i++) {
 			sb.append("9");
 		}
-		double max = Double.parseDouble(sb.toString());
-		if (d > max) {
+		BigDecimal max = new BigDecimal(sb.toString());
+		if (d.compareTo(max) > 0) {
 			return true;
 		}
 		return false;
