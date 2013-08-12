@@ -5,6 +5,8 @@ import java.util.List;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,7 +19,7 @@ import com.yojiokisoft.japanesecalc.CustomHorizontalScrollView.IScrollStateListe
 public class SkinActivity extends Activity {
 	private ImageView mLeftArrow;
 	private ImageView mRightArrow;
-	private ImageView mBigImage;
+	private ViewPager mPager;
 	private Button mUseButton;
 	private String mSkinResName;
 
@@ -25,6 +27,8 @@ public class SkinActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_skin);
+
+		mSkinResName = SettingDao.getInstance().getSkin();
 
 		int orientation = getResources().getConfiguration().orientation;
 		if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -37,7 +41,7 @@ public class SkinActivity extends Activity {
 		LinearLayout imageContainer = (LinearLayout) findViewById(R.id.image_container);
 		mLeftArrow = (ImageView) findViewById(R.id.left_arrow);
 		mRightArrow = (ImageView) findViewById(R.id.right_arrow);
-		mBigImage = (ImageView) findViewById(R.id.big_image);
+		mPager = (ViewPager) findViewById(R.id.pager);
 		mUseButton = (Button) findViewById(R.id.use_button);
 
 		mUseButton.setOnClickListener(mUseButtonClicked);
@@ -58,16 +62,15 @@ public class SkinActivity extends Activity {
 				images[i].setLayoutParams(new LayoutParams(80 + 10, 120));
 				images[i].setPadding(5, 0, 5, 0);
 			}
-			images[i].setTag(items.get(i).resourceName);
+			images[i].setTag(i);
 			images[i].setOnClickListener(mImageClicked);
 			imageContainer.addView(images[i]);
 		}
 
-		mSkinResName = SettingDao.getInstance().getSkin();
-		resId = MyResource.getResourceIdByName(mSkinResName);
-		mBigImage.setImageResource(resId);
-		mBigImage.setTag(mSkinResName);
-		setUseButtonText(mSkinResName);
+		SkinPagerAdapter adapter = new SkinPagerAdapter(this, items);
+		mPager.setAdapter(adapter);
+		mPager.setOnPageChangeListener(mPageChanged);
+		setUseButtonText(items.get(0).resourceName);
 	}
 
 	private IScrollStateListener mImageHScrolled = new IScrollStateListener() {
@@ -109,11 +112,27 @@ public class SkinActivity extends Activity {
 	private OnClickListener mImageClicked = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			String resName = (String) v.getTag();
-			int resId = MyResource.getResourceIdByName(resName);
-			mBigImage.setImageResource(resId);
-			mBigImage.setTag(resName);
-			setUseButtonText(resName);
+			int position = (Integer) v.getTag();
+			mPager.setCurrentItem(position);
+
+			BackImageEntity item = ((SkinPagerAdapter) mPager.getAdapter()).getSkin(position);
+			setUseButtonText(item.resourceName);
+		}
+	};
+
+	private OnPageChangeListener mPageChanged = new OnPageChangeListener() {
+		@Override
+		public void onPageSelected(int position) {
+			BackImageEntity item = ((SkinPagerAdapter) mPager.getAdapter()).getSkin(position);
+			setUseButtonText(item.resourceName);
+		}
+
+		@Override
+		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+		}
+
+		@Override
+		public void onPageScrollStateChanged(int state) {
 		}
 	};
 
@@ -130,11 +149,12 @@ public class SkinActivity extends Activity {
 	private OnClickListener mUseButtonClicked = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			String resName = (String) mBigImage.getTag();
-			if (mSkinResName.equals(resName)) {
+			int position = mPager.getCurrentItem();
+			BackImageEntity item = ((SkinPagerAdapter) mPager.getAdapter()).getSkin(position);
+			if (mSkinResName.equals(item.resourceName)) {
 				return;
 			}
-			SettingDao.getInstance().setSkin(resName);
+			SettingDao.getInstance().setSkin(item.resourceName);
 			finish();
 		}
 	};
