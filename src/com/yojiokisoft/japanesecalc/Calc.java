@@ -158,11 +158,12 @@ public class Calc implements CalcContext {
 
 	@Override
 	public BigDecimal doOperation() throws CalcException {
-		BigDecimal result = mOp.eval(A, B);
-		// Double の場合ゼロ割でエラーが発生しないので注意
-		//		if (Double.isInfinite(result) || Double.isNaN(result)) {
-		//			throw new CalcException();
-		//		}
+		BigDecimal result;
+		try {
+			result = mOp.eval(A, B);
+		} catch (ArithmeticException e) {
+			throw new CalcException();
+		}
 		showDisplay(result);
 		// 演算結果がディスプレイからはみ出さないか
 		if (mDisp.isOverflow(result)) {
@@ -175,19 +176,19 @@ public class Calc implements CalcContext {
 	public BigDecimal doPercent() throws CalcException {
 		BigDecimal hyaku = new BigDecimal("100");
 		BigDecimal result;
-		if (mOp == Operation.PLUS) {
-			result = A.add((A.multiply(B).divide(hyaku)));
-		} else if (mOp == Operation.MINUS) {
-			result = A.subtract((A.multiply(B).divide(hyaku)));
-		} else if (mOp == Operation.TIMES) {
-			result = A.multiply(B).divide(hyaku);
-		} else {
-			result = A.divide(B).multiply(hyaku);
+		try {
+			if (mOp == Operation.PLUS) {
+				result = A.add((A.multiply(B).divide(hyaku)));
+			} else if (mOp == Operation.MINUS) {
+				result = A.subtract((A.multiply(B).divide(hyaku)));
+			} else if (mOp == Operation.TIMES) {
+				result = A.multiply(B).divide(hyaku);
+			} else {
+				result = A.divide(B).multiply(hyaku);
+			}
+		} catch (ArithmeticException e) {
+			throw new CalcException();
 		}
-		// Double の場合ゼロ割でエラーが発生しないので注意
-		//		if (Double.isInfinite(result) || Double.isNaN(result)) {
-		//			throw new CalcException();
-		//		}
 		showDisplay(result);
 		// 演算結果がディスプレイからはみ出さないか
 		if (mDisp.isOverflow(result)) {
