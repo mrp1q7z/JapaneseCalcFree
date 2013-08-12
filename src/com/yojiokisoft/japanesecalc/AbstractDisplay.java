@@ -1,19 +1,37 @@
+/*
+ * Copyright (C) 2013 YojiokiSoft
+ * 
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.yojiokisoft.japanesecalc;
 
 import java.math.BigDecimal;
 import java.util.Stack;
 
+/**
+ * ディスプレイの抽象クラス
+ */
 public abstract class AbstractDisplay {
 	// 数値の桁数
-	protected final int DISPLAY_DIGIT = 12;
+	public static final int DISPLAY_DIGIT = 12;
 	// ディスプレイに表示される文字をスタックで保持
-	protected final Stack<String> displayChar = new Stack<String>();
+	protected final Stack<String> mDisplayChar = new Stack<String>();
 	// Trueの場合カンマ表示（小数点入力モード）であることを示す
-	protected boolean commaMode;
+	protected boolean mCommaMode;
 	// 小数点以下の桁数を保持します
-	protected int decimalPlaces;
+	protected int mDecimalPlaces;
 	// マイナス記号です
-	protected boolean minus;
+	protected boolean mMinus;
 	// 内部保持用
 	protected BigDecimal mDisplayNumber;
 
@@ -62,6 +80,6 @@ public abstract class AbstractDisplay {
 	}
 
 	public String toString() {
-		return displayChar.toString();
+		return mDisplayChar.toString();
 	}
 }

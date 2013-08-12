@@ -26,6 +26,9 @@ import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+/**
+ * クリック音のアダプター
+ */
 public class SoundListAdapter extends ArrayAdapter<SoundEntity> {
 
 	private List<SoundEntity> mItems = null;

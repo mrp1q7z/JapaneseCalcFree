@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2013 YojiokiSoft
+ * 
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.yojiokisoft.japanesecalc;
 
 import android.app.Activity;
@@ -13,8 +28,11 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+/**
+ * メインアクティビティ
+ */
 public class MainActivity extends Activity {
-	private Calc calc = new Calc();
+	private Calc mCalc = new Calc();
 	private SoundPool mSound;
 	private int mSoundId;
 	private String mSoundName;
@@ -49,7 +67,7 @@ public class MainActivity extends Activity {
 
 		int iOrientation = getResources().getConfiguration().orientation;
 		LinearLayout displayContainer = (LinearLayout) findViewById(R.id.displayContainer);
-		calc.setDisplay(displayContainer, this, iOrientation);
+		mCalc.setDisplay(displayContainer, this, iOrientation);
 	}
 
 	@Override
@@ -110,7 +128,7 @@ public class MainActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		String state = calc.getInstanceState();
+		String state = mCalc.getInstanceState();
 		outState.putString("SAVE_NUMBER", state);
 	}
 
@@ -120,7 +138,7 @@ public class MainActivity extends Activity {
 		super.onRestoreInstanceState(savedInstanceState);
 
 		String state = savedInstanceState.getString("SAVE_NUMBER");
-		calc.restoreInstanceState(state);
+		mCalc.restoreInstanceState(state);
 	}
 
 	@Override
@@ -132,7 +150,7 @@ public class MainActivity extends Activity {
 	private OnLongClickListener mClearButtonClicked = new OnLongClickListener() {
 		@Override
 		public boolean onLongClick(View v) {
-			calc.onButtonClear();
+			mCalc.onButtonClear();
 			return false;
 		}
 	};
@@ -140,8 +158,8 @@ public class MainActivity extends Activity {
 	private OnLongClickListener mAllClearButtonClicked = new OnLongClickListener() {
 		@Override
 		public boolean onLongClick(View v) {
-			calc.onButtonClearMemory();
-			calc.onButtonAllClear();
+			mCalc.onButtonClearMemory();
+			mCalc.onButtonAllClear();
 			return false;
 		}
 	};
@@ -154,79 +172,79 @@ public class MainActivity extends Activity {
 
 		switch (view.getId()) {
 		case R.id.zero:
-			calc.onButtonNumber(Number.ZERO);
+			mCalc.onButtonNumber(Number.ZERO);
 			break;
 		case R.id.doublezero:
-			calc.onButtonNumber(Number.DOUBLE_ZERO);
+			mCalc.onButtonNumber(Number.DOUBLE_ZERO);
 			break;
 		case R.id.one:
-			calc.onButtonNumber(Number.ONE);
+			mCalc.onButtonNumber(Number.ONE);
 			break;
 		case R.id.two:
-			calc.onButtonNumber(Number.TWO);
+			mCalc.onButtonNumber(Number.TWO);
 			break;
 		case R.id.three:
-			calc.onButtonNumber(Number.TREE);
+			mCalc.onButtonNumber(Number.TREE);
 			break;
 		case R.id.four:
-			calc.onButtonNumber(Number.FORE);
+			mCalc.onButtonNumber(Number.FORE);
 			break;
 		case R.id.five:
-			calc.onButtonNumber(Number.FIVE);
+			mCalc.onButtonNumber(Number.FIVE);
 			break;
 		case R.id.six:
-			calc.onButtonNumber(Number.SIX);
+			mCalc.onButtonNumber(Number.SIX);
 			break;
 		case R.id.seven:
-			calc.onButtonNumber(Number.SEVEN);
+			mCalc.onButtonNumber(Number.SEVEN);
 			break;
 		case R.id.eight:
-			calc.onButtonNumber(Number.EIGHT);
+			mCalc.onButtonNumber(Number.EIGHT);
 			break;
 		case R.id.nine:
-			calc.onButtonNumber(Number.NINE);
+			mCalc.onButtonNumber(Number.NINE);
 			break;
 		case R.id.plus:
-			calc.onButtonOp(Operation.PLUS);
+			mCalc.onButtonOp(Operation.PLUS);
 			break;
 		case R.id.minus:
-			calc.onButtonOp(Operation.MINUS);
+			mCalc.onButtonOp(Operation.MINUS);
 			break;
 		case R.id.times:
-			calc.onButtonOp(Operation.TIMES);
+			mCalc.onButtonOp(Operation.TIMES);
 			break;
 		case R.id.divide:
-			calc.onButtonOp(Operation.DIVIDE);
+			mCalc.onButtonOp(Operation.DIVIDE);
 			break;
 		case R.id.comma:
-			calc.onButtonNumber(Number.COMMA);
+			mCalc.onButtonNumber(Number.COMMA);
 			break;
 		case R.id.allclear:
-			calc.onButtonAllClear();
+			mCalc.onButtonAllClear();
 			break;
 		case R.id.clear:
-			calc.onButtonBackspace();
+			mCalc.onButtonBackspace();
 			break;
 		case R.id.equal:
-			calc.onButtonEquale();
+			mCalc.onButtonEquale();
 			break;
 		case R.id.sign:
-			calc.changeSign();
+			mCalc.changeSign();
 			break;
 		case R.id.percent:
-			calc.onButtonPercent();
+			mCalc.onButtonPercent();
 			break;
 		case R.id.memoryPlus:
-			calc.onButtonMemoryPlus();
+			mCalc.onButtonMemoryPlus();
 			break;
 		case R.id.memoryMinus:
-			calc.onButtonMemoryMinus();
+			mCalc.onButtonMemoryMinus();
 			break;
 		case R.id.clearMemory:
-			calc.onButtonClearMemory();
+			mCalc.onButtonClearMemory();
 			break;
 		case R.id.returnMemory:
-			calc.onButtonReturnMemory();
+			mCalc.onButtonReturnMemory();
 			break;
 		default:
 			break;

@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2013 YojiokiSoft
+ * 
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.yojiokisoft.japanesecalc;
 
 import java.math.BigDecimal;
@@ -12,6 +27,9 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
+/**
+ * グラフィカルディスプレイ
+ */
 public class GraphicDisplay extends AbstractDisplay {
 	private final int CHAR_WIDTH_PORT = 36;
 	private final int CHAR_HEIGHT_PORT = 50;
@@ -94,7 +112,7 @@ public class GraphicDisplay extends AbstractDisplay {
 		StringBuffer sb = stack2String();
 
 		// 小数点のゼロは省く
-		if (format && commaMode && decimalPlaces > 0) {
+		if (format && mCommaMode && mDecimalPlaces > 0) {
 			sb = omitDecimalZero(sb);
 			string2Stack(sb);
 		}
@@ -145,7 +163,7 @@ public class GraphicDisplay extends AbstractDisplay {
 
 		ImageView[] unit = { mUnitOku, mUnitMan, mUnitSen };
 		int[] keta = { 8, 4, 3 };
-		int ketaSu = displayChar.size() - decimalPlaces;
+		int ketaSu = mDisplayChar.size() - mDecimalPlaces;
 		for (int i = 0; i < keta.length; i++) {
 			if (ketaSu > keta[i]) {
 				unit[i].setVisibility(View.VISIBLE);
@@ -153,9 +171,9 @@ public class GraphicDisplay extends AbstractDisplay {
 				int top;
 				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
 					left = CHAR_WIDTH_LAND - 5;
-					top = CHAR_HEIGHT_LAND * (sb.length() - keta[i] - (decimalPlaces == 0 ? 0 : decimalPlaces + 1)) + 5;
+					top = CHAR_HEIGHT_LAND * (sb.length() - keta[i] - (mDecimalPlaces == 0 ? 0 : mDecimalPlaces + 1)) + 5;
 				} else {
-					left = CHAR_WIDTH_PORT * (DISPLAY_DIGIT - keta[i] - decimalPlaces) + (int) (CHAR_WIDTH_PORT * 0.6);
+					left = CHAR_WIDTH_PORT * (DISPLAY_DIGIT - keta[i] - mDecimalPlaces) + (int) (CHAR_WIDTH_PORT * 0.6);
 					top = CHAR_HEIGHT_PORT - 2;
 				}
 				unit[i].setPadding(left, top, 0, 0);
@@ -201,18 +219,18 @@ public class GraphicDisplay extends AbstractDisplay {
 	 */
 	private StringBuffer stack2String() {
 		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < displayChar.size(); i++) {
-			String str = displayChar.get(i);
+		for (int i = 0; i < mDisplayChar.size(); i++) {
+			String str = mDisplayChar.get(i);
 			sb.append(str);
 		}
 		// コンマの位置を判定
-		if (commaMode && decimalPlaces > 0) {
-			sb.insert(sb.length() - decimalPlaces, ".");
+		if (mCommaMode && mDecimalPlaces > 0) {
+			sb.insert(sb.length() - mDecimalPlaces, ".");
 		}
 		// 空の場合はゼロを表示
 		if (sb.length() == 0) {
 			sb.append("0");
-		} else if (minus) {
+		} else if (mMinus) {
 			// 符号を表示
 			sb.insert(0, "-");
 		}
@@ -236,17 +254,17 @@ public class GraphicDisplay extends AbstractDisplay {
 		for (int i = 0; i < len; i++) {
 			char chr = sb.charAt(i);
 			if (chr == '.') {
-				commaMode = true;
+				mCommaMode = true;
 			} else if (chr == '-') {
-				minus = true;
+				mMinus = true;
 			} else {
-				displayChar.push(String.valueOf(chr));
-				if (commaMode) {
-					decimalPlaces++;
+				mDisplayChar.push(String.valueOf(chr));
+				if (mCommaMode) {
+					mDecimalPlaces++;
 				}
 			}
 			// 桁数が表示桁数を超える部分は入れない
-			if (displayChar.size() >= DISPLAY_DIGIT) {
+			if (mDisplayChar.size() >= DISPLAY_DIGIT) {
 				break;
 			}
 		}
@@ -260,9 +278,9 @@ public class GraphicDisplay extends AbstractDisplay {
 			addNumber(num);
 			break;
 		case COMMA:
-			if (!commaMode) {
-				commaMode = true;
-				decimalPlaces = 0;
+			if (!mCommaMode) {
+				mCommaMode = true;
+				mDecimalPlaces = 0;
 			}
 			break;
 		default:
@@ -272,25 +290,25 @@ public class GraphicDisplay extends AbstractDisplay {
 	}
 
 	private void addNumber(Number num) {
-		if (displayChar.size() < DISPLAY_DIGIT) {
-			displayChar.push(num.getValue());
-			if (commaMode) {
-				decimalPlaces++;
+		if (mDisplayChar.size() < DISPLAY_DIGIT) {
+			mDisplayChar.push(num.getValue());
+			if (mCommaMode) {
+				mDecimalPlaces++;
 			}
 		}
 	}
 
 	@Override
 	public void onInputBackspace() {
-		if (displayChar.isEmpty()) {
+		if (mDisplayChar.isEmpty()) {
 			return;
 		}
 
-		displayChar.pop();
-		if (commaMode) {
-			decimalPlaces--;
-			if (decimalPlaces == 0) {
-				commaMode = false;
+		mDisplayChar.pop();
+		if (mCommaMode) {
+			mDecimalPlaces--;
+			if (mDecimalPlaces == 0) {
+				mCommaMode = false;
 			}
 		}
 	}
@@ -298,10 +316,10 @@ public class GraphicDisplay extends AbstractDisplay {
 	@Override
 	public void clear() {
 		mDisplayNumber = null;
-		commaMode = false;
-		decimalPlaces = 0;
-		minus = false;
-		displayChar.clear();
+		mCommaMode = false;
+		mDecimalPlaces = 0;
+		mMinus = false;
+		mDisplayChar.clear();
 		clearError();
 		mUnitOku.setVisibility(View.INVISIBLE);
 		mUnitMan.setVisibility(View.INVISIBLE);
@@ -318,16 +336,16 @@ public class GraphicDisplay extends AbstractDisplay {
 		}
 
 		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < displayChar.size(); i++) {
-			String str = displayChar.get(i);
+		for (int i = 0; i < mDisplayChar.size(); i++) {
+			String str = mDisplayChar.get(i);
 			sb.append(str);
 		}
 		// コンマの位置を判定
-		if (commaMode && decimalPlaces > 0) {
-			sb.insert(sb.length() - decimalPlaces, ".");
+		if (mCommaMode && mDecimalPlaces > 0) {
+			sb.insert(sb.length() - mDecimalPlaces, ".");
 		}
 		// マイナス記号を追加
-		if (minus) {
+		if (mMinus) {
 			sb.insert(0, "-");
 		}
 

@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2013 YojiokiSoft
+ * 
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with this
+ * program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.yojiokisoft.japanesecalc;
 
 import java.lang.reflect.InvocationTargetException;
@@ -8,6 +23,9 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+/**
+ * 電卓の機能実装
+ */
 public class Calc implements CalcContext {
 	private boolean mIsError; // エラー状態かどうか
 	private BigDecimal A; // 電卓はメモリＡを持ちます
@@ -211,12 +229,12 @@ public class Calc implements CalcContext {
 	@Override
 	public void addDisplayNumber(Number num) {
 		if (num == Number.ZERO || num == Number.DOUBLE_ZERO) {
-			if (mDisp.displayChar.size() == 0 && !mDisp.commaMode) {
+			if (mDisp.mDisplayChar.size() == 0 && !mDisp.mCommaMode) {
 				mDisp.showDisplay(false);
 				return;
 			}
 		}
-		if (num == Number.COMMA && !mDisp.commaMode && mDisp.displayChar.size() == 0) {
+		if (num == Number.COMMA && !mDisp.mCommaMode && mDisp.mDisplayChar.size() == 0) {
 			mDisp.onInputNumber(Number.ZERO);
 		}
 		mDisp.onInputNumber(num);
@@ -298,7 +316,7 @@ public class Calc implements CalcContext {
 	@Override
 	public void changeSign() {
 		if (!mDisp.getNumber().equals(new BigDecimal("0"))) {
-			mDisp.minus = !mDisp.minus;
+			mDisp.mMinus = !mDisp.mMinus;
 			mDisp.showDisplay(false);
 		}
 	}

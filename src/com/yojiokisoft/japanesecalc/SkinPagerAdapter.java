@@ -26,7 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 /**
- * カード詳細アダプター
+ * スキンのページャーアダプター
  */
 public class SkinPagerAdapter extends PagerAdapter {
 	private ImageView mBigImage;
@@ -92,7 +92,7 @@ public class SkinPagerAdapter extends PagerAdapter {
 	}
 
 	/**
-	 * カードの取得.
+	 * スキンの取得.
 	 * 
 	 * @param position
 	 * @return
