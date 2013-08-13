@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.yojiokisoft.japanesecalc.activity.SoundActivitydActivity"
+            android:name="com.yojiokisoft.japanesecalc.activity.SoundActivity"
             android:label="@string/title_activity_sound" >
         </activity>
         <activity
