@@ -13,7 +13,7 @@
  * program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.yojiokisoft.japanesecalc;
+package com.yojiokisoft.japanesecalc.dao;
 
 /**
  * 背景画像エンティティ

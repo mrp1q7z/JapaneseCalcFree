@@ -19,6 +19,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
+import com.yojiokisoft.japanesecalc.state.ErrorState;
+import com.yojiokisoft.japanesecalc.state.NumberAState;
+import com.yojiokisoft.japanesecalc.state.State;
+
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.Toast;

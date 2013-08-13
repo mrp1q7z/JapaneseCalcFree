@@ -13,7 +13,11 @@
  * program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.yojiokisoft.japanesecalc;
+package com.yojiokisoft.japanesecalc.state;
+
+import com.yojiokisoft.japanesecalc.CalcContext;
+import com.yojiokisoft.japanesecalc.Number;
+import com.yojiokisoft.japanesecalc.Operation;
 
 /**
  * 状態インターフェース

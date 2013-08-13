@@ -17,6 +17,8 @@ package com.yojiokisoft.japanesecalc;
 
 import java.util.List;
 
+import com.yojiokisoft.japanesecalc.dao.SoundEntity;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

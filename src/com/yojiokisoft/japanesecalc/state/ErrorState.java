@@ -13,49 +13,45 @@
  * program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.yojiokisoft.japanesecalc;
+package com.yojiokisoft.japanesecalc.state;
+
+import com.yojiokisoft.japanesecalc.CalcContext;
+import com.yojiokisoft.japanesecalc.Number;
+import com.yojiokisoft.japanesecalc.Operation;
 
 /**
- * 数値Aの入力状態
+ * エラー状態
  */
-public class NumberAState implements State {
-	private static NumberAState singleton = new NumberAState();
+public class ErrorState implements State {
+	private static ErrorState singleton = new ErrorState();
 
-	private NumberAState() { // コンストラクタはプライベート
+	// コンストラクタはプライベート
+	private ErrorState() {
 	}
 
-	public static State getInstance() {
+	// 唯一のインスタンスを得る
+	public static ErrorState getInctance() {
 		return singleton;
 	}
 
 	@Override
 	public void onInputNumber(CalcContext context, Number num) {
-		context.addDisplayNumber(num);
 	}
 
 	@Override
 	public void onInputOperation(CalcContext context, Operation op) {
-		context.saveDisplayNumberToA();
-		context.setOp(op);
-		context.changeState(OperationState.getInstance());
 	}
 
 	@Override
 	public void onInputEquale(CalcContext context) {
-		context.saveDisplayNumberToA();
-		context.showDisplay(context.getA());
-		context.changeState(ResultState.getInstance());
 	}
 
 	@Override
 	public void onInputBackspace(CalcContext context) {
-		context.backspace();
 	}
 
 	@Override
 	public void onInputClear(CalcContext context) {
-		context.clearA();
-		context.clearDisplay();
 	}
 
 	@Override
@@ -63,34 +59,27 @@ public class NumberAState implements State {
 		context.clearA();
 		context.clearB();
 		context.clearDisplay();
+		context.clearError();
+		context.changeState(NumberAState.getInstance());
 	}
 
 	@Override
 	public void onInputPercent(CalcContext context) {
-		context.saveDisplayNumberToA();
-		context.showDisplay(context.getA());
-		context.changeState(ResultState.getInstance());
 	}
 
 	@Override
 	public void onInputMemoryPlus(CalcContext context) {
-		context.memoryPlus();
-		context.changeState(ResultState.getInstance());
 	}
 
 	@Override
 	public void onInputMemoryMinus(CalcContext context) {
-		context.memoryMinus();
-		context.changeState(ResultState.getInstance());
 	}
 
 	@Override
 	public void onInputClearMemory(CalcContext context) {
-		context.clearMemory();
 	}
 
 	@Override
 	public void onInputReturnMemory(CalcContext context) {
-		context.returnMemory();
 	}
 }

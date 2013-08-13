@@ -17,6 +17,7 @@ package com.yojiokisoft.japanesecalc;
 
 import java.util.List;
 
+import com.yojiokisoft.japanesecalc.dao.BackImageEntity;
 import com.yojiokisoft.japanesecalc.utils.MyResource;
 
 import android.content.Context;

@@ -13,7 +13,7 @@
  * program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.yojiokisoft.japanesecalc;
+package com.yojiokisoft.japanesecalc.activity;
 
 import java.util.List;
 
@@ -29,7 +29,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.yojiokisoft.japanesecalc.CustomHorizontalScrollView;
+import com.yojiokisoft.japanesecalc.CustomScrollView;
+import com.yojiokisoft.japanesecalc.R;
+import com.yojiokisoft.japanesecalc.SkinPagerAdapter;
 import com.yojiokisoft.japanesecalc.CustomHorizontalScrollView.IScrollStateListener;
+import com.yojiokisoft.japanesecalc.R.drawable;
+import com.yojiokisoft.japanesecalc.R.id;
+import com.yojiokisoft.japanesecalc.R.layout;
+import com.yojiokisoft.japanesecalc.R.string;
+import com.yojiokisoft.japanesecalc.dao.BackImageDao;
+import com.yojiokisoft.japanesecalc.dao.BackImageEntity;
+import com.yojiokisoft.japanesecalc.dao.SettingDao;
 import com.yojiokisoft.japanesecalc.utils.MyResource;
 
 /**

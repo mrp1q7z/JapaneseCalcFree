@@ -13,7 +13,7 @@
  * program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.yojiokisoft.japanesecalc;
+package com.yojiokisoft.japanesecalc.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -28,6 +28,15 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.yojiokisoft.japanesecalc.Calc;
+import com.yojiokisoft.japanesecalc.MyUncaughtExceptionHandler;
+import com.yojiokisoft.japanesecalc.Number;
+import com.yojiokisoft.japanesecalc.Operation;
+import com.yojiokisoft.japanesecalc.R;
+import com.yojiokisoft.japanesecalc.R.id;
+import com.yojiokisoft.japanesecalc.R.layout;
+import com.yojiokisoft.japanesecalc.R.menu;
+import com.yojiokisoft.japanesecalc.dao.SettingDao;
 import com.yojiokisoft.japanesecalc.utils.MyResource;
 
 /**

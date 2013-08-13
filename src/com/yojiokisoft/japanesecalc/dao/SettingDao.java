@@ -13,12 +13,13 @@
  * program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.yojiokisoft.japanesecalc;
+package com.yojiokisoft.japanesecalc.dao;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.yojiokisoft.japanesecalc.App;
 import com.yojiokisoft.japanesecalc.utils.MyConst;
 
 /**

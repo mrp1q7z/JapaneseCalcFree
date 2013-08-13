@@ -13,11 +13,18 @@
  * program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.yojiokisoft.japanesecalc;
+package com.yojiokisoft.japanesecalc.activity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.yojiokisoft.japanesecalc.R;
+import com.yojiokisoft.japanesecalc.SoundListAdapter;
+import com.yojiokisoft.japanesecalc.R.id;
+import com.yojiokisoft.japanesecalc.R.layout;
+import com.yojiokisoft.japanesecalc.R.raw;
+import com.yojiokisoft.japanesecalc.dao.SettingDao;
+import com.yojiokisoft.japanesecalc.dao.SoundEntity;
 import com.yojiokisoft.japanesecalc.utils.MyResource;
 
 import android.app.Activity;

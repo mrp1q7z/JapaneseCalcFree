@@ -17,6 +17,8 @@ package com.yojiokisoft.japanesecalc;
 
 import java.math.BigDecimal;
 
+import com.yojiokisoft.japanesecalc.state.State;
+
 /**
  * 電卓の機能概要
  */

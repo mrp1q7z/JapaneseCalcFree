@@ -13,42 +13,57 @@
  * program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.yojiokisoft.japanesecalc;
+package com.yojiokisoft.japanesecalc.state;
+
+import com.yojiokisoft.japanesecalc.CalcContext;
+import com.yojiokisoft.japanesecalc.CalcException;
+import com.yojiokisoft.japanesecalc.Number;
+import com.yojiokisoft.japanesecalc.Operation;
 
 /**
- * 演算結果の表示状態
+ * 数値Bの入力状態
  */
-public class ResultState implements State {
-	private static ResultState singleton = new ResultState();
+public class NumberBState implements State {
+	private static NumberBState singleton = new NumberBState();
 
 	// コンストラクタはプライベート
-	private ResultState() {
+	private NumberBState() {
 	}
 
 	// 唯一のインスタンスを得る
-	public static ResultState getInstance() {
+	public static NumberBState getInstance() {
 		return singleton;
 	}
 
 	@Override
 	public void onInputNumber(CalcContext context, Number num) {
-		context.clearDisplay();
 		context.addDisplayNumber(num);
-
-		context.changeState(NumberAState.getInstance());
 	}
 
 	@Override
 	public void onInputOperation(CalcContext context, Operation op) {
-		context.saveDisplayNumberToA();
-		context.setOp(op);
-
-		context.changeState(OperationState.getInstance());
+		try {
+			context.saveDisplayNumberToB();
+			context.doOperation();
+			context.setOp(op);
+			context.saveDisplayNumberToA();
+			context.changeState(OperationState.getInstance());
+		} catch (CalcException e) {
+			context.setError();
+			context.changeState(ErrorState.getInctance());
+		}
 	}
 
 	@Override
 	public void onInputEquale(CalcContext context) {
-		context.showDisplay();
+		try {
+			context.saveDisplayNumberToB();
+			context.doOperation();
+			context.changeState(ResultState.getInstance());
+		} catch (CalcException e) {
+			context.setError();
+			context.changeState(ErrorState.getInctance());
+		}
 	}
 
 	@Override
@@ -58,11 +73,8 @@ public class ResultState implements State {
 
 	@Override
 	public void onInputClear(CalcContext context) {
-		context.clearA();
 		context.clearB();
 		context.clearDisplay();
-
-		context.changeState(NumberAState.getInstance());
 	}
 
 	@Override
@@ -70,23 +82,45 @@ public class ResultState implements State {
 		context.clearA();
 		context.clearB();
 		context.clearDisplay();
-
 		context.changeState(NumberAState.getInstance());
 	}
 
 	@Override
 	public void onInputPercent(CalcContext context) {
-		// 何もしない
+		try {
+			context.saveDisplayNumberToB();
+			context.doPercent();
+			context.changeState(ResultState.getInstance());
+		} catch (CalcException e) {
+			context.setError();
+			context.changeState(ErrorState.getInctance());
+		}
 	}
 
 	@Override
 	public void onInputMemoryPlus(CalcContext context) {
-		context.memoryPlus();
+		try {
+			context.saveDisplayNumberToB();
+			context.doOperation();
+			context.memoryPlus();
+			context.changeState(ResultState.getInstance());
+		} catch (CalcException e) {
+			context.setError();
+			context.changeState(ErrorState.getInctance());
+		}
 	}
 
 	@Override
 	public void onInputMemoryMinus(CalcContext context) {
-		context.memoryMinus();
+		try {
+			context.saveDisplayNumberToB();
+			context.doOperation();
+			context.memoryMinus();
+			context.changeState(ResultState.getInstance());
+		} catch (CalcException e) {
+			context.setError();
+			context.changeState(ErrorState.getInctance());
+		}
 	}
 
 	@Override
