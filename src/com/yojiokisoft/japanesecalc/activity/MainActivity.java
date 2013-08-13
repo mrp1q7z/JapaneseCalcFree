@@ -33,9 +33,6 @@ import com.yojiokisoft.japanesecalc.MyUncaughtExceptionHandler;
 import com.yojiokisoft.japanesecalc.Number;
 import com.yojiokisoft.japanesecalc.Operation;
 import com.yojiokisoft.japanesecalc.R;
-import com.yojiokisoft.japanesecalc.R.id;
-import com.yojiokisoft.japanesecalc.R.layout;
-import com.yojiokisoft.japanesecalc.R.menu;
 import com.yojiokisoft.japanesecalc.dao.SettingDao;
 import com.yojiokisoft.japanesecalc.utils.MyResource;
 
@@ -46,10 +43,13 @@ public class MainActivity extends Activity {
 	private Calc mCalc = new Calc();
 	private SoundPool mSound;
 	private int mSoundId;
-	private String mSoundName;
-	private String mSkinName;
+	private String mCurrentSoundName;
+	private String mCurrentSkinName;
 	private LinearLayout mButtonContainer;
 
+	/**
+	 * 初期処理
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,8 +61,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		mSound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-		mSoundName = SettingDao.getInstance().getClickSound();
-		int resId = MyResource.getResourceIdByName(mSoundName, "raw");
+		mCurrentSoundName = SettingDao.getInstance().getClickSound();
+		int resId = MyResource.getResourceIdByName(mCurrentSoundName, "raw");
 		if (resId == 0) {
 			mSoundId = 0;
 		} else {
@@ -76,27 +76,30 @@ public class MainActivity extends Activity {
 		btnAllClear.setOnLongClickListener(mAllClearButtonClicked);
 
 		mButtonContainer = (LinearLayout) findViewById(R.id.buttonContainer);
-		mSkinName = SettingDao.getInstance().getSkin();
-		resId = MyResource.getResourceIdByName(mSkinName);
+		mCurrentSkinName = SettingDao.getInstance().getSkin();
+		resId = MyResource.getResourceIdByName(mCurrentSkinName);
 		mButtonContainer.setBackgroundResource(resId);
 
-		int iOrientation = getResources().getConfiguration().orientation;
+		int orientation = getResources().getConfiguration().orientation;
 		LinearLayout displayContainer = (LinearLayout) findViewById(R.id.displayContainer);
-		mCalc.setDisplay(displayContainer, this, iOrientation);
+		mCalc.setDisplay(displayContainer, this, orientation);
 	}
 
+	/**
+	 * 前面に表示された
+	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
 
 		String newSoundName = SettingDao.getInstance().getClickSound();
-		if (!mSoundName.equals(newSoundName)) {
+		if (!mCurrentSoundName.equals(newSoundName)) {
 			if (mSoundId != 0) {
 				mSound.unload(mSoundId);
 			}
 
-			mSoundName = newSoundName;
-			int resId = MyResource.getResourceIdByName(mSoundName, "raw");
+			mCurrentSoundName = newSoundName;
+			int resId = MyResource.getResourceIdByName(mCurrentSoundName, "raw");
 			if (resId == 0) {
 				mSoundId = 0;
 			} else {
@@ -105,21 +108,27 @@ public class MainActivity extends Activity {
 		}
 
 		String newSkinName = SettingDao.getInstance().getSkin();
-		if (!mSkinName.equals(newSkinName)) {
-			mSkinName = newSkinName;
-			int resId = MyResource.getResourceIdByName(mSkinName);
+		if (!mCurrentSkinName.equals(newSkinName)) {
+			mCurrentSkinName = newSkinName;
+			int resId = MyResource.getResourceIdByName(mCurrentSkinName);
 			if (resId != 0) {
 				mButtonContainer.setBackgroundResource(resId);
 			}
 		}
 	}
 
+	/**
+	 * メニューの作成
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
+	/**
+	 * メニューが選択された
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;
@@ -138,7 +147,9 @@ public class MainActivity extends Activity {
 		return false;
 	}
 
-	/** アクティビティがデータを一時保存する時に呼ばれます。 */
+	/**
+	 * データの一時保存
+	 */
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -147,7 +158,9 @@ public class MainActivity extends Activity {
 		outState.putString("SAVE_NUMBER", state);
 	}
 
-	/** アクティビティが一時保存されたデータを読み込む時に呼ばれます。 */
+	/**
+	 * 一時保存されたデータを復元
+	 */
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
@@ -156,12 +169,18 @@ public class MainActivity extends Activity {
 		mCalc.restoreInstanceState(state);
 	}
 
+	/**
+	 * 終了処理
+	 */
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		mSound.release();
 	}
 
+	/**
+	 * クリアボタンの長押し
+	 */
 	private OnLongClickListener mClearButtonClicked = new OnLongClickListener() {
 		@Override
 		public boolean onLongClick(View v) {
@@ -170,6 +189,9 @@ public class MainActivity extends Activity {
 		}
 	};
 
+	/**
+	 * オールクリアボタンの長押し
+	 */
 	private OnLongClickListener mAllClearButtonClicked = new OnLongClickListener() {
 		@Override
 		public boolean onLongClick(View v) {
@@ -179,6 +201,11 @@ public class MainActivity extends Activity {
 		}
 	};
 
+	/**
+	 * 電卓の各ボタンのクリック
+	 * 
+	 * @param view
+	 */
 	public void onClickButton(View view) {
 		if (mSoundId != 0) {
 			mSound.stop(mSoundId);

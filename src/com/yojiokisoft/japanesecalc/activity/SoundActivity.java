@@ -18,15 +18,6 @@ package com.yojiokisoft.japanesecalc.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yojiokisoft.japanesecalc.R;
-import com.yojiokisoft.japanesecalc.SoundListAdapter;
-import com.yojiokisoft.japanesecalc.R.id;
-import com.yojiokisoft.japanesecalc.R.layout;
-import com.yojiokisoft.japanesecalc.R.raw;
-import com.yojiokisoft.japanesecalc.dao.SettingDao;
-import com.yojiokisoft.japanesecalc.dao.SoundEntity;
-import com.yojiokisoft.japanesecalc.utils.MyResource;
-
 import android.app.Activity;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -35,6 +26,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+
+import com.yojiokisoft.japanesecalc.R;
+import com.yojiokisoft.japanesecalc.SoundListAdapter;
+import com.yojiokisoft.japanesecalc.dao.SettingDao;
+import com.yojiokisoft.japanesecalc.dao.SoundEntity;
+import com.yojiokisoft.japanesecalc.utils.MyResource;
 
 /**
  * クリック音設定のアクティビティ
@@ -46,6 +43,9 @@ public class SoundActivity extends Activity {
 	private SoundPool mSound;
 	private int[] mSoundId;
 
+	/**
+	 * 初期処理
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,6 +68,11 @@ public class SoundActivity extends Activity {
 		}
 	}
 
+	/**
+	 * クリック音一覧の取得
+	 * 
+	 * @return
+	 */
 	private List<SoundEntity> getSoundList() {
 		List<SoundEntity> list = new ArrayList<SoundEntity>();
 
@@ -143,6 +148,9 @@ public class SoundActivity extends Activity {
 		return list;
 	}
 
+	/**
+	 * クリック音が選択された
+	 */
 	private OnItemClickListener mSoundListItemClicked = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -160,6 +168,11 @@ public class SoundActivity extends Activity {
 		}
 	};
 
+	/**
+	 * OKボタンのクリック
+	 * 
+	 * @param view
+	 */
 	public void onOkButtonClicked(View view) {
 		int resId = mAdapter.getItem(mCheckedPosition).resId;
 		String resName = "none";
@@ -174,6 +187,9 @@ public class SoundActivity extends Activity {
 		finish();
 	}
 
+	/**
+	 * 終了処理
+	 */
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

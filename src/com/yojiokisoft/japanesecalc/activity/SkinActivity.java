@@ -30,14 +30,10 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.yojiokisoft.japanesecalc.CustomHorizontalScrollView;
+import com.yojiokisoft.japanesecalc.CustomHorizontalScrollView.IScrollStateListener;
 import com.yojiokisoft.japanesecalc.CustomScrollView;
 import com.yojiokisoft.japanesecalc.R;
 import com.yojiokisoft.japanesecalc.SkinPagerAdapter;
-import com.yojiokisoft.japanesecalc.CustomHorizontalScrollView.IScrollStateListener;
-import com.yojiokisoft.japanesecalc.R.drawable;
-import com.yojiokisoft.japanesecalc.R.id;
-import com.yojiokisoft.japanesecalc.R.layout;
-import com.yojiokisoft.japanesecalc.R.string;
 import com.yojiokisoft.japanesecalc.dao.BackImageDao;
 import com.yojiokisoft.japanesecalc.dao.BackImageEntity;
 import com.yojiokisoft.japanesecalc.dao.SettingDao;
@@ -53,6 +49,9 @@ public class SkinActivity extends Activity {
 	private Button mUseButton;
 	private String mSkinResName;
 
+	/**
+	 * 初期処理
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -103,6 +102,9 @@ public class SkinActivity extends Activity {
 		setUseButtonText(items.get(0).resourceName);
 	}
 
+	/**
+	 * 水平スクロールビューがスクロールされた
+	 */
 	private IScrollStateListener mImageHScrolled = new IScrollStateListener() {
 		public void onScrollMostRight() {
 			mRightArrow.setVisibility(View.INVISIBLE);
@@ -121,6 +123,9 @@ public class SkinActivity extends Activity {
 		}
 	};
 
+	/**
+	 * 垂直スクロールビューがスクロールされた
+	 */
 	private CustomScrollView.IScrollStateListener mImageVScrolled = new CustomScrollView.IScrollStateListener() {
 		public void onScrollMostBottom() {
 			mRightArrow.setVisibility(View.INVISIBLE);
@@ -139,6 +144,9 @@ public class SkinActivity extends Activity {
 		}
 	};
 
+	/**
+	 * 画像一覧のクリック
+	 */
 	private OnClickListener mImageClicked = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -150,6 +158,9 @@ public class SkinActivity extends Activity {
 		}
 	};
 
+	/**
+	 * 大きな画像がスワイプされた
+	 */
 	private OnPageChangeListener mPageChanged = new OnPageChangeListener() {
 		@Override
 		public void onPageSelected(int position) {
@@ -166,6 +177,11 @@ public class SkinActivity extends Activity {
 		}
 	};
 
+	/**
+	 * この外観を使うボタンのテキストを設定
+	 * 
+	 * @param resName
+	 */
 	private void setUseButtonText(String resName) {
 		if (mSkinResName.equals(resName)) {
 			mUseButton.setText("使用中");
@@ -176,6 +192,9 @@ public class SkinActivity extends Activity {
 		}
 	}
 
+	/**
+	 * この外観を使うのクリック
+	 */
 	private OnClickListener mUseButtonClicked = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
