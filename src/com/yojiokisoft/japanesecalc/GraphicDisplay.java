@@ -17,6 +17,8 @@ package com.yojiokisoft.japanesecalc;
 
 import java.math.BigDecimal;
 
+import com.yojiokisoft.japanesecalc.utils.MyResource;
+
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;

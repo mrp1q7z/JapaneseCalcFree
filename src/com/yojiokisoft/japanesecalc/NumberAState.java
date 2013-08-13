@@ -19,7 +19,6 @@ package com.yojiokisoft.japanesecalc;
  * 数値Aの入力状態
  */
 public class NumberAState implements State {
-
 	private static NumberAState singleton = new NumberAState();
 
 	private NumberAState() { // コンストラクタはプライベート

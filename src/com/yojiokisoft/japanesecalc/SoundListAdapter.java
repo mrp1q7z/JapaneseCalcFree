@@ -30,7 +30,6 @@ import android.widget.TextView;
  * クリック音のアダプター
  */
 public class SoundListAdapter extends ArrayAdapter<SoundEntity> {
-
 	private List<SoundEntity> mItems = null;
 
 	private class ViewHolder {
@@ -80,7 +79,6 @@ public class SoundListAdapter extends ArrayAdapter<SoundEntity> {
 		viewHolder.radioButton.setChecked(item.checked);
 
 		viewHolder.radioButton.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View view) {
 				// 一旦全てのチェックをクリアする
@@ -93,7 +91,6 @@ public class SoundListAdapter extends ArrayAdapter<SoundEntity> {
 				// アダプタ内容を即時反映する
 				notifyDataSetChanged();
 			}
-
 		});
 
 		return convertView;

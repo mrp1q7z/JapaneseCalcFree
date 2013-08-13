@@ -30,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.yojiokisoft.japanesecalc.CustomHorizontalScrollView.IScrollStateListener;
+import com.yojiokisoft.japanesecalc.utils.MyResource;
 
 /**
  * 外観設定アクティビティ

@@ -18,6 +18,8 @@ package com.yojiokisoft.japanesecalc;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.yojiokisoft.japanesecalc.utils.MyResource;
+
 /**
  * 背景画像のデータアクセス
  */

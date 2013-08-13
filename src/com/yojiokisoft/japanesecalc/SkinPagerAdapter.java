@@ -17,6 +17,8 @@ package com.yojiokisoft.japanesecalc;
 
 import java.util.List;
 
+import com.yojiokisoft.japanesecalc.utils.MyResource;
+
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;

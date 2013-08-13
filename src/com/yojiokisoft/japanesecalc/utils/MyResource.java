@@ -13,7 +13,15 @@
  * program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.yojiokisoft.japanesecalc;
+package com.yojiokisoft.japanesecalc.utils;
+
+import java.io.FileNotFoundException;
+
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+
+import com.yojiokisoft.japanesecalc.App;
 
 /**
  * リソース関連のユーティリティ
@@ -42,5 +50,24 @@ public class MyResource {
 		App app = App.getInstance();
 		String packageName = app.getPackageName();
 		return app.getResources().getIdentifier(name, type, packageName);
+	}
+
+	/**
+	 * @return パッケージ情報
+	 */
+	public static PackageInfo getPackageInfo() {
+		App app = App.getInstance();
+		PackageInfo packageInfo = null;
+		try {
+			packageInfo = app.getPackageManager()
+					.getPackageInfo(app.getPackageName(), PackageManager.GET_META_DATA);
+		} catch (NameNotFoundException e) {
+			try {
+				MyLog.writeStackTrace(MyConst.BUG_CAUGHT_FILE, e);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return packageInfo;
 	}
 }

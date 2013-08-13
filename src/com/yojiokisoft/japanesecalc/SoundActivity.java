@@ -18,6 +18,8 @@ package com.yojiokisoft.japanesecalc;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.yojiokisoft.japanesecalc.utils.MyResource;
+
 import android.app.Activity;
 import android.media.AudioManager;
 import android.media.SoundPool;

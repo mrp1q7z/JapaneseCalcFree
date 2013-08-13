@@ -28,6 +28,8 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.yojiokisoft.japanesecalc.utils.MyResource;
+
 /**
  * メインアクティビティ
  */
@@ -42,6 +44,10 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// キャッチされない例外をキャッチするデフォルトのハンドラを設定する
+		Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 

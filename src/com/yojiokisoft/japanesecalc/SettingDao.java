@@ -19,6 +19,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.yojiokisoft.japanesecalc.utils.MyConst;
+
 /**
  * 設定情報のデータアクセス
  */
@@ -52,7 +54,7 @@ public class SettingDao {
 	 * @return クリック音のリソース名
 	 */
 	public String getClickSound() {
-		String val = mSharedPref.getString("ClickSound", "none");
+		String val = mSharedPref.getString(MyConst.PK_CLICK_SOUND, "none");
 		return val;
 	}
 
@@ -63,14 +65,14 @@ public class SettingDao {
 	 * @return true=正常終了
 	 */
 	public boolean setClickSound(String resName) {
-		return mSharedPref.edit().putString("ClickSound", resName).commit();
+		return mSharedPref.edit().putString(MyConst.PK_CLICK_SOUND, resName).commit();
 	}
 
 	/**
 	 * @return スキンのリソース名
 	 */
 	public String getSkin() {
-		String val = mSharedPref.getString("Skin", "bg_image_02");
+		String val = mSharedPref.getString(MyConst.PK_SKIN, "bg_image_01");
 		return val;
 	}
 
@@ -81,6 +83,6 @@ public class SettingDao {
 	 * @return true=正常終了
 	 */
 	public boolean setSkin(String resName) {
-		return mSharedPref.edit().putString("Skin", resName).commit();
+		return mSharedPref.edit().putString(MyConst.PK_SKIN, resName).commit();
 	}
 }
