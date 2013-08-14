@@ -32,7 +32,7 @@ public abstract class AbstractDisplay {
 	protected int mDecimalPlaces;
 	// マイナス記号です
 	protected boolean mMinus;
-	// 内部保持用
+	// 表示中の値の正確な数値（誤差を防ぐため）
 	protected BigDecimal mDisplayNumber;
 
 	// ディスプレイ表示を行います

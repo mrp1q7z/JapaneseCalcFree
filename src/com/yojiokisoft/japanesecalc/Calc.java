@@ -19,13 +19,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
-import com.yojiokisoft.japanesecalc.state.ErrorState;
-import com.yojiokisoft.japanesecalc.state.NumberAState;
-import com.yojiokisoft.japanesecalc.state.State;
-
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.yojiokisoft.japanesecalc.state.ErrorState;
+import com.yojiokisoft.japanesecalc.state.NumberAState;
+import com.yojiokisoft.japanesecalc.state.State;
 
 /**
  * 電卓の機能実装
@@ -40,6 +40,11 @@ public class Calc implements CalcContext {
 	protected State mState; // 電卓の状態を表すクラス
 	protected Context mContext; // Toast表示用のcontext
 
+	/**
+	 * 現在の状態を保存する文字列を返す
+	 * 
+	 * @return
+	 */
 	public String getInstanceState() {
 		StringBuilder sb = new StringBuilder();
 
@@ -54,6 +59,11 @@ public class Calc implements CalcContext {
 		return sb.toString();
 	}
 
+	/**
+	 * 状態の復元
+	 * 
+	 * @param state
+	 */
 	public void restoreInstanceState(String state) {
 		String[] stateArray = state.split(",");
 		A = new BigDecimal(stateArray[0]);
@@ -77,26 +87,21 @@ public class Calc implements CalcContext {
 
 		if (!stateArray[5].equals("null")) {
 			try {
-				Class clazz = Class.forName(stateArray[5]);
+				Class<?> clazz = Class.forName(stateArray[5]);
 				if (clazz != null) {
 					Method factoryMethod = clazz.getDeclaredMethod("getInstance");
-					mState = (State) factoryMethod.invoke(null, null);
+					mState = (State) factoryMethod.invoke(null, (Class<?>) null);
 				}
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				MyUncaughtExceptionHandler.sendBugReport(mContext, e);
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				MyUncaughtExceptionHandler.sendBugReport(mContext, e);
 			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				MyUncaughtExceptionHandler.sendBugReport(mContext, e);
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				MyUncaughtExceptionHandler.sendBugReport(mContext, e);
 			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				MyUncaughtExceptionHandler.sendBugReport(mContext, e);
 			}
 		}
 
@@ -113,6 +118,9 @@ public class Calc implements CalcContext {
 		}
 	}
 
+	/**
+	 * コンストラクタ
+	 */
 	public Calc() {
 		A = new BigDecimal("0");
 		B = new BigDecimal("0");
@@ -121,6 +129,13 @@ public class Calc implements CalcContext {
 		changeState(NumberAState.getInstance());
 	}
 
+	/**
+	 * ディスプレイのセット
+	 * 
+	 * @param viewGroup ディスプレイ表示領域のViewGroup
+	 * @param context
+	 * @param orientation
+	 */
 	public void setDisplay(ViewGroup viewGroup, Context context, int orientation) {
 		if (mDisp != null) {
 			mDisp = null;
@@ -129,55 +144,98 @@ public class Calc implements CalcContext {
 		mContext = context;
 	}
 
+	/**
+	 * 数値の入力
+	 * 
+	 * @param num
+	 */
 	public void onButtonNumber(Number num) {
 		mState.onInputNumber(this, num);
 	}
 
+	/**
+	 * 四則演算子の入力
+	 * 
+	 * @param op
+	 */
 	public void onButtonOp(Operation op) {
 		mState.onInputOperation(this, op);
 	}
 
+	/**
+	 * １文字削除の入力
+	 */
 	public void onButtonBackspace() {
 		mState.onInputBackspace(this);
 	}
 
+	/**
+	 * クリアボタンの入力
+	 */
 	public void onButtonClear() {
 		mState.onInputClear(this);
 	}
 
+	/**
+	 * 全クリアボタンの入力
+	 */
 	public void onButtonAllClear() {
 		mState.onInputAllClear(this);
 	}
 
+	/**
+	 * ＝ボタンの入力
+	 */
 	public void onButtonEquale() {
 		mState.onInputEquale(this);
 	}
 
+	/**
+	 * ％ボタンの入力
+	 */
 	public void onButtonPercent() {
 		mState.onInputPercent(this);
 	}
 
+	/**
+	 * M+ボタンの入力
+	 */
 	public void onButtonMemoryPlus() {
 		mState.onInputMemoryPlus(this);
 	}
 
+	/**
+	 * M-ボタンの入力
+	 */
 	public void onButtonMemoryMinus() {
 		mState.onInputMemoryMinus(this);
 	}
 
+	/**
+	 * CMボタンの入力
+	 */
 	public void onButtonClearMemory() {
 		mState.onInputClearMemory(this);
 	}
 
+	/**
+	 * RMボタンの入力
+	 */
 	public void onButtonReturnMemory() {
 		mState.onInputReturnMemory(this);
 	}
 
+	/**
+	 * @see CalcContext#changeState(State)
+	 */
 	@Override
 	public void changeState(State newState) {
 		mState = newState;
 	}
 
+	/**
+	 * @see CalcContext#doOperation()
+	 */
 	@Override
 	public BigDecimal doOperation() throws CalcException {
 		BigDecimal result;
@@ -194,6 +252,9 @@ public class Calc implements CalcContext {
 		return result;
 	}
 
+	/**
+	 * @see CalcContext#doPercent()
+	 */
 	@Override
 	public BigDecimal doPercent() throws CalcException {
 		BigDecimal hyaku = new BigDecimal("100");
@@ -219,17 +280,26 @@ public class Calc implements CalcContext {
 		return result;
 	}
 
+	/**
+	 * @see CalcContext#showDisplay()
+	 */
 	@Override
 	public void showDisplay() {
 		mDisp.showDisplay(true);
 	}
 
+	/**
+	 * @see CalcContext#showDisplay(BigDecimal)
+	 */
 	@Override
 	public void showDisplay(BigDecimal d) {
 		mDisp.setNumber(d);
 		mDisp.showDisplay(true);
 	}
 
+	/**
+	 * @see CalcContext#addDisplayNumber(Number)
+	 */
 	@Override
 	public void addDisplayNumber(Number num) {
 		if (num == Number.ZERO || num == Number.DOUBLE_ZERO) {
@@ -245,63 +315,99 @@ public class Calc implements CalcContext {
 		mDisp.showDisplay(false);
 	}
 
+	/**
+	 * @see CalcContext#saveDisplayNumberToA()
+	 */
 	@Override
 	public void saveDisplayNumberToA() {
 		A = mDisp.getNumber();
 	}
 
+	/**
+	 * @see CalcContext#saveDisplayNumberToB()
+	 */
 	@Override
 	public void saveDisplayNumberToB() {
 		B = mDisp.getNumber();
 	}
 
+	/**
+	 * @see CalcContext#backspace()
+	 */
 	@Override
 	public void backspace() {
 		mDisp.onInputBackspace();
 		mDisp.showDisplay(false);
 	}
 
+	/**
+	 * @see CalcContext#clearA()
+	 */
 	@Override
 	public void clearA() {
 		A = new BigDecimal("0");
 	}
 
+	/**
+	 * @see CalcContext#clearB()
+	 */
 	@Override
 	public void clearB() {
 		B = new BigDecimal("0");
 	}
 
+	/**
+	 * @see CalcContext#getOp()
+	 */
 	@Override
 	public Operation getOp() {
 		return mOp;
 	}
 
+	/**
+	 * @see CalcContext#setOp(Operation)
+	 */
 	@Override
 	public void setOp(Operation newOp) {
 		mOp = newOp;
 	}
 
+	/**
+	 * @see CalcContext#clearDisplay()
+	 */
 	@Override
 	public void clearDisplay() {
 		mDisp.clear();
 		mDisp.showDisplay(false);
 	}
 
+	/**
+	 * @see CalcContext#copyAtoB()
+	 */
 	@Override
 	public void copyAtoB() {
 		B = A;
 	}
 
+	/**
+	 * @see CalcContext#getA()
+	 */
 	@Override
 	public BigDecimal getA() {
 		return A;
 	}
 
+	/**
+	 * @see CalcContext#getB()
+	 */
 	@Override
 	public BigDecimal getB() {
 		return B;
 	}
 
+	/**
+	 * @see CalcContext#setError()
+	 */
 	@Override
 	public void setError() {
 		if (mContext != null) {
@@ -311,12 +417,18 @@ public class Calc implements CalcContext {
 		mIsError = true;
 	}
 
+	/**
+	 * @see CalcContext#clearError()
+	 */
 	@Override
 	public void clearError() {
 		mDisp.clearError();
 		mIsError = false;
 	}
 
+	/**
+	 * @see CalcContext#changeSign()
+	 */
 	@Override
 	public void changeSign() {
 		if (!mDisp.getNumber().equals(new BigDecimal("0"))) {
@@ -325,18 +437,27 @@ public class Calc implements CalcContext {
 		}
 	}
 
+	/**
+	 * @see CalcContext#memoryPlus()
+	 */
 	@Override
 	public void memoryPlus() {
 		M = M.add(mDisp.getNumber());
 		mDisp.setMemory(M.doubleValue());
 	}
 
+	/**
+	 * @see CalcContext#memoryMinus()
+	 */
 	@Override
 	public void memoryMinus() {
 		M = M.subtract(mDisp.getNumber());
 		mDisp.setMemory(M.doubleValue());
 	}
 
+	/**
+	 * @see CalcContext#clearMemory()
+	 */
 	@Override
 	public void clearMemory() {
 		if (M != null) {
@@ -346,6 +467,9 @@ public class Calc implements CalcContext {
 		mDisp.setMemory(M.doubleValue());
 	}
 
+	/**
+	 * @see CalcContext#returnMemory()
+	 */
 	@Override
 	public void returnMemory() {
 		mDisp.setNumber(M);

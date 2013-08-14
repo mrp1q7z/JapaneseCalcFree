@@ -31,7 +31,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.os.Build;
@@ -87,9 +87,9 @@ public class MyUncaughtExceptionHandler implements UncaughtExceptionHandler {
 	/** 
 	 * バグレポートの内容をメールで送信する.
 	 * 
-	 * @param activity アプリケーションコンテキストはダメ、Activityであること！
+	 * @param activityContext アプリケーションコンテキストはダメ、Activityであること！
 	 */
-	public static void sendBugReport(Activity activity) {
+	public static void sendBugReport(Context activityContext) {
 		sBugReportFile = new File(MyConst.getUncaughtBugFilePath());
 		if (sBugReportFile == null || !sBugReportFile.exists()) {
 			return;
@@ -97,12 +97,12 @@ public class MyUncaughtExceptionHandler implements UncaughtExceptionHandler {
 
 		setVersionName();
 
-		MyDialog.Builder.newInstance(activity)
-				.setTitle(activity.getString(R.string.err_dialog_title))
-				.setMessage(activity.getString(R.string.err_dialog_msg))
-				.setPositiveLabel(activity.getString(R.string.send))
+		MyDialog.Builder.newInstance(activityContext)
+				.setTitle(activityContext.getString(R.string.err_dialog_title))
+				.setMessage(activityContext.getString(R.string.err_dialog_msg))
+				.setPositiveLabel(activityContext.getString(R.string.send))
 				.setPositiveClickListener(mBugDialogOkClicked)
-				.setNegativeLabel(activity.getString(R.string.cancel))
+				.setNegativeLabel(activityContext.getString(R.string.cancel))
 				.setNegativeClickListener(mBugDialogCancelClicked)
 				.show();
 	}
@@ -110,10 +110,10 @@ public class MyUncaughtExceptionHandler implements UncaughtExceptionHandler {
 	/** 
 	 * バグレポートの内容をメールで送信する.
 	 * 
-	 * @param activity アプリケーションコンテキストはダメ、Activityであること！
+	 * @param activityContext アプリケーションコンテキストはダメ、ActivityのContextであること！
 	 * @param ex
 	 */
-	public static void sendBugReport(Activity activity, Throwable ex) {
+	public static void sendBugReport(Context activityContext, Throwable ex) {
 		try {
 			MyLog.writeStackTrace(MyConst.getCaughtBugFilePath(), ex);
 		} catch (FileNotFoundException e) {
@@ -127,12 +127,12 @@ public class MyUncaughtExceptionHandler implements UncaughtExceptionHandler {
 
 		setVersionName();
 
-		MyDialog.Builder.newInstance(activity)
-				.setTitle(activity.getString(R.string.err_dialog_title))
-				.setMessage(activity.getString(R.string.err_dialog_msg2))
-				.setPositiveLabel(activity.getString(R.string.send))
+		MyDialog.Builder.newInstance(activityContext)
+				.setTitle(activityContext.getString(R.string.err_dialog_title))
+				.setMessage(activityContext.getString(R.string.err_dialog_msg2))
+				.setPositiveLabel(activityContext.getString(R.string.send))
 				.setPositiveClickListener(mBugDialogOkClicked)
-				.setNegativeLabel(activity.getString(R.string.cancel))
+				.setNegativeLabel(activityContext.getString(R.string.cancel))
 				.setNegativeClickListener(mBugDialogCancelClicked)
 				.show();
 	}
