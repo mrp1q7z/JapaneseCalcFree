@@ -24,17 +24,27 @@ import com.yojiokisoft.japanesecalc.Operation;
  * 演算子の入力状態
  */
 public class OperationState implements State {
-	private static OperationState singleton = new OperationState();
+	private static OperationState mInstance = new OperationState();
 
-	// コンストラクタはプライベート
+	/**
+	 * コンストラクタは公開しない
+	 * インスタンスを取得する場合は、getInstanceを使用する.
+	 */
 	private OperationState() {
 	}
 
-	// 唯一のインスタンスを得る
+	/**
+	 * インスタンスの取得
+	 * 
+	 * @return OperationState
+	 */
 	public static OperationState getInstance() {
-		return singleton;
+		return mInstance;
 	}
 
+	/**
+	 * @see State#onInputNumber(CalcContext, Number)
+	 */
 	@Override
 	public void onInputNumber(CalcContext context, Number num) {
 		context.clearDisplay();
@@ -43,11 +53,17 @@ public class OperationState implements State {
 		context.changeState(NumberBState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputOperation(CalcContext, Operation)
+	 */
 	@Override
 	public void onInputOperation(CalcContext context, Operation op) {
 		context.setOp(op);
 	}
 
+	/**
+	 * @see State#onInputEquale(CalcContext)
+	 */
 	@Override
 	public void onInputEquale(CalcContext context) {
 		switch (context.getOp()) {
@@ -59,7 +75,7 @@ public class OperationState implements State {
 				context.changeState(ResultState.getInstance());
 			} catch (CalcException e) {
 				context.setError();
-				context.changeState(ErrorState.getInctance());
+				context.changeState(ErrorState.getInstance());
 			}
 			break;
 		case MINUS:
@@ -72,11 +88,17 @@ public class OperationState implements State {
 		}
 	}
 
+	/**
+	 * @see State#onInputBackspace(CalcContext)
+	 */
 	@Override
 	public void onInputBackspace(CalcContext context) {
 		context.backspace();
 	}
 
+	/**
+	 * @see State#onInputClear(CalcContext)
+	 */
 	@Override
 	public void onInputClear(CalcContext context) {
 		context.clearA();
@@ -84,6 +106,9 @@ public class OperationState implements State {
 		context.changeState(NumberAState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputAllClear(CalcContext)
+	 */
 	@Override
 	public void onInputAllClear(CalcContext context) {
 		context.clearA();
@@ -92,27 +117,42 @@ public class OperationState implements State {
 		context.changeState(NumberAState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputPercent(CalcContext)
+	 */
 	@Override
 	public void onInputPercent(CalcContext context) {
 		context.showDisplay(context.getA());
 		context.changeState(ResultState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputMemoryPlus(CalcContext)
+	 */
 	@Override
 	public void onInputMemoryPlus(CalcContext context) {
 		context.memoryPlus();
 	}
 
+	/**
+	 * @see State#onInputMemoryMinus(CalcContext)
+	 */
 	@Override
 	public void onInputMemoryMinus(CalcContext context) {
 		context.memoryMinus();
 	}
 
+	/**
+	 * @see State#onInputClearMemory(CalcContext)
+	 */
 	@Override
 	public void onInputClearMemory(CalcContext context) {
 		context.clearMemory();
 	}
 
+	/**
+	 * @see State#onInputReturnMemory(CalcContext)
+	 */
 	@Override
 	public void onInputReturnMemory(CalcContext context) {
 		context.returnMemory();

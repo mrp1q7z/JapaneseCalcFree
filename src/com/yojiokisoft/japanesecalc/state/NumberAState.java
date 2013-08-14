@@ -23,20 +23,35 @@ import com.yojiokisoft.japanesecalc.Operation;
  * 数値Aの入力状態
  */
 public class NumberAState implements State {
-	private static NumberAState singleton = new NumberAState();
+	private static NumberAState mInstance = new NumberAState();
 
-	private NumberAState() { // コンストラクタはプライベート
+	/**
+	 * コンストラクタは公開しない
+	 * インスタンスを取得する場合は、getInstanceを使用する.
+	 */
+	private NumberAState() {
 	}
 
+	/**
+	 * インスタンスの取得
+	 * 
+	 * @return NumberAState
+	 */
 	public static State getInstance() {
-		return singleton;
+		return mInstance;
 	}
 
+	/**
+	 * @see State#onInputNumber(CalcContext, Number)
+	 */
 	@Override
 	public void onInputNumber(CalcContext context, Number num) {
 		context.addDisplayNumber(num);
 	}
 
+	/**
+	 * @see State#onInputOperation(CalcContext, Operation)
+	 */
 	@Override
 	public void onInputOperation(CalcContext context, Operation op) {
 		context.saveDisplayNumberToA();
@@ -44,6 +59,9 @@ public class NumberAState implements State {
 		context.changeState(OperationState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputEquale(CalcContext)
+	 */
 	@Override
 	public void onInputEquale(CalcContext context) {
 		context.saveDisplayNumberToA();
@@ -51,17 +69,26 @@ public class NumberAState implements State {
 		context.changeState(ResultState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputBackspace(CalcContext)
+	 */
 	@Override
 	public void onInputBackspace(CalcContext context) {
 		context.backspace();
 	}
 
+	/**
+	 * @see State#onInputClear(CalcContext)
+	 */
 	@Override
 	public void onInputClear(CalcContext context) {
 		context.clearA();
 		context.clearDisplay();
 	}
 
+	/**
+	 * @see State#onInputAllClear(CalcContext)
+	 */
 	@Override
 	public void onInputAllClear(CalcContext context) {
 		context.clearA();
@@ -69,6 +96,9 @@ public class NumberAState implements State {
 		context.clearDisplay();
 	}
 
+	/**
+	 * @see State#onInputPercent(CalcContext)
+	 */
 	@Override
 	public void onInputPercent(CalcContext context) {
 		context.saveDisplayNumberToA();
@@ -76,23 +106,35 @@ public class NumberAState implements State {
 		context.changeState(ResultState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputMemoryPlus(CalcContext)
+	 */
 	@Override
 	public void onInputMemoryPlus(CalcContext context) {
 		context.memoryPlus();
 		context.changeState(ResultState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputMemoryMinus(CalcContext)
+	 */
 	@Override
 	public void onInputMemoryMinus(CalcContext context) {
 		context.memoryMinus();
 		context.changeState(ResultState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputClearMemory(CalcContext)
+	 */
 	@Override
 	public void onInputClearMemory(CalcContext context) {
 		context.clearMemory();
 	}
 
+	/**
+	 * @see State#onInputReturnMemory(CalcContext)
+	 */
 	@Override
 	public void onInputReturnMemory(CalcContext context) {
 		context.returnMemory();

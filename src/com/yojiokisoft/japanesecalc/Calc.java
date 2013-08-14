@@ -102,7 +102,7 @@ public class Calc implements CalcContext {
 
 		mIsError = (stateArray[6].equals("true") ? true : false);
 		if (mIsError) {
-			mState = ErrorState.getInctance();
+			mState = ErrorState.getInstance();
 			setError();
 		}
 

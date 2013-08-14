@@ -24,22 +24,35 @@ import com.yojiokisoft.japanesecalc.Operation;
  * 数値Bの入力状態
  */
 public class NumberBState implements State {
-	private static NumberBState singleton = new NumberBState();
+	private static NumberBState mInstance = new NumberBState();
 
-	// コンストラクタはプライベート
+	/**
+	 * コンストラクタは公開しない
+	 * インスタンスを取得する場合は、getInstanceを使用する.
+	 */
 	private NumberBState() {
 	}
 
-	// 唯一のインスタンスを得る
+	/**
+	 * インスタンスの取得
+	 * 
+	 * @return NumberBState
+	 */
 	public static NumberBState getInstance() {
-		return singleton;
+		return mInstance;
 	}
 
+	/**
+	 * @see State#onInputNumber(CalcContext, Number)
+	 */
 	@Override
 	public void onInputNumber(CalcContext context, Number num) {
 		context.addDisplayNumber(num);
 	}
 
+	/**
+	 * @see State#onInputOperation(CalcContext, Operation)
+	 */
 	@Override
 	public void onInputOperation(CalcContext context, Operation op) {
 		try {
@@ -50,10 +63,13 @@ public class NumberBState implements State {
 			context.changeState(OperationState.getInstance());
 		} catch (CalcException e) {
 			context.setError();
-			context.changeState(ErrorState.getInctance());
+			context.changeState(ErrorState.getInstance());
 		}
 	}
 
+	/**
+	 * @see State#onInputEquale(CalcContext)
+	 */
 	@Override
 	public void onInputEquale(CalcContext context) {
 		try {
@@ -62,21 +78,30 @@ public class NumberBState implements State {
 			context.changeState(ResultState.getInstance());
 		} catch (CalcException e) {
 			context.setError();
-			context.changeState(ErrorState.getInctance());
+			context.changeState(ErrorState.getInstance());
 		}
 	}
 
+	/**
+	 * @see State#onInputBackspace(CalcContext)
+	 */
 	@Override
 	public void onInputBackspace(CalcContext context) {
 		context.backspace();
 	}
 
+	/**
+	 * @see State#onInputClear(CalcContext)
+	 */
 	@Override
 	public void onInputClear(CalcContext context) {
 		context.clearB();
 		context.clearDisplay();
 	}
 
+	/**
+	 * @see State#onInputAllClear(CalcContext)
+	 */
 	@Override
 	public void onInputAllClear(CalcContext context) {
 		context.clearA();
@@ -85,6 +110,9 @@ public class NumberBState implements State {
 		context.changeState(NumberAState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputPercent(CalcContext)
+	 */
 	@Override
 	public void onInputPercent(CalcContext context) {
 		try {
@@ -93,10 +121,13 @@ public class NumberBState implements State {
 			context.changeState(ResultState.getInstance());
 		} catch (CalcException e) {
 			context.setError();
-			context.changeState(ErrorState.getInctance());
+			context.changeState(ErrorState.getInstance());
 		}
 	}
 
+	/**
+	 * @see State#onInputMemoryPlus(CalcContext)
+	 */
 	@Override
 	public void onInputMemoryPlus(CalcContext context) {
 		try {
@@ -106,10 +137,13 @@ public class NumberBState implements State {
 			context.changeState(ResultState.getInstance());
 		} catch (CalcException e) {
 			context.setError();
-			context.changeState(ErrorState.getInctance());
+			context.changeState(ErrorState.getInstance());
 		}
 	}
 
+	/**
+	 * @see State#onInputMemoryMinus(CalcContext)
+	 */
 	@Override
 	public void onInputMemoryMinus(CalcContext context) {
 		try {
@@ -119,15 +153,21 @@ public class NumberBState implements State {
 			context.changeState(ResultState.getInstance());
 		} catch (CalcException e) {
 			context.setError();
-			context.changeState(ErrorState.getInctance());
+			context.changeState(ErrorState.getInstance());
 		}
 	}
 
+	/**
+	 * @see State#onInputClearMemory(CalcContext)
+	 */
 	@Override
 	public void onInputClearMemory(CalcContext context) {
 		context.clearMemory();
 	}
 
+	/**
+	 * @see State#onInputReturnMemory(CalcContext)
+	 */
 	@Override
 	public void onInputReturnMemory(CalcContext context) {
 		context.returnMemory();

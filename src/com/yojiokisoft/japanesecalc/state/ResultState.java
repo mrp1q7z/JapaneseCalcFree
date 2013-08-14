@@ -23,17 +23,27 @@ import com.yojiokisoft.japanesecalc.Operation;
  * 演算結果の表示状態
  */
 public class ResultState implements State {
-	private static ResultState singleton = new ResultState();
+	private static ResultState mInstance = new ResultState();
 
-	// コンストラクタはプライベート
+	/**
+	 * コンストラクタは公開しない
+	 * インスタンスを取得する場合は、getInstanceを使用する.
+	 */
 	private ResultState() {
 	}
 
-	// 唯一のインスタンスを得る
+	/**
+	 * インスタンスの取得
+	 * 
+	 * @return ErrorState
+	 */
 	public static ResultState getInstance() {
-		return singleton;
+		return mInstance;
 	}
 
+	/**
+	 * @see State#onInputNumber(CalcContext, Number)
+	 */
 	@Override
 	public void onInputNumber(CalcContext context, Number num) {
 		context.clearDisplay();
@@ -42,6 +52,9 @@ public class ResultState implements State {
 		context.changeState(NumberAState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputOperation(CalcContext, Operation)
+	 */
 	@Override
 	public void onInputOperation(CalcContext context, Operation op) {
 		context.saveDisplayNumberToA();
@@ -50,16 +63,25 @@ public class ResultState implements State {
 		context.changeState(OperationState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputEquale(CalcContext)
+	 */
 	@Override
 	public void onInputEquale(CalcContext context) {
 		context.showDisplay();
 	}
 
+	/**
+	 * @see State#onInputBackspace(CalcContext)
+	 */
 	@Override
 	public void onInputBackspace(CalcContext context) {
 		context.backspace();
 	}
 
+	/**
+	 * @see State#onInputClear(CalcContext)
+	 */
 	@Override
 	public void onInputClear(CalcContext context) {
 		context.clearA();
@@ -69,6 +91,9 @@ public class ResultState implements State {
 		context.changeState(NumberAState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputAllClear(CalcContext)
+	 */
 	@Override
 	public void onInputAllClear(CalcContext context) {
 		context.clearA();
@@ -78,26 +103,41 @@ public class ResultState implements State {
 		context.changeState(NumberAState.getInstance());
 	}
 
+	/**
+	 * @see State#onInputPercent(CalcContext)
+	 */
 	@Override
 	public void onInputPercent(CalcContext context) {
 		// 何もしない
 	}
 
+	/**
+	 * @see State#onInputMemoryPlus(CalcContext)
+	 */
 	@Override
 	public void onInputMemoryPlus(CalcContext context) {
 		context.memoryPlus();
 	}
 
+	/**
+	 * @see State#onInputMemoryMinus(CalcContext)
+	 */
 	@Override
 	public void onInputMemoryMinus(CalcContext context) {
 		context.memoryMinus();
 	}
 
+	/**
+	 * @see State#onInputClearMemory(CalcContext)
+	 */
 	@Override
 	public void onInputClearMemory(CalcContext context) {
 		context.clearMemory();
 	}
 
+	/**
+	 * @see State#onInputReturnMemory(CalcContext)
+	 */
 	@Override
 	public void onInputReturnMemory(CalcContext context) {
 		context.returnMemory();
