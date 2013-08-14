@@ -19,7 +19,10 @@ package com.yojiokisoft.japanesecalc.dao;
  * 背景画像エンティティ
  */
 public class BackImageEntity {
+	/** 画像タイプ:リソース */
 	public static final int IT_RESOURCE = 1;
+
+	/** 画像タイプ:外部取込みビットマップ */
 	public static final int IT_BITMAP = 2;
 
 	/** 画像タイプ（1=リソース、2=外部取込みビットマップ） */
