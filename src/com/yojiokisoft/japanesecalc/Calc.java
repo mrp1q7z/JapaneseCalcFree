@@ -90,7 +90,7 @@ public class Calc implements CalcContext {
 				Class<?> clazz = Class.forName(stateArray[5]);
 				if (clazz != null) {
 					Method factoryMethod = clazz.getDeclaredMethod("getInstance");
-					mState = (State) factoryMethod.invoke(null, (Class<?>) null);
+					mState = (State) factoryMethod.invoke(null);
 				}
 			} catch (ClassNotFoundException e) {
 				MyUncaughtExceptionHandler.sendBugReport(mContext, e);
