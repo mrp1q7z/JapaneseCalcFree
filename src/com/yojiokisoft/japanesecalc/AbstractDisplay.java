@@ -76,6 +76,10 @@ public abstract class AbstractDisplay {
 		if (d.compareTo(max) > 0) {
 			return true;
 		}
+		BigDecimal min = (new BigDecimal("0")).subtract(max);
+		if (d.compareTo(min) < 0) {
+			return true;
+		}
 		return false;
 	}
 
