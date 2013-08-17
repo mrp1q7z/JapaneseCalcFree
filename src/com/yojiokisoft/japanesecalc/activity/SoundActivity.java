@@ -25,10 +25,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.yojiokisoft.japanesecalc.R;
-import com.yojiokisoft.japanesecalc.SoundListAdapter;
 import com.yojiokisoft.japanesecalc.dao.SettingDao;
 import com.yojiokisoft.japanesecalc.dao.SoundEntity;
 import com.yojiokisoft.japanesecalc.utils.MyResource;
@@ -38,10 +38,10 @@ import com.yojiokisoft.japanesecalc.utils.MyResource;
  */
 public class SoundActivity extends Activity {
 	private ListView mListView;
-	private SoundListAdapter mAdapter;
 	private int mCheckedPosition = -1;
 	private SoundPool mSound;
 	private int[] mSoundId;
+	private List<SoundEntity> mList;
 
 	/**
 	 * 初期処理
@@ -52,19 +52,35 @@ public class SoundActivity extends Activity {
 		setContentView(R.layout.activity_sound);
 
 		mListView = (ListView) findViewById(R.id.sound_list);
+		mList = getSoundList();
 
-		List<SoundEntity> list = getSoundList();
-		mAdapter = new SoundListAdapter(this, 0, list);
-		mListView.setAdapter(mAdapter);
-		mListView.setOnItemClickListener(mSoundListItemClicked);
-
-		mSound = new SoundPool(list.size(), AudioManager.STREAM_MUSIC, 0);
-		mSoundId = new int[list.size()];
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).resId == 0) {
-				continue;
+		String resName = SettingDao.getInstance().getClickSound();
+		int resId = MyResource.getResourceIdByName(resName, "raw");
+		String[] items = new String[mList.size()];
+		SoundEntity item;
+		for (int i = 0; i < mList.size(); i++) {
+			item = mList.get(i);
+			items[i] = item.title + " (" + item.description + ")";
+			if (resId == item.resId) {
+				mCheckedPosition = i;
 			}
-			mSoundId[i] = mSound.load(getApplicationContext(), list.get(i).resId, 0);
+		}
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_single_choice,
+				android.R.id.text1, items);
+		mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		mListView.setAdapter(adapter);
+		mListView.setOnItemClickListener(mSoundListItemClicked);
+		mListView.setItemChecked(mCheckedPosition, true);
+
+		mSound = new SoundPool(mList.size(), AudioManager.STREAM_MUSIC, 0);
+		mSoundId = new int[mList.size()];
+		for (int i = 0; i < mList.size(); i++) {
+			if (mList.get(i).resId == 0) {
+				mSoundId[i] = 0;
+			} else {
+				mSoundId[i] = mSound.load(getApplicationContext(), mList.get(i).resId, 0);
+			}
 		}
 	}
 
@@ -132,19 +148,6 @@ public class SoundActivity extends Activity {
 		sound.checked = false;
 		list.add(sound);
 
-		// 設定中のサウンドをチェック
-		String resName = SettingDao.getInstance().getClickSound();
-		int resId = MyResource.getResourceIdByName(resName, "raw");
-		int clickSound = 0;
-		for (int i = 0; i < list.size(); i++) {
-			if (resId == list.get(i).resId) {
-				clickSound = i;
-				break;
-			}
-		}
-		list.get(clickSound).checked = true;
-		mCheckedPosition = clickSound;
-
 		return list;
 	}
 
@@ -156,15 +159,14 @@ public class SoundActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 			if (mCheckedPosition != -1) {
-				mSound.stop(mSoundId[mCheckedPosition]);
-				mAdapter.getItem(mCheckedPosition).checked = false;
+				if (mSoundId[mCheckedPosition] != 0) {
+					mSound.stop(mSoundId[mCheckedPosition]);
+				}
 			}
-			mSound.play(mSoundId[position], 1.0F, 1.0F, 0, 0, 1.0F);
-			mAdapter.getItem(position).checked = true;
+			if (mSoundId[position] != 0) {
+				mSound.play(mSoundId[position], 1.0F, 1.0F, 0, 0, 1.0F);
+			}
 			mCheckedPosition = position;
-
-			// アダプタの内容を即時反映する
-			mAdapter.notifyDataSetChanged();
 		}
 	};
 
@@ -174,7 +176,7 @@ public class SoundActivity extends Activity {
 	 * @param view
 	 */
 	public void onOkButtonClicked(View view) {
-		int resId = mAdapter.getItem(mCheckedPosition).resId;
+		int resId = mList.get(mCheckedPosition).resId;
 		String resName = "none";
 		if (resId != 0) {
 			resName = getResources().getResourceEntryName(resId);
