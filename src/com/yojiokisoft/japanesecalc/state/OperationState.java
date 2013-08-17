@@ -155,7 +155,8 @@ public class OperationState implements State {
 	 */
 	@Override
 	public void onInputReturnMemory(CalcContext context) {
-		context.returnMemory();
-		context.changeState(NumberBState.getInstance());
+		NumberBState state = NumberBState.getInstance();
+		state.onInputReturnMemory(context);
+		context.changeState(state);
 	}
 }

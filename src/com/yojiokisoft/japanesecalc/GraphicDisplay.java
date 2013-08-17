@@ -17,8 +17,6 @@ package com.yojiokisoft.japanesecalc;
 
 import java.math.BigDecimal;
 
-import com.yojiokisoft.japanesecalc.utils.MyResource;
-
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -28,6 +26,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+
+import com.yojiokisoft.japanesecalc.utils.MyResource;
 
 /**
  * グラフィカルディスプレイ
@@ -297,6 +297,7 @@ public class GraphicDisplay extends AbstractDisplay {
 			if (mCommaMode) {
 				mDecimalPlaces++;
 			}
+			mDisplayNumber = null;
 		}
 	}
 
@@ -313,6 +314,7 @@ public class GraphicDisplay extends AbstractDisplay {
 				mCommaMode = false;
 			}
 		}
+		mDisplayNumber = null;
 	}
 
 	@Override

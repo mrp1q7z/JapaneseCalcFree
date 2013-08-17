@@ -25,6 +25,7 @@ import com.yojiokisoft.japanesecalc.Operation;
  */
 public class NumberBState implements State {
 	private static NumberBState mInstance = new NumberBState();
+	private boolean mReturnMemory = false; // RM直後の状態
 
 	/**
 	 * コンストラクタは公開しない
@@ -47,6 +48,10 @@ public class NumberBState implements State {
 	 */
 	@Override
 	public void onInputNumber(CalcContext context, Number num) {
+		if (mReturnMemory) {
+			context.clearDisplay();
+			mReturnMemory = false;
+		}
 		context.addDisplayNumber(num);
 	}
 
@@ -171,5 +176,6 @@ public class NumberBState implements State {
 	@Override
 	public void onInputReturnMemory(CalcContext context) {
 		context.returnMemory();
+		mReturnMemory = true;
 	}
 }
