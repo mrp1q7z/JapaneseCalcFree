@@ -85,6 +85,26 @@ public class SoundActivity extends Activity {
 	}
 
 	/**
+	 * データの一時保存
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putInt("SAVE_POSITION", mCheckedPosition);
+	}
+
+	/**
+	 * 一時保存されたデータを復元
+	 */
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+
+		mCheckedPosition = savedInstanceState.getInt("SAVE_POSITION");
+	}
+
+	/**
 	 * クリック音一覧の取得
 	 * 
 	 * @return
