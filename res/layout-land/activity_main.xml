@@ -18,12 +18,10 @@
         android:orientation="horizontal" >
 
         <TableLayout
-            android:id="@+id/tableLayout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
             <TableRow
-                android:id="@+id/tableRow1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" >
@@ -75,7 +73,6 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" >
@@ -127,7 +124,6 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" >
@@ -179,7 +175,6 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" >
@@ -188,7 +183,6 @@
                     android:id="@+id/one"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5px"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg"
                     android:onClick="onClickButton"
@@ -232,7 +226,6 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow5"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" >
