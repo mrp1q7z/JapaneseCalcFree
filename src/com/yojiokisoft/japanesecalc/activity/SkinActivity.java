@@ -56,6 +56,11 @@ public class SkinActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_skin);
+		
+		int imageW = MyResource.dpi2Px(53);
+		int imageH = MyResource.dpi2Px(80);
+		int margin7 = MyResource.dpi2Px(7);
+		int margin3 = MyResource.dpi2Px(3);
 
 		mSkinResName = SettingDao.getInstance().getSkin();
 
@@ -85,11 +90,11 @@ public class SkinActivity extends Activity {
 			resId = MyResource.getResourceIdByName("s_" + items.get(i).resourceName);
 			images[i].setImageResource(resId);
 			if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-				images[i].setLayoutParams(new LayoutParams(120, 80 + 10));
-				images[i].setPadding(0, 5, 0, 5);
+				images[i].setLayoutParams(new LayoutParams(imageH, imageW + margin7));
+				images[i].setPadding(0, margin3, 0, margin3);
 			} else {
-				images[i].setLayoutParams(new LayoutParams(80 + 10, 120));
-				images[i].setPadding(5, 0, 5, 0);
+				images[i].setLayoutParams(new LayoutParams(imageW + margin7, imageH));
+				images[i].setPadding(margin3, 0, margin3, 0);
 			}
 			images[i].setTag(i);
 			images[i].setOnClickListener(mImageClicked);
