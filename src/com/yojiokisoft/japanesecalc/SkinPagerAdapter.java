@@ -17,16 +17,17 @@ package com.yojiokisoft.japanesecalc;
 
 import java.util.List;
 
-import com.yojiokisoft.japanesecalc.dao.BackImageEntity;
-import com.yojiokisoft.japanesecalc.utils.MyResource;
-
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import com.yojiokisoft.japanesecalc.dao.BackImageEntity;
+import com.yojiokisoft.japanesecalc.utils.MyResource;
 
 /**
  * スキンのページャーアダプター
@@ -35,6 +36,7 @@ public class SkinPagerAdapter extends PagerAdapter {
 	private ImageView mBigImage;
 	private List<BackImageEntity> mList;
 	private LayoutInflater mInflter;
+	private int mOrientation;
 
 	/**
 	 * コンストラクタ.
@@ -42,6 +44,7 @@ public class SkinPagerAdapter extends PagerAdapter {
 	 * @param context
 	 */
 	public SkinPagerAdapter(Context context, List<BackImageEntity> list) {
+		mOrientation = context.getResources().getConfiguration().orientation;
 		mInflter = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mList = list;
 	}
@@ -54,6 +57,12 @@ public class SkinPagerAdapter extends PagerAdapter {
 		FrameLayout layout = (FrameLayout) this.mInflter.inflate(R.layout.page_skin, null);
 
 		mBigImage = (ImageView) layout.findViewById(R.id.big_image);
+		int padding = MyResource.dpi2Px(5);
+		if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+			mBigImage.setPadding(0, 0, padding, 0);
+		} else {
+			mBigImage.setPadding(0, padding, 0, 0);
+		}
 
 		BackImageEntity item = mList.get(position);
 		String resName = item.resourceName;
