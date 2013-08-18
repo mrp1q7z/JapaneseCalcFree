@@ -33,10 +33,11 @@ import com.yojiokisoft.japanesecalc.utils.MyResource;
  * グラフィカルディスプレイ
  */
 public class GraphicDisplay extends AbstractDisplay {
-	private final int CHAR_WIDTH_PORT = 36;
-	private final int CHAR_HEIGHT_PORT = 50;
-	private final int CHAR_WIDTH_LAND = 37;
-	private final int CHAR_HEIGHT_LAND = 32;
+	// １文字のサイズ（単位はdp）
+	private int mCharWidthPort = 24;
+	private int mCharHeightPort = 33;
+	private int mCharWidthLand = 25;
+	private int mCharHeightLand = 21;
 
 	private int mOrientation;
 	private ViewGroup mDisplayContainer;
@@ -50,6 +51,11 @@ public class GraphicDisplay extends AbstractDisplay {
 	private int[] mNumResId = new int[10];
 
 	public GraphicDisplay(ViewGroup viewGroup, Context context, int orientation) {
+		mCharWidthPort = MyResource.dpi2Px(mCharWidthPort);
+		mCharHeightPort = MyResource.dpi2Px(mCharHeightPort);
+		mCharWidthLand = MyResource.dpi2Px(mCharWidthLand);
+		mCharHeightLand = MyResource.dpi2Px(mCharHeightLand);
+
 		mOrientation = orientation;
 		mDisplayContainer = viewGroup;
 		FrameLayout frameLayout = new FrameLayout(context);
@@ -71,16 +77,16 @@ public class GraphicDisplay extends AbstractDisplay {
 			mNum[i].setScaleType(ScaleType.FIT_XY);
 			if (i == DISPLAY_DIGIT) {
 				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(CHAR_WIDTH_LAND, CHAR_HEIGHT_LAND));
+					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(mCharWidthLand, mCharHeightLand));
 				} else {
-					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams((int) (CHAR_WIDTH_PORT * 0.56),
-							CHAR_HEIGHT_PORT));
+					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams((int) (mCharWidthPort * 0.56),
+							mCharHeightPort));
 				}
 			} else {
 				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(CHAR_WIDTH_LAND, CHAR_HEIGHT_LAND));
+					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(mCharWidthLand, mCharHeightLand));
 				} else {
-					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(CHAR_WIDTH_PORT, CHAR_HEIGHT_PORT));
+					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(mCharWidthPort, mCharHeightPort));
 				}
 			}
 		}
@@ -124,6 +130,9 @@ public class GraphicDisplay extends AbstractDisplay {
 
 	private void dispText(StringBuffer sb) {
 		mTen.setVisibility(View.INVISIBLE);
+		
+		int margin3 = MyResource.dpi2Px(3);
+		int margin1 = MyResource.dpi2Px(1);
 
 		int index = 0;
 		for (int i = sb.length() - 1; i >= 0; i--) {
@@ -138,11 +147,11 @@ public class GraphicDisplay extends AbstractDisplay {
 				int left;
 				int top;
 				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-					left = CHAR_WIDTH_LAND - 5;
-					top = CHAR_HEIGHT_LAND * (sb.length() - 1 - index) + 5;
+					left = mCharWidthLand - margin3;
+					top = mCharHeightLand * (sb.length() - 1 - index) + margin3;
 				} else {
-					left = CHAR_WIDTH_PORT * (DISPLAY_DIGIT - index) + (int) (CHAR_WIDTH_PORT * 0.6);
-					top = CHAR_HEIGHT_PORT - 2;
+					left = mCharWidthPort * (DISPLAY_DIGIT - index) + (int) (mCharWidthPort * 0.6);
+					top = mCharHeightPort - margin1;
 				}
 				mTen.setPadding(left, top, 0, 0);
 				mTen.setVisibility(View.VISIBLE);
@@ -172,11 +181,11 @@ public class GraphicDisplay extends AbstractDisplay {
 				int left;
 				int top;
 				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-					left = CHAR_WIDTH_LAND - 5;
-					top = CHAR_HEIGHT_LAND * (sb.length() - keta[i] - (mDecimalPlaces == 0 ? 0 : mDecimalPlaces + 1)) + 5;
+					left = mCharWidthLand - margin3;
+					top = mCharHeightLand * (sb.length() - keta[i] - (mDecimalPlaces == 0 ? 0 : mDecimalPlaces + 1)) + 5;
 				} else {
-					left = CHAR_WIDTH_PORT * (DISPLAY_DIGIT - keta[i] - mDecimalPlaces) + (int) (CHAR_WIDTH_PORT * 0.6);
-					top = CHAR_HEIGHT_PORT - 2;
+					left = mCharWidthPort * (DISPLAY_DIGIT - keta[i] - mDecimalPlaces) + (int) (mCharWidthPort * 0.6);
+					top = mCharHeightPort - margin1;
 				}
 				unit[i].setPadding(left, top, 0, 0);
 			} else {
