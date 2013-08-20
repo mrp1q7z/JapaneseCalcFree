@@ -145,4 +145,9 @@ public class NumberAState implements State {
 		context.returnMemory();
 		mReturnMemory = true;
 	}
+	
+	@Override
+	public String toString() {
+		return "NumberAState";
+	}
 }

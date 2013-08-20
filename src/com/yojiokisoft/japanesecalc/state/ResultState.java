@@ -142,4 +142,9 @@ public class ResultState implements State {
 	public void onInputReturnMemory(CalcContext context) {
 		context.returnMemory();
 	}
+	
+	@Override
+	public String toString() {
+		return "ResultState";
+	}
 }

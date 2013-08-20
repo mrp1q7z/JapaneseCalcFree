@@ -122,4 +122,9 @@ public class ErrorState implements State {
 	@Override
 	public void onInputReturnMemory(CalcContext context) {
 	}
+	
+	@Override
+	public String toString() {
+		return "ErrorState";
+	}
 }

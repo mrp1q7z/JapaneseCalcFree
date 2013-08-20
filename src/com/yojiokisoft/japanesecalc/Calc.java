@@ -15,8 +15,6 @@
 
 package com.yojiokisoft.japanesecalc;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
 import android.content.Context;
@@ -25,6 +23,9 @@ import android.widget.Toast;
 
 import com.yojiokisoft.japanesecalc.state.ErrorState;
 import com.yojiokisoft.japanesecalc.state.NumberAState;
+import com.yojiokisoft.japanesecalc.state.NumberBState;
+import com.yojiokisoft.japanesecalc.state.OperationState;
+import com.yojiokisoft.japanesecalc.state.ResultState;
 import com.yojiokisoft.japanesecalc.state.State;
 
 /**
@@ -53,7 +54,7 @@ public class Calc implements CalcContext {
 		sb.append("," + String.valueOf(M)); // 2
 		sb.append("," + mDisp.getNumber()); // 3
 		sb.append("," + ((mOp == null) ? "null" : mOp.toString())); // 4
-		sb.append("," + ((mState == null) ? "null" : mState.getClass().getName())); // 5
+		sb.append("," + ((mState == null) ? "null" : mState.toString())); // 5
 		sb.append("," + mIsError); // 6
 
 		return sb.toString();
@@ -86,22 +87,16 @@ public class Calc implements CalcContext {
 		}
 
 		if (!stateArray[5].equals("null")) {
-			try {
-				Class<?> clazz = Class.forName(stateArray[5]);
-				if (clazz != null) {
-					Method factoryMethod = clazz.getDeclaredMethod("getInstance");
-					mState = (State) factoryMethod.invoke(null);
-				}
-			} catch (ClassNotFoundException e) {
-				MyUncaughtExceptionHandler.sendBugReport(mContext, e);
-			} catch (IllegalAccessException e) {
-				MyUncaughtExceptionHandler.sendBugReport(mContext, e);
-			} catch (NoSuchMethodException e) {
-				MyUncaughtExceptionHandler.sendBugReport(mContext, e);
-			} catch (IllegalArgumentException e) {
-				MyUncaughtExceptionHandler.sendBugReport(mContext, e);
-			} catch (InvocationTargetException e) {
-				MyUncaughtExceptionHandler.sendBugReport(mContext, e);
+			if (stateArray[5].endsWith("NumberAState")) {
+				mState = NumberAState.getInstance();
+			} else if (stateArray[5].equals("NumberBState")) {
+				mState = NumberBState.getInstance();
+			} else if (stateArray[5].equals("OperationState")) {
+				mState = OperationState.getInstance();
+			} else if (stateArray[5].equals("ResultState")) {
+				mState = ResultState.getInstance();
+			} else if (stateArray[5].equals("ErrorState")) {
+				mState = ErrorState.getInstance();
 			}
 		}
 

@@ -178,4 +178,9 @@ public class NumberBState implements State {
 		context.returnMemory();
 		mReturnMemory = true;
 	}
+	
+	@Override
+	public String toString() {
+		return "NumberBState";
+	}
 }

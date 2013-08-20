@@ -159,4 +159,9 @@ public class OperationState implements State {
 		state.onInputReturnMemory(context);
 		context.changeState(state);
 	}
+	
+	@Override
+	public String toString() {
+		return "OperationState";
+	}
 }
