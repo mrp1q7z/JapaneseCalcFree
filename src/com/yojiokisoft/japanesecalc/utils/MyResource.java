@@ -17,9 +17,12 @@ package com.yojiokisoft.japanesecalc.utils;
 
 import java.io.FileNotFoundException;
 
+import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.util.DisplayMetrics;
+import android.util.Pair;
 
 import com.yojiokisoft.japanesecalc.App;
 
@@ -70,7 +73,7 @@ public class MyResource {
 		}
 		return packageInfo;
 	}
-	
+
 	/**
 	 * dpiをpxに変換
 	 * 
@@ -81,5 +84,28 @@ public class MyResource {
 		float density = App.getInstance().getResources().getDisplayMetrics().density;
 		int px = (int) (dpi * density + 0.5f);
 		return px;
+	}
+
+	/**
+	 * 画面の幅と高さを取得する.
+	 * 
+	 * @param activity
+	 * @return 画面の幅(=first)と高さ(=second)
+	 */
+	public static Pair<Integer, Integer> getScreenWidthAndHeight(Activity activity) {
+		// 画面サイズを取得する
+		DisplayMetrics metrics = new DisplayMetrics();
+		activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		int screenWidth = (Integer) metrics.widthPixels;
+		int screenHeight = (Integer) metrics.heightPixels;
+		Pair<Integer, Integer> size = new Pair<Integer, Integer>(screenWidth, screenHeight);
+		return size;
+	}
+
+	/**
+	 * @return ステータスバーの高さ
+	 */
+	public static int getStatusBarHeight() {
+		return dpi2Px(25);
 	}
 }

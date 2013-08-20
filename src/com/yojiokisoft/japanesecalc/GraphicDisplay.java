@@ -17,11 +17,15 @@ package com.yojiokisoft.japanesecalc;
 
 import java.math.BigDecimal;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.util.Pair;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -33,11 +37,9 @@ import com.yojiokisoft.japanesecalc.utils.MyResource;
  * グラフィカルディスプレイ
  */
 public class GraphicDisplay extends AbstractDisplay {
-	// １文字のサイズ（単位はdp）
-	private int mCharWidthPort = 24;
-	private int mCharHeightPort = 33;
-	private int mCharWidthLand = 25;
-	private int mCharHeightLand = 21;
+	private int mCharWidth;
+	private int mCharHeight;
+	private int mMemoryWidth = 10; // dp
 
 	private int mOrientation;
 	private ViewGroup mDisplayContainer;
@@ -51,16 +53,12 @@ public class GraphicDisplay extends AbstractDisplay {
 	private int[] mNumResId = new int[10];
 
 	public GraphicDisplay(ViewGroup viewGroup, Context context, int orientation) {
-		mCharWidthPort = MyResource.dpi2Px(mCharWidthPort);
-		mCharHeightPort = MyResource.dpi2Px(mCharHeightPort);
-		mCharWidthLand = MyResource.dpi2Px(mCharWidthLand);
-		mCharHeightLand = MyResource.dpi2Px(mCharHeightLand);
-
 		mOrientation = orientation;
 		mDisplayContainer = viewGroup;
 		FrameLayout frameLayout = new FrameLayout(context);
 		LinearLayout linearLayout = new LinearLayout(context);
 
+		mMemoryWidth = MyResource.dpi2Px(mMemoryWidth);
 		mMemory = new ImageView(context);
 		mMemory.setImageResource(R.drawable.memory);
 		mMemory.setVisibility(View.INVISIBLE);
@@ -69,26 +67,26 @@ public class GraphicDisplay extends AbstractDisplay {
 			linearLayout.setOrientation(LinearLayout.VERTICAL);
 		}
 
+		int margin = MyResource.dpi2Px(2);
+		Pair<Integer, Integer> wh = MyResource.getScreenWidthAndHeight((Activity) context);
+		int displaySize;
+		if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+			displaySize = wh.second - MyResource.getStatusBarHeight();
+			mCharWidth = MyResource.dpi2Px(25);
+			mCharHeight = (displaySize - mMemoryWidth - margin) / (DISPLAY_DIGIT + 1);
+		} else {
+			displaySize = wh.first;
+			mCharWidth = (displaySize - mMemoryWidth - margin) / (DISPLAY_DIGIT + 1);
+			mCharHeight = MyResource.dpi2Px(33);
+		}
+
 		for (int i = 0; i < mNumResId.length; i++) {
 			mNumResId[i] = MyResource.getResourceIdByName("num" + i);
 		}
 		for (int i = DISPLAY_DIGIT; i >= 0; i--) {
 			mNum[i] = new ImageView(context);
 			mNum[i].setScaleType(ScaleType.FIT_XY);
-			if (i == DISPLAY_DIGIT) {
-				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(mCharWidthLand, mCharHeightLand));
-				} else {
-					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams((int) (mCharWidthPort * 0.56),
-							mCharHeightPort));
-				}
-			} else {
-				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(mCharWidthLand, mCharHeightLand));
-				} else {
-					linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(mCharWidthPort, mCharHeightPort));
-				}
-			}
+			linearLayout.addView(mNum[i], new LinearLayout.LayoutParams(mCharWidth, mCharHeight));
 		}
 
 		mUnitOku = new ImageView(context);
@@ -103,6 +101,13 @@ public class GraphicDisplay extends AbstractDisplay {
 
 		mError = new ImageView(context);
 		mError.setImageResource(R.drawable.error);
+
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT, Gravity.LEFT);
+		mUnitOku.setLayoutParams(layoutParams);
+		mUnitMan.setLayoutParams(layoutParams);
+		mUnitSen.setLayoutParams(layoutParams);
+		mTen.setLayoutParams(layoutParams);
 
 		frameLayout.addView(linearLayout);
 		frameLayout.addView(mUnitOku);
@@ -130,9 +135,10 @@ public class GraphicDisplay extends AbstractDisplay {
 
 	private void dispText(StringBuffer sb) {
 		mTen.setVisibility(View.INVISIBLE);
-		
+
 		int margin3 = MyResource.dpi2Px(3);
 		int margin1 = MyResource.dpi2Px(1);
+		int marginX = (int) (mCharWidth * 0.3);
 
 		int index = 0;
 		for (int i = sb.length() - 1; i >= 0; i--) {
@@ -147,11 +153,11 @@ public class GraphicDisplay extends AbstractDisplay {
 				int left;
 				int top;
 				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-					left = mCharWidthLand - margin3;
-					top = mCharHeightLand * (sb.length() - 1 - index) + margin3;
+					left = mCharWidth - margin3;
+					top = mCharHeight * (sb.length() - 1 - index) + mMemoryWidth - marginX;
 				} else {
-					left = mCharWidthPort * (DISPLAY_DIGIT - index) + (int) (mCharWidthPort * 0.6);
-					top = mCharHeightPort - margin1;
+					left = mCharWidth * (DISPLAY_DIGIT - index + 1) + mMemoryWidth - marginX;
+					top = mCharHeight - margin1;
 				}
 				mTen.setPadding(left, top, 0, 0);
 				mTen.setVisibility(View.VISIBLE);
@@ -181,11 +187,12 @@ public class GraphicDisplay extends AbstractDisplay {
 				int left;
 				int top;
 				if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-					left = mCharWidthLand - margin3;
-					top = mCharHeightLand * (sb.length() - keta[i] - (mDecimalPlaces == 0 ? 0 : mDecimalPlaces + 1)) + 5;
+					left = mCharWidth - margin3;
+					top = mCharHeight * (sb.length() - keta[i] - (mDecimalPlaces == 0 ? 0 : mDecimalPlaces + 1))
+							+ mMemoryWidth - marginX;
 				} else {
-					left = mCharWidthPort * (DISPLAY_DIGIT - keta[i] - mDecimalPlaces) + (int) (mCharWidthPort * 0.6);
-					top = mCharHeightPort - margin1;
+					left = mCharWidth * (DISPLAY_DIGIT - keta[i] - mDecimalPlaces + 1) + mMemoryWidth - marginX;
+					top = mCharHeight - margin1;
 				}
 				unit[i].setPadding(left, top, 0, 0);
 			} else {
