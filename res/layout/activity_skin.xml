@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <com.yojiokisoft.japanesecalc.CustomHorizontalScrollView
+        <com.yojiokisoft.japanesecalcfree.CustomHorizontalScrollView
             android:id="@+id/horizontal_scrollview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" />
-        </com.yojiokisoft.japanesecalc.CustomHorizontalScrollView>
+        </com.yojiokisoft.japanesecalcfree.CustomHorizontalScrollView>
 
         <RelativeLayout
             android:layout_width="match_parent"
