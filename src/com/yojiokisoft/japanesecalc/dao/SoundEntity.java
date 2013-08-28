@@ -21,6 +21,8 @@ import java.io.Serializable;
  * サウンドエンティティ
  */
 public class SoundEntity implements Serializable {
+	private static final long serialVersionUID = 1775444377602465547L;
+
 	/** リソースID */
 	public int resId;
 
