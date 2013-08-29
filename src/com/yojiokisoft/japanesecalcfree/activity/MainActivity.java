@@ -17,9 +17,11 @@ package com.yojiokisoft.japanesecalcfree.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,24 +30,30 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.google.ads.Ad;
+import com.google.ads.AdListener;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 import com.yojiokisoft.japanesecalcfree.Calc;
 import com.yojiokisoft.japanesecalcfree.MyUncaughtExceptionHandler;
 import com.yojiokisoft.japanesecalcfree.Number;
 import com.yojiokisoft.japanesecalcfree.Operation;
 import com.yojiokisoft.japanesecalcfree.R;
 import com.yojiokisoft.japanesecalcfree.dao.SettingDao;
+import com.yojiokisoft.japanesecalcfree.utils.AdCatalogUtils;
 import com.yojiokisoft.japanesecalcfree.utils.MyResource;
 
 /**
  * メインアクティビティ
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements AdListener {
 	private Calc mCalc = new Calc();
 	private SoundPool mSound;
 	private int mSoundId;
 	private String mCurrentSoundName;
 	private String mCurrentSkinName;
 	private LinearLayout mButtonContainer;
+	private AdView adViewBanner;
 
 	/**
 	 * 初期処理
@@ -83,6 +91,13 @@ public class MainActivity extends Activity {
 		int orientation = getResources().getConfiguration().orientation;
 		LinearLayout displayContainer = (LinearLayout) findViewById(R.id.displayContainer);
 		mCalc.setDisplay(displayContainer, this, orientation);
+
+		if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+			AdRequest adRequest = AdCatalogUtils.createAdRequest();
+			adViewBanner = (AdView) findViewById(R.id.adViewBanner);
+			adViewBanner.setAdListener(this);
+			adViewBanner.loadAd(adRequest);
+		}
 	}
 
 	/**
@@ -177,6 +192,34 @@ public class MainActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		mSound.release();
+		if (adViewBanner != null) {
+			adViewBanner.destroy();
+		}
+	}
+
+	@Override
+	public void onReceiveAd(Ad ad) {
+		Log.d("Banners_class", "I received an ad");
+	}
+
+	@Override
+	public void onFailedToReceiveAd(Ad ad, AdRequest.ErrorCode error) {
+		Log.d("Banners_class", "I failed to receive an ad");
+	}
+
+	@Override
+	public void onPresentScreen(Ad ad) {
+		Log.d("Banners_class", "Presenting screen");
+	}
+
+	@Override
+	public void onDismissScreen(Ad ad) {
+		Log.d("Banners_class", "Dismissing screen");
+	}
+
+	@Override
+	public void onLeaveApplication(Ad ad) {
+		Log.d("Banners_class", "Leaving application");
 	}
 
 	/**
