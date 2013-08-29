@@ -127,28 +127,7 @@ public class SoundActivity extends Activity {
 		list.add(sound);
 
 		sound = new SoundEntity();
-		sound.title = "水滴";
-		sound.description = "ポチャ";
-		sound.resId = R.raw.mp_drop;
-		sound.checked = false;
-		list.add(sound);
-
-		sound = new SoundEntity();
-		sound.title = "風";
-		sound.description = "ヒュッ";
-		sound.resId = R.raw.mp_hyu;
-		sound.checked = false;
-		list.add(sound);
-
-		sound = new SoundEntity();
-		sound.title = "電子音１";
-		sound.description = "ピッィ";
-		sound.resId = R.raw.mp_pi1;
-		sound.checked = false;
-		list.add(sound);
-
-		sound = new SoundEntity();
-		sound.title = "電子音２";
+		sound.title = "電子音";
 		sound.description = "ピッ。";
 		sound.resId = R.raw.mp_pi2;
 		sound.checked = false;
@@ -158,13 +137,6 @@ public class SoundActivity extends Activity {
 		sound.title = "木魚";
 		sound.description = "ポク";
 		sound.resId = R.raw.mp_poku;
-		sound.checked = false;
-		list.add(sound);
-
-		sound = new SoundEntity();
-		sound.title = "太鼓";
-		sound.description = "ドン";
-		sound.resId = R.raw.mp_taiko;
 		sound.checked = false;
 		list.add(sound);
 
