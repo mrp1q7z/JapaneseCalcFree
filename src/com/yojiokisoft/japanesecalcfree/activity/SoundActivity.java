@@ -113,29 +113,29 @@ public class SoundActivity extends Activity {
 		List<SoundEntity> list = new ArrayList<SoundEntity>();
 
 		SoundEntity sound = new SoundEntity();
-		sound.title = "なし";
-		sound.description = "無音";
+		sound.title = getString(R.string.sound_none);
+		sound.description = getString(R.string.sound_none_note);
 		sound.resId = 0;
 		sound.checked = false;
 		list.add(sound);
 
 		sound = new SoundEntity();
-		sound.title = "仏壇";
-		sound.description = "チーン";
+		sound.title = getString(R.string.sound_chiiin);
+		sound.description = getString(R.string.sound_chiiin_note);
 		sound.resId = R.raw.mp_chiiin;
 		sound.checked = false;
 		list.add(sound);
 
 		sound = new SoundEntity();
-		sound.title = "電子音";
-		sound.description = "ピッ。";
+		sound.title = getString(R.string.sound_pi);
+		sound.description = getString(R.string.sound_pi_note);
 		sound.resId = R.raw.mp_pi2;
 		sound.checked = false;
 		list.add(sound);
 
 		sound = new SoundEntity();
-		sound.title = "木魚";
-		sound.description = "ポク";
+		sound.title = getString(R.string.sound_poku);
+		sound.description = getString(R.string.sound_poku_note);
 		sound.resId = R.raw.mp_poku;
 		sound.checked = false;
 		list.add(sound);
