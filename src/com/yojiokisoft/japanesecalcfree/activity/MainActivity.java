@@ -21,6 +21,7 @@ import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,6 +55,7 @@ public class MainActivity extends Activity implements AdListener {
 	private String mCurrentSkinName;
 	private LinearLayout mButtonContainer;
 	private AdView adViewBanner;
+    private Vibrator mVibrator = null;
 
 	/**
 	 * 初期処理
@@ -68,6 +70,7 @@ public class MainActivity extends Activity implements AdListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 
+        mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 		mSound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 		mCurrentSoundName = SettingDao.getInstance().getClickSound();
 		int resId = MyResource.getResourceIdByName(mCurrentSoundName, "raw");
@@ -251,6 +254,7 @@ public class MainActivity extends Activity implements AdListener {
 	 * @param view
 	 */
 	public void onClickButton(View view) {
+        mVibrator.vibrate(60);
 		if (mSoundId != 0) {
 			mSound.stop(mSoundId);
 			mSound.play(mSoundId, 1.0F, 1.0F, 0, 0, 1.0F);
