@@ -62,6 +62,9 @@ public abstract class AbstractDisplay {
 	// エラー表示をクリアします
 	public abstract void clearError();
 
+    // 四則演算子を表示します
+    public abstract void showOperation(Operation op);
+
 	/**
 	 * 引数がディスプレイの表示桁数を超えていないかをチェックします.<br>
 	 * @param d チェックしたい値

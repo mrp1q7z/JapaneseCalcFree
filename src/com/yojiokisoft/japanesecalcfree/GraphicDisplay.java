@@ -45,6 +45,7 @@ public class GraphicDisplay extends AbstractDisplay {
 	private ViewGroup mDisplayContainer;
 	private ImageView[] mNum = new ImageView[DISPLAY_DIGIT + 1];
 	private ImageView mMemory;
+    private ImageView mMark;
 	private ImageView mTen;
 	private ImageView mError;
 	private ImageView mUnitOku;
@@ -62,7 +63,21 @@ public class GraphicDisplay extends AbstractDisplay {
 		mMemory = new ImageView(context);
 		mMemory.setImageResource(R.drawable.memory);
 		mMemory.setVisibility(View.INVISIBLE);
-		linearLayout.addView(mMemory);
+
+        mMark = new ImageView(context);
+        mMark.setImageResource(R.drawable.plus_mark);
+        mMark.setVisibility(View.INVISIBLE);
+        LinearLayout markLL = new LinearLayout(context);
+        if (mOrientation != Configuration.ORIENTATION_LANDSCAPE) {
+            mMark.setPadding(0, mMemoryWidth, 0, 0);
+            markLL.setOrientation(LinearLayout.VERTICAL);
+        } else {
+            mMark.setPadding(mMemoryWidth, 0, 0, 0);
+        }
+        markLL.addView(mMemory);
+        markLL.addView(mMark);
+
+		linearLayout.addView(markLL);
 		if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
 			linearLayout.setOrientation(LinearLayout.VERTICAL);
 		}
@@ -355,6 +370,7 @@ public class GraphicDisplay extends AbstractDisplay {
 		mUnitMan.setVisibility(View.INVISIBLE);
 		mUnitSen.setVisibility(View.INVISIBLE);
 		mTen.setVisibility(View.INVISIBLE);
+        mMark.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
@@ -425,4 +441,21 @@ public class GraphicDisplay extends AbstractDisplay {
 			mMemory.setVisibility(View.VISIBLE);
 		}
 	}
+
+    @Override
+    public void showOperation(Operation op) {
+        if (op == Operation.PLUS) {
+            mMark.setImageResource(R.drawable.plus_mark);
+        } else if (op == Operation.MINUS) {
+            mMark.setImageResource(R.drawable.minus_mark);
+        } else if (op == Operation.TIMES) {
+            mMark.setImageResource(R.drawable.times_mark);
+        } else if (op == Operation.DIVIDE) {
+            mMark.setImageResource(R.drawable.divide_mark);
+        } else {
+            mMark.setVisibility(View.INVISIBLE);
+            return;
+        }
+        mMark.setVisibility(View.VISIBLE);
+    }
 }

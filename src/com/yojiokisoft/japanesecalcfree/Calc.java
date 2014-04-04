@@ -93,6 +93,7 @@ public class Calc implements CalcContext {
 				mState = NumberBState.getInstance();
 			} else if (stateArray[5].equals("OperationState")) {
 				mState = OperationState.getInstance();
+                mDisp.showOperation(mOp);
 			} else if (stateArray[5].equals("ResultState")) {
 				mState = ResultState.getInstance();
 			} else if (stateArray[5].equals("ErrorState")) {
@@ -365,6 +366,7 @@ public class Calc implements CalcContext {
 	@Override
 	public void setOp(Operation newOp) {
 		mOp = newOp;
+        mDisp.showOperation(mOp);
 	}
 
 	/**
